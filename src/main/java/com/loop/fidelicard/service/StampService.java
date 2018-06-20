@@ -20,12 +20,18 @@ public class StampService {
 	}
 
 	public Stamp save(StampDTO stampDTO) {
-//		System.out.println(stampDTO);
+		// System.out.println(stampDTO);
 		Card card = cardService.findById(stampDTO.getCardId()).get();
 		Stamp stamp = new Stamp(card);
 		stamp.setCard(card);
 		stampRepository.save(stamp);
 		return stamp;
+	}
+
+	public void addStamp(Card card) {
+		Stamp stamp = new Stamp();
+		stamp.setCard(card);
+		stampRepository.save(stamp);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.model.Card;
+import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.CardRepository;
 
 @Service
@@ -23,6 +24,13 @@ public class CardService {
 
 	public Optional<Card> findById(Long id) {
 		return cardRepository.findById(id);
+	}
+
+	public Card addCardToFinalClient(FinalClient finalClient) {
+		Card card = new Card();
+		card.setFinalClient(finalClient);
+		cardRepository.save(card);
+		return card;
 	}
 
 }

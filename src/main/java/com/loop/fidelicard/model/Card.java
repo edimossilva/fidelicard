@@ -9,8 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "card")
@@ -21,19 +24,16 @@ public class Card implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@JsonIgnore 
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private FinalClient finalClient;
+	
 	@OneToMany(mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Stamp> stamps;
 
 	public Card() {
 
 	}
-
-	public Card(Long id, List<Stamp> stamps) {
-		super();
-		this.id = id;
-		this.stamps = stamps;
-	}
-
 
 	public Long getId() {
 		return id;
@@ -43,6 +43,14 @@ public class Card implements Serializable {
 		this.id = id;
 	}
 
+	public FinalClient getFinalClient() {
+		return finalClient;
+	}
+
+	public void setFinalClient(FinalClient finalClient) {
+		this.finalClient = finalClient;
+	}
+
 	public List<Stamp> getStamps() {
 		return stamps;
 	}
@@ -50,4 +58,6 @@ public class Card implements Serializable {
 	public void setStamps(List<Stamp> stamps) {
 		this.stamps = stamps;
 	}
+
+	
 }

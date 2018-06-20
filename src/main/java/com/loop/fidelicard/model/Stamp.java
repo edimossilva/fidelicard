@@ -23,6 +23,7 @@ public class Stamp implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	@JsonIgnore 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Card card;

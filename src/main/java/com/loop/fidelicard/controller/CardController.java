@@ -25,6 +25,5 @@ public class CardController {
 	public ResponseEntity<Card> save() {
 		Card card = cardService.save();
 		return ResponseEntity.ok(card);
-
 	}
 }
