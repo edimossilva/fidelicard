@@ -50,4 +50,8 @@ public class FinalClientService {
 		return finalClientRepository.findByUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
 	}
 
+	public FinalClient findById(Long finalClientId) {
+		return finalClientRepository.findById(finalClientId).get();
+	}
+
 }
