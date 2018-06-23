@@ -36,14 +36,13 @@ public class Stamp implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@JsonIgnore 
+
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Card card;
 
 	@Column(name = "date", nullable = false)
 	private LocalDateTime date;
-
 
 	public Stamp(Card card) {
 		setDate(LocalDateTime.now());

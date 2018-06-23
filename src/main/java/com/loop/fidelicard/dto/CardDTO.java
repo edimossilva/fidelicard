@@ -1,13 +1,9 @@
 package com.loop.fidelicard.dto;
 
+import lombok.Getter;
+
+@Getter
 public class CardDTO {
 	private long cardId;
 
-	public long getCardId() {
-		return cardId;
-	}
-
-	public void setCardId(long cardId) {
-		this.cardId = cardId;
-	}
 }
