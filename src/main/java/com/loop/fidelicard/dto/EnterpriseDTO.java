@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NonNull;
 
 @Getter
-public class CardDTO {
-	private @NonNull Long cardId;
-
+public class EnterpriseDTO {
+	private @NonNull String name;
 }

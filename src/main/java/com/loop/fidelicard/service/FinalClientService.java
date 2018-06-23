@@ -14,13 +14,13 @@ import com.loop.fidelicard.repository.FinalClientRepository;
 @Service
 public class FinalClientService {
 	@Autowired
-	FinalClientRepository finalClientRepository;
+	private FinalClientRepository finalClientRepository;
 
 	@Autowired
-	CardService cardService;
+	private CardService cardService;
 
 	@Autowired
-	StampService stampService;
+	private StampService stampService;
 
 	public Iterable<FinalClient> findAll() {
 		return finalClientRepository.findAll();
