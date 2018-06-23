@@ -33,4 +33,8 @@ public class EnterpriseService {
 		enterpriseRepository.save(enterprise);
 		return enterprise;
 	}
+
+	public Enterprise findById(Long enterpriseId) {
+		return enterpriseRepository.findById(enterpriseId).get();
+	}
 }
