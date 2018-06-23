@@ -26,4 +26,8 @@ public class OfferService {
 		offerRepository.save(offer);
 		return offer;
 	}
+
+	public Offer findById(Long offerId) {
+		return offerRepository.findById(offerId).get();
+	}
 }

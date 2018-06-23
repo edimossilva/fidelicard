@@ -5,6 +5,6 @@ import lombok.NonNull;
 
 @Getter
 public class CardDTO {
-	private @NonNull Long cardId;
-
+	private @NonNull Long finalClientId;
+	private @NonNull Long offerId;
 }

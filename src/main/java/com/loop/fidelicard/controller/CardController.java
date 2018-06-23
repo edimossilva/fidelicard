@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.dto.CardDTO;
 import com.loop.fidelicard.dto.FinalClientDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
@@ -24,8 +25,8 @@ public class CardController {
 	}
 
 	@RequestMapping(value = "/card", method = POST)
-	public ResponseEntity<Card> save(@RequestBody FinalClientDTO finalClientDTO) {
-		Card card = cardService.createCardFromFinalClientDTO(finalClientDTO);
+	public ResponseEntity<Card> save(@RequestBody CardDTO cardDTO) {
+		Card card = cardService.createCardFromCardDTO(cardDTO);
 		return ResponseEntity.ok(card);
 	}
 }

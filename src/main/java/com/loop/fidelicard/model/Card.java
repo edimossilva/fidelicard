@@ -45,4 +45,12 @@ public class Card implements Serializable {
 	@OneToMany(mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Stamp> stamps;
 
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private Offer offer;
+
+	public Card(FinalClient finalClient, Offer offer) {
+		setFinalClient(finalClient);
+		setOffer(offer);
+	}
 }

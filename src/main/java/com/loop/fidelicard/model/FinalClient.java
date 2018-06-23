@@ -44,6 +44,7 @@ public class FinalClient implements Serializable {
 
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
+	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "finalClients")
 	private List<Enterprise> enterprises;

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.CardDTO;
+import com.loop.fidelicard.dto.CardToStampDTO;
 import com.loop.fidelicard.dto.FinalClientDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
@@ -29,15 +29,14 @@ public class FinalClientService {
 	public FinalClient save(FinalClientDTO finalClientDTO) {
 		FinalClient finalClient = new FinalClient(finalClientDTO.getUniqueIdentifier());
 		return finalClientRepository.save(finalClient);
-
 	}
 
-	public FinalClient addStamp(long id, CardDTO cardDTO) {
+	public FinalClient addStamp(long id, CardToStampDTO cardToStampDTO) {
 		FinalClient finalClient = finalClientRepository.findById(id).get();
-		Optional<Card> optionalCard = cardService.findById(cardDTO.getCardId());
+		Optional<Card> optionalCard = cardService.findById(cardToStampDTO.getCardId());
 		Card card = null;
 		if (!optionalCard.isPresent()) {
-			card = cardService.createCardFromFinalClient(finalClient);
+			card = cardService.createCardFromFinalClientAndOffer(finalClient);
 		} else {
 			card = optionalCard.get();
 		}

@@ -5,9 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.FinalClientDTO;
+import com.loop.fidelicard.dto.CardDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
+import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.repository.CardRepository;
 
 @Service
@@ -17,6 +18,8 @@ public class CardService {
 
 	@Autowired
 	private FinalClientService finalClientService;
+	@Autowired
+	private OfferService offerService;
 
 	public Iterable<Card> findAll() {
 		return cardRepository.findAll();
@@ -30,15 +33,11 @@ public class CardService {
 		return cardRepository.findById(id);
 	}
 
-	public Card createCardFromFinalClient(FinalClient finalClient) {
-		Card card = new Card();
-		card.setFinalClient(finalClient);
+	public Card createCardFromCardDTO(CardDTO cardDTO) {
+		FinalClient finalClient = finalClientService.findById(cardDTO.getFinalClientId());
+		Offer offer = offerService.findById(cardDTO.getOfferId());
+		Card card = new Card(finalClient, offer);
 		return cardRepository.save(card);
-	}
-
-	public Card createCardFromFinalClientDTO(FinalClientDTO finalClientDTO) {
-		FinalClient finalClient = finalClientService.getFromDTO(finalClientDTO);
-		return createCardFromFinalClient(finalClient);
 	}
 
 }
