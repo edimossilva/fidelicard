@@ -14,8 +14,21 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "stamp")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Stamp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,9 +44,6 @@ public class Stamp implements Serializable {
 	@Column(name = "date", nullable = false)
 	private LocalDateTime date;
 
-	public Stamp() {
-		setDate(LocalDateTime.now());
-	}
 
 	public Stamp(Card card) {
 		setDate(LocalDateTime.now());
@@ -43,30 +53,6 @@ public class Stamp implements Serializable {
 	public Stamp(Long id, LocalDateTime date) {
 		this.id = id;
 		this.date = date;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
-
-	public Card getCard() {
-		return card;
-	}
-
-	public void setCard(Card card) {
-		this.card = card;
 	}
 
 }

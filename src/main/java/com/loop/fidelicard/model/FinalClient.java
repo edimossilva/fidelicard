@@ -13,8 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "finalClient")
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+
 public class FinalClient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,51 +36,14 @@ public class FinalClient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "uniqueIdentifier", nullable = false)
+	@Column(name = "uniqueIdentifier", nullable = false, unique = true)
 	private String uniqueIdentifier;
 
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
 
-	public FinalClient() {
-	}
-
 	public FinalClient(String uniqueIdentifier) {
 		setUniqueIdentifier(uniqueIdentifier);
-	}
-
-	public FinalClient(Long id, String uniqueIdentifier, List<Card> cards) {
-		this.id = id;
-		this.uniqueIdentifier = uniqueIdentifier;
-		this.cards = cards;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUniqueIdentifier() {
-		return uniqueIdentifier;
-	}
-
-	public void setUniqueIdentifier(String uniqueIdentifier) {
-		this.uniqueIdentifier = uniqueIdentifier;
-	}
-
-	public List<Card> getCards() {
-		return cards;
-	}
-
-	public void setCards(List<Card> cards) {
-		this.cards = cards;
-	}
-
-	public void addCard(Card card) {
-		getCards().add(card);
 	}
 
 }

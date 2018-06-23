@@ -20,7 +20,6 @@ public class StampService {
 	}
 
 	public Stamp save(StampDTO stampDTO) {
-		// System.out.println(stampDTO);
 		Card card = cardService.findById(stampDTO.getCardId()).get();
 		Stamp stamp = new Stamp(card);
 		stamp.setCard(card);

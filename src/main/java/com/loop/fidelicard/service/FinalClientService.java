@@ -37,12 +37,17 @@ public class FinalClientService {
 		Optional<Card> optionalCard = cardService.findById(cardDTO.getCardId());
 		Card card = null;
 		if (!optionalCard.isPresent()) {
-			card = cardService.addCardToFinalClient(finalClient);
-		}else {
+			card = cardService.createCardFromFinalClient(finalClient);
+		} else {
 			card = optionalCard.get();
 		}
 		stampService.addStamp(card);
 		return finalClient;
+	}
+
+	public FinalClient getFromDTO(FinalClientDTO finalClientDTO) {
+
+		return finalClientRepository.findByUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
 	}
 
 }
