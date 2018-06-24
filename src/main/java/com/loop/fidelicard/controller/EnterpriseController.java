@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.EnterpriseDTO;
-import com.loop.fidelicard.dto.EnterpriseFinalClientDTO;
+import com.loop.fidelicard.dto.FullCardDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.service.EnterpriseService;
 
@@ -32,7 +32,7 @@ public class EnterpriseController {
 
 	@RequestMapping(value = "/enterprise/addFinalClientToEnterprise", method = POST)
 	public ResponseEntity<Enterprise> addFinalClientToEnterprise(
-			@RequestBody EnterpriseFinalClientDTO enterpriseFinalClientDTO) {
+			@RequestBody FullCardDTO enterpriseFinalClientDTO) {
 		Enterprise enterprise = enterpriseService.addFinalClientToEnterprise(enterpriseFinalClientDTO);
 		return ResponseEntity.ok(enterprise);
 	}

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.dto.CardDTO;
 import com.loop.fidelicard.dto.StampDTO;
 import com.loop.fidelicard.model.Stamp;
 import com.loop.fidelicard.service.StampService;
@@ -25,8 +26,13 @@ public class StampController {
 
 	@RequestMapping(value = "/stamp", method = POST)
 	public ResponseEntity<StampDTO> save(@RequestBody StampDTO stampDTO) {
-
 		stampService.save(stampDTO);
 		return ResponseEntity.ok(stampDTO);
+	}
+
+	@RequestMapping(value = "/stamp/addStamp/", method = POST)
+	public ResponseEntity<Stamp> addStamp(@RequestBody CardDTO cardDTO) {
+		Stamp stamp = stampService.addStamp(cardDTO);
+		return ResponseEntity.ok(stamp);
 	}
 }

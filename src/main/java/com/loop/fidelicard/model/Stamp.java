@@ -18,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -27,7 +26,6 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Stamp implements Serializable {
 
@@ -43,6 +41,10 @@ public class Stamp implements Serializable {
 
 	@Column(name = "date", nullable = false)
 	private LocalDateTime date;
+
+	public Stamp() {
+		setDate(LocalDateTime.now());
+	}
 
 	public Stamp(Card card) {
 		setDate(LocalDateTime.now());

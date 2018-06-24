@@ -33,6 +33,10 @@ public class CardService {
 		return cardRepository.findById(id);
 	}
 
+	public Optional<Card> findByFinalClientAndOffer(FinalClient finalClient, Offer offer) {
+		return cardRepository.findByFinalClientAndOffer(finalClient, offer);
+	}
+
 	public Card createCardFromCardDTO(CardDTO cardDTO) {
 		FinalClient finalClient = finalClientService.findById(cardDTO.getFinalClientId());
 		Offer offer = offerService.findById(cardDTO.getOfferId());

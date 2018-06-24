@@ -1,10 +1,15 @@
 package com.loop.fidelicard.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loop.fidelicard.dto.CardDTO;
 import com.loop.fidelicard.dto.StampDTO;
 import com.loop.fidelicard.model.Card;
+import com.loop.fidelicard.model.FinalClient;
+import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.model.Stamp;
 import com.loop.fidelicard.repository.StampRepository;
 
@@ -14,6 +19,10 @@ public class StampService {
 	private StampRepository stampRepository;
 	@Autowired
 	private CardService cardService;
+	@Autowired
+	private FinalClientService finalClientService;
+	@Autowired
+	private OfferService offerService;
 
 	public Iterable<Stamp> findAll() {
 		return stampRepository.findAll();
@@ -27,10 +36,23 @@ public class StampService {
 		return stamp;
 	}
 
-	public void addStamp(Card card) {
+	public Stamp addStamp(Card card) {
 		Stamp stamp = new Stamp();
 		stamp.setCard(card);
-		stampRepository.save(stamp);
+		return stampRepository.save(stamp);
+	}
+
+	public Stamp addStamp(CardDTO cardIdDTO) {
+		FinalClient finalClient = finalClientService.findById(cardIdDTO.getFinalClientId());
+		Offer offer = offerService.findById(cardIdDTO.getOfferId());
+		Optional<Card> optionalCard = cardService.findByFinalClientAndOffer(finalClient, offer);
+		Card card = null;
+		if (!optionalCard.isPresent()) {
+			card = cardService.createCardFromCardDTO(cardIdDTO);
+		} else {
+			card = optionalCard.get();
+		}
+		return addStamp(card);
 	}
 
 }
