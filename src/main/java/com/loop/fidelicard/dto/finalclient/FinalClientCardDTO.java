@@ -1,4 +1,4 @@
-package com.loop.fidelicard.dto;
+package com.loop.fidelicard.dto.finalclient;
 
 import lombok.Getter;
 import lombok.NonNull;

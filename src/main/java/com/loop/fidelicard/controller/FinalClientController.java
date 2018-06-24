@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loop.fidelicard.dto.FinalClientDTO;
+import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.service.FinalClientService;
 
@@ -24,7 +24,7 @@ public class FinalClientController {
 	}
 
 	@RequestMapping(value = "/finalClient", method = POST)
-	public ResponseEntity<FinalClient> save(@RequestBody FinalClientDTO finalClientDTO) {
+	public ResponseEntity<FinalClient> save(@RequestBody FinalClientCreateDTO finalClientDTO) {
 		FinalClient finalClient = finalClientService.save(finalClientDTO);
 		return ResponseEntity.ok(finalClient);
 	}

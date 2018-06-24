@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.CardDTO;
-import com.loop.fidelicard.dto.FinalClientDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
 

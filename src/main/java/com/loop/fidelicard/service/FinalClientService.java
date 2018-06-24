@@ -3,7 +3,7 @@ package com.loop.fidelicard.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.FinalClientDTO;
+import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.FinalClientRepository;
 
@@ -20,11 +20,11 @@ public class FinalClientService {
 		return finalClientRepository.findById(finalClientId).get();
 	}
 
-	public FinalClient getFromDTO(FinalClientDTO finalClientDTO) {
+	public FinalClient getFromDTO(FinalClientCreateDTO finalClientDTO) {
 		return finalClientRepository.findByUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
 	}
 
-	public FinalClient save(FinalClientDTO finalClientDTO) {
+	public FinalClient save(FinalClientCreateDTO finalClientDTO) {
 		FinalClient finalClient = new FinalClient(finalClientDTO.getUniqueIdentifier());
 		return finalClientRepository.save(finalClient);
 	}

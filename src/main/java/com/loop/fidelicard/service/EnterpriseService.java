@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.EnterpriseDTO;
-import com.loop.fidelicard.dto.FullCardDTO;
+import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.EnterpriseRepository;
@@ -26,9 +26,9 @@ public class EnterpriseService {
 		return enterprise;
 	}
 
-	public Enterprise addFinalClientToEnterprise(FullCardDTO enterpriseFinalClientDTO) {
+	public Enterprise addFinalClientToEnterprise(FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
 		FinalClient finalCLient = finalClientService.findById(enterpriseFinalClientDTO.getFinalClientId());
-		Enterprise enterprise = enterpriseRepository.findById(enterpriseFinalClientDTO.getOfferId()).get();
+		Enterprise enterprise = enterpriseRepository.findById(enterpriseFinalClientDTO.getEnterpriseId()).get();
 		enterprise.addFinalClient(finalCLient);
 		enterpriseRepository.save(enterprise);
 		return enterprise;
