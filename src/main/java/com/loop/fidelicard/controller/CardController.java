@@ -25,11 +25,7 @@ public class CardController {
 	public Iterable<Card> index() {
 		return cardService.findAll();
 	}
-	@PreAuthorize("hasAuthority('ROLE_GUEST')")
-	@RequestMapping(value = "/about", method = GET)
-	public Iterable<Card> index2() {
-		return cardService.findAll();
-	}
+	
 	@RequestMapping(value = "/card", method = POST)
 	public ResponseEntity<Card> save(@RequestBody CardDTO cardDTO) {
 		Card card = cardService.createCardFromCardDTO(cardDTO);

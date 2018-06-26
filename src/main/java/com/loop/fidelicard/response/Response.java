@@ -1,4 +1,4 @@
-package com.loop.fidelicardi.response;
+package com.loop.fidelicard.response;
 
 import java.util.ArrayList;
 import java.util.List;

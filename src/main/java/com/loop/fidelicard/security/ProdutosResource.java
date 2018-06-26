@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.security.model.Produto;
+
 @RestController
 @RequestMapping("/produtos")
 public class ProdutosResource {

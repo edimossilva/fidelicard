@@ -1,4 +1,4 @@
-package com.loop.fidelicard;
+package com.loop.fidelicard.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

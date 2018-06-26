@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security;
+package com.loop.fidelicard.security.model;
 
 import java.io.Serializable;
 
@@ -17,6 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "login_user")
@@ -26,6 +27,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString
 public class LoginUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 

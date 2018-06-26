@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security;
+package com.loop.fidelicard.security.model;
 
 public class Produto {
 
