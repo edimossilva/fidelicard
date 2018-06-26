@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +19,17 @@ public class CardController {
 	@Autowired
 	private CardService cardService;
 
+
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@RequestMapping(value = "/card", method = GET)
 	public Iterable<Card> index() {
 		return cardService.findAll();
 	}
-
+	@PreAuthorize("hasAuthority('ROLE_GUEST')")
+	@RequestMapping(value = "/about", method = GET)
+	public Iterable<Card> index2() {
+		return cardService.findAll();
+	}
 	@RequestMapping(value = "/card", method = POST)
 	public ResponseEntity<Card> save(@RequestBody CardDTO cardDTO) {
 		Card card = cardService.createCardFromCardDTO(cardDTO);
