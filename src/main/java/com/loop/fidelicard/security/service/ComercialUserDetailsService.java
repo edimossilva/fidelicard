@@ -15,7 +15,7 @@ import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;
 
 @Service
-public class UserDetailsService {
+public class ComercialUserDetailsService {
 	@Autowired
 	private LoginUserService localUserService;
 
