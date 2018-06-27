@@ -2,11 +2,10 @@ package com.loop.fidelicard.security;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,7 +25,6 @@ import com.loop.fidelicard.security.service.MyUserDetailService;
 @EnableResourceServer
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Resource
 public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -37,10 +35,16 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
-				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/card");
+				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**");
 	}
 
 	@Override
@@ -56,6 +60,6 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.anonymous().and().authorizeRequests().antMatchers("/card/**").permitAll();
+		http.authorizeRequests().antMatchers("/**").hasAuthority("ROLE_ADMIN");
 	}
 }
