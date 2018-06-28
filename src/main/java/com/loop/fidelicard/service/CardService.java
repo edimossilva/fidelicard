@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.CardDTO;
+import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;

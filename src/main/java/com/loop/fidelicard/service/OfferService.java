@@ -3,7 +3,7 @@ package com.loop.fidelicard.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.OfferDTO;
+import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.repository.OfferRepository;

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.CardDTO;
-import com.loop.fidelicard.dto.StampDTO;
+import com.loop.fidelicard.dto.card.CardDTO;
+import com.loop.fidelicard.dto.stamp.StampDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
@@ -42,7 +42,7 @@ public class StampService {
 		return stampRepository.save(stamp);
 	}
 
-	public Stamp addStamp(CardDTO cardIdDTO) {
+	public Card addStamp(CardDTO cardIdDTO) {
 		FinalClient finalClient = finalClientService.findById(cardIdDTO.getFinalClientId());
 		Offer offer = offerService.findById(cardIdDTO.getOfferId());
 		Optional<Card> optionalCard = cardService.findByFinalClientAndOffer(finalClient, offer);
@@ -52,7 +52,8 @@ public class StampService {
 		} else {
 			card = optionalCard.get();
 		}
-		return addStamp(card);
+		addStamp(card);
+		return card;
 	}
 
 }

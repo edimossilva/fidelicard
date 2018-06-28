@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.loop.fidelicard.dto.EnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

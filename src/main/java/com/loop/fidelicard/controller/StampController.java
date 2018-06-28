@@ -3,36 +3,53 @@ package com.loop.fidelicard.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.loop.fidelicard.dto.CardDTO;
-import com.loop.fidelicard.dto.StampDTO;
+import com.loop.fidelicard.dto.card.CardDTO;
+import com.loop.fidelicard.dto.card.ResponseCardDTO;
+import com.loop.fidelicard.dto.stamp.ResponseStampDTO;
+import com.loop.fidelicard.dto.stamp.StampDTO;
+import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Stamp;
 import com.loop.fidelicard.service.StampService;
+import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
 public class StampController {
 	@Autowired
 	private StampService stampService;
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/stamp", method = GET)
-	public Iterable<Stamp> index() {
-		return stampService.findAll();
+	public ResponseEntity index() {
+		List<ResponseStampDTO> responseStampDTOList = new ArrayList<>();
+		stampService.findAll().forEach(s -> new ResponseStampDTO(s));
+
+		return GenericsUtil.dTOToResponse(responseStampDTOList);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/stamp", method = POST)
-	public ResponseEntity<StampDTO> save(@RequestBody StampDTO stampDTO) {
-		stampService.save(stampDTO);
-		return ResponseEntity.ok(stampDTO);
+	public ResponseEntity save(@RequestBody StampDTO stampDTO) {
+		Stamp stamp = stampService.save(stampDTO);
+		ResponseStampDTO responseStampDTO = new ResponseStampDTO(stamp);
+
+		return GenericsUtil.dTOToResponse(responseStampDTO);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/stamp/addStamp/", method = POST)
-	public ResponseEntity<Stamp> addStamp(@RequestBody CardDTO cardDTO) {
-		Stamp stamp = stampService.addStamp(cardDTO);
-		return ResponseEntity.ok(stamp);
+	public ResponseEntity addStamp(@RequestBody CardDTO cardDTO) {
+		Card card = stampService.addStamp(cardDTO);
+		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
+
+		return GenericsUtil.dTOToResponse(responseCardDTO);
 	}
 }

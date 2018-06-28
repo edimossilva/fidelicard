@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.loop.fidelicard.dto.OfferDTO;
+import com.loop.fidelicard.dto.offer.OfferDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
