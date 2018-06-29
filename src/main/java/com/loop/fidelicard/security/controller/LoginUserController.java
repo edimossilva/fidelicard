@@ -4,57 +4,56 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.security.dto.LoginUserDTO;
+import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
 public class LoginUserController {
 	@Autowired
 	private LoginUserService loginUserService;
 
-	@PreAuthorize("hasAuthority('ROLE_FINAL_CLIENT')")
-	@RequestMapping(value = "/roleFinalClient", method = GET)
-	public Iterable<LoginUser> guest() {
-		return loginUserService.findAll();
-	}
+	// @PreAuthorize("hasAuthority('ROLE_FINAL_CLIENT')")
 
-	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
-	@RequestMapping(value = "/roleEnterprise", method = GET)
-	public Iterable<LoginUser> admin() {
-		return loginUserService.findAll();
-	}
+	// @PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
+	// @RequestMapping(value = "/roleEnterprise", method = GET)
+	// public Iterable<LoginUser> admin() {
+	// return loginUserService.findAll();
+	// }
 
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	@RequestMapping(value = "/loginUser", method = POST)
-	public LoginUser save(@RequestBody LoginUserDTO loginUserDTO) {
-		return loginUserService.save(loginUserDTO);
-	}
-
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/loginUser", method = GET)
-	public List<LoginUser> index() {
-		return loginUserService.findAll();
+	public ResponseEntity guest() {
+		List<ResponseLoginUserDTO> responseLoginUserDTOList = new ArrayList<>();
+		loginUserService.findAll().forEach(lu -> responseLoginUserDTOList.add(new ResponseLoginUserDTO(lu)));
+		return GenericsUtil.dTOToResponse(responseLoginUserDTOList);
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/loginUser", method = POST)
+	public ResponseEntity save(@RequestBody LoginUserDTO loginUserDTO) {
+		LoginUser loginUser = loginUserService.save(loginUserDTO);
+		ResponseLoginUserDTO responseLoginUserDTO = new ResponseLoginUserDTO(loginUser);
+		return GenericsUtil.dTOToResponse(responseLoginUserDTO);
+	}
+
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/loginUser/{id}", method = DELETE)
-	public String delete(@PathVariable("id") Long id) {
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		loginUserService.deleteById(id);
-		return "ok";
-	}
-
-	@RequestMapping(value = "/none", method = GET)
-	public Iterable<LoginUser> none() {
-		return loginUserService.findAll();
+		return GenericsUtil.dTOToResponse("Login User with id " + id + " was deleted");
 	}
 
 }
