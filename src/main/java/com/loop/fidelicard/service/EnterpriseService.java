@@ -10,7 +10,7 @@ import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.EnterpriseRepository;
 
 @Service
-public class EnterpriseService {
+public class EnterpriseService extends DefaultService<Enterprise>{
 	@Autowired
 	private EnterpriseRepository enterpriseRepository;
 	@Autowired

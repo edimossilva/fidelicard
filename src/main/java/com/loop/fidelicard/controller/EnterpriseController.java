@@ -3,9 +3,6 @@ package com.loop.fidelicard.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,26 +17,21 @@ import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
-public class EnterpriseController {
+public class EnterpriseController extends RESTController<EnterpriseService> {
 	@Autowired
 	private EnterpriseService enterpriseService;
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise", method = GET)
+	@Override
 	public ResponseEntity index() {
-		List<ResponseEnterpriseDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseDTO>();
-		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(new ResponseEnterpriseDTO(e)));
-
-		return GenericsUtil.dTOToResponse(enterpriseDTOList);
+		return super.index();
 	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise", method = POST)
 	public ResponseEntity save(@RequestBody EnterpriseDTO enterpriseDTO) {
-		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
-		ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
-
-		return GenericsUtil.dTOToResponse(responseEnterpriseDTO);
+		return super.save(enterpriseDTO);
 	}
 
 	@SuppressWarnings("rawtypes")
