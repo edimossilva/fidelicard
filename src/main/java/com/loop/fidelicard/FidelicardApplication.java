@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.loop.fidelicard.security.model.LoginUser;
+import com.loop.fidelicard.security.model.UserRole;
 import com.loop.fidelicard.security.service.LoginUserService;
 
 @SpringBootApplication
@@ -20,9 +22,12 @@ public class FidelicardApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
-			// LoginUser loginUser1 =
-			// LoginUser.builder().email("admin@gmail.com").password("123").userRole(UserRole.ADMIN)
-			// .build();
+			LoginUser loginUser = loginUserService.findByEmail("admin@gmail.com");
+			if (loginUser == null) {
+				LoginUser loginUser1 = LoginUser.builder().email("admin@gmail.com").password("123")
+						.userRole(UserRole.ADMIN).build();
+				loginUserService.save(loginUser1);
+			}
 			// LoginUser loginUser2 =
 			// LoginUser.builder().email("finalclient@gmail.com").password("123")
 			// .userRole(UserRole.FINAL_CLIENT).build();
