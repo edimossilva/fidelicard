@@ -6,4 +6,6 @@ import lombok.NonNull;
 @Getter
 public class FinalClientCreateDTO {
 	private @NonNull String uniqueIdentifier;
+	private @NonNull String email;
+
 }

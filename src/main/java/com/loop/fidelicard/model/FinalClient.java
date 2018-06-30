@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,18 +40,22 @@ public class FinalClient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(name = "email", nullable = false, unique = true)
+	private String email;
+
 	@Column(name = "uniqueIdentifier", nullable = false, unique = true)
 	private String uniqueIdentifier;
 
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
-	
+
 	@JsonIgnore
 	@ManyToMany(mappedBy = "finalClients")
 	private List<Enterprise> enterprises;
 
-	public FinalClient(String uniqueIdentifier) {
-		setUniqueIdentifier(uniqueIdentifier);
+	public FinalClient(FinalClientCreateDTO finalClientDTO) {
+		setUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
+		setEmail(finalClientDTO.getEmail());
 	}
 
 }

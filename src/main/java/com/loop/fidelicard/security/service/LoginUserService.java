@@ -38,7 +38,7 @@ public class LoginUserService {
 		String password = PasswordUtils.gerarBCrypt(loginUser.getPassword());
 		loginUser.setPassword(password);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
-		
+
 		return loginUserRepository.save(loginUser);
 	}
 
@@ -48,5 +48,9 @@ public class LoginUserService {
 
 	public LoginUser findByEmail(String email) {
 		return loginUserRepository.findAllByEmail(email);
+	}
+
+	public LoginUser findById(Long loginUserId) {
+		return loginUserRepository.findById(loginUserId).get();
 	}
 }

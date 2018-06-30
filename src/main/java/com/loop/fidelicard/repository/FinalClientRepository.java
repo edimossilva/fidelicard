@@ -7,6 +7,5 @@ import com.loop.fidelicard.model.FinalClient;
 public interface FinalClientRepository extends JpaRepository<FinalClient, Long> {
 
 	FinalClient findByUniqueIdentifier(String uniqueIdentifier);
-	
 
 }

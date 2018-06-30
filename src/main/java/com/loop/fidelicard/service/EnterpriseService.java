@@ -8,13 +8,17 @@ import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.EnterpriseRepository;
+import com.loop.fidelicard.security.model.LoginUser;
+import com.loop.fidelicard.security.service.LoginUserService;
 
 @Service
-public class EnterpriseService extends DefaultService<Enterprise>{
+public class EnterpriseService  {
 	@Autowired
 	private EnterpriseRepository enterpriseRepository;
 	@Autowired
 	private FinalClientService finalClientService;
+	@Autowired
+	private LoginUserService loginUserService;
 
 	public Iterable<Enterprise> findAll() {
 		return enterpriseRepository.findAll();
@@ -22,7 +26,13 @@ public class EnterpriseService extends DefaultService<Enterprise>{
 
 	public Enterprise save(EnterpriseDTO enterpriseDTO) {
 		Enterprise enterprise = new Enterprise(enterpriseDTO);
+		LoginUser loginUser = loginUserService.findById(enterpriseDTO.getLoginUserId());
+
+		loginUser.setEnterprise(enterprise);
+		enterprise.setOwnerLoginUser(loginUser);
+			
 		enterpriseRepository.save(enterprise);
+		
 		return enterprise;
 	}
 

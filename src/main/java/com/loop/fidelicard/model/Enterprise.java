@@ -13,15 +13,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
+import com.loop.fidelicard.security.model.LoginUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "enterprise")
@@ -30,7 +33,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString
 public class Enterprise extends DefaultModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +47,9 @@ public class Enterprise extends DefaultModel {
 
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "enterprise")
+	private LoginUser ownerLoginUser;
 
 	public Enterprise(EnterpriseDTO enterpriseDTO) {
 		setName(enterpriseDTO.getName());

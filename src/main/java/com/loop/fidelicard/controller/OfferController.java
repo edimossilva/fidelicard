@@ -28,7 +28,7 @@ public class OfferController {
 	public ResponseEntity index() {
 		List<ResponseOfferDTO> responseOfferList = new ArrayList<>();
 		offerService.findAll().forEach(o -> responseOfferList.add(new ResponseOfferDTO(o)));
-		return GenericsUtil.dTOToResponse(responseOfferList);
+		return GenericsUtil.objectToResponse(responseOfferList);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -36,6 +36,6 @@ public class OfferController {
 	public ResponseEntity save(@RequestBody OfferDTO offerDTO) {
 		Offer offer = offerService.save(offerDTO);
 		ResponseOfferDTO responseOfferDTO = new ResponseOfferDTO(offer);
-		return GenericsUtil.dTOToResponse(responseOfferDTO);
+		return GenericsUtil.objectToResponse(responseOfferDTO);
 	}
 }

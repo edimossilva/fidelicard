@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.util.GenericsUtil;
@@ -29,7 +30,7 @@ public class CardController {
 		List<ResponseCardDTO> responseCardDTOList = new ArrayList<>();
 		cardService.findAll().forEach(c -> responseCardDTOList.add(new ResponseCardDTO(c)));
 
-		return GenericsUtil.dTOToResponse(responseCardDTOList);
+		return GenericsUtil.objectToResponse(responseCardDTOList);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,6 +39,15 @@ public class CardController {
 		Card card = cardService.createCardFromCardDTO(cardDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
-		return GenericsUtil.dTOToResponse(responseCardDTO);
+		return GenericsUtil.objectToResponse(responseCardDTO);
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "card/createWithStamp/", method = POST)
+	public ResponseEntity<Card> createWithStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Card card = cardService.createCardFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
+
+		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
 }

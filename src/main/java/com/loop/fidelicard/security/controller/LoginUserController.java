@@ -38,7 +38,7 @@ public class LoginUserController {
 	public ResponseEntity guest() {
 		List<ResponseLoginUserDTO> responseLoginUserDTOList = new ArrayList<>();
 		loginUserService.findAll().forEach(lu -> responseLoginUserDTOList.add(new ResponseLoginUserDTO(lu)));
-		return GenericsUtil.dTOToResponse(responseLoginUserDTOList);
+		return GenericsUtil.objectToResponse(responseLoginUserDTOList);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -46,14 +46,14 @@ public class LoginUserController {
 	public ResponseEntity save(@RequestBody LoginUserDTO loginUserDTO) {
 		LoginUser loginUser = loginUserService.save(loginUserDTO);
 		ResponseLoginUserDTO responseLoginUserDTO = new ResponseLoginUserDTO(loginUser);
-		return GenericsUtil.dTOToResponse(responseLoginUserDTO);
+		return GenericsUtil.objectToResponse(responseLoginUserDTO);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/loginUser/{id}", method = DELETE)
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		loginUserService.deleteById(id);
-		return GenericsUtil.dTOToResponse("Login User with id " + id + " was deleted");
+		return GenericsUtil.objectToResponse("Login User with id " + id + " was deleted");
 	}
 
 }

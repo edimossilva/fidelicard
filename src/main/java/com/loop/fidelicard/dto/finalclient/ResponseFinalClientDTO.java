@@ -11,10 +11,13 @@ import lombok.Setter;
 public class ResponseFinalClientDTO {
 	private @NonNull Long id;
 	private @NonNull String uniqueIdentifier;
+	private @NonNull String email;
 
 	public ResponseFinalClientDTO(FinalClient fc) {
 		setId(fc.getId());
 		setUniqueIdentifier(fc.getUniqueIdentifier());
+		setEmail(fc.getEmail());
+
 	}
 
 }

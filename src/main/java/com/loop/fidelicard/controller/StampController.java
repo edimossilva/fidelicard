@@ -32,7 +32,7 @@ public class StampController {
 		List<ResponseStampDTO> responseStampDTOList = new ArrayList<>();
 		stampService.findAll().forEach(s -> new ResponseStampDTO(s));
 
-		return GenericsUtil.dTOToResponse(responseStampDTOList);
+		return GenericsUtil.objectToResponse(responseStampDTOList);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -41,7 +41,7 @@ public class StampController {
 		Stamp stamp = stampService.save(stampDTO);
 		ResponseStampDTO responseStampDTO = new ResponseStampDTO(stamp);
 
-		return GenericsUtil.dTOToResponse(responseStampDTO);
+		return GenericsUtil.objectToResponse(responseStampDTO);
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -50,6 +50,6 @@ public class StampController {
 		Card card = stampService.addStamp(cardDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
-		return GenericsUtil.dTOToResponse(responseCardDTO);
+		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
 }
