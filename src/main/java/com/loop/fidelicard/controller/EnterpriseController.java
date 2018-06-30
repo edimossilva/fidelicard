@@ -16,6 +16,8 @@ import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
+import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
+import com.loop.fidelicard.security.dto.LoginUserIdDTO;
 import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.util.GenericsUtil;
 
@@ -51,4 +53,30 @@ public class EnterpriseController {
 		return GenericsUtil.objectToResponse(responseEnterpriseDTO);
 	}
 
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/enterprise/findByLoginUserId", method = POST)
+	public ResponseEntity findByLoginUserId(@RequestBody LoginUserIdDTO enterpriseFinalClientDTO) {
+		Enterprise enterprise = enterpriseService.findByOwnerLoginUser(enterpriseFinalClientDTO.getLoginUserId());
+		if (enterprise != null) {
+			ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
+			return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+		} else {
+			String message = "Enterprise not found for loginUser with id = "
+					+ enterpriseFinalClientDTO.getLoginUserId();
+			return GenericsUtil.objectToResponse(message);
+		}
+	}
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/enterprise/findByLoginUserEmail", method = POST)
+	public ResponseEntity findByLoginUserId(@RequestBody LoginUserEmailDTO loginUserEmailDTO) {
+		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
+		if (enterprise != null) {
+			ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
+			return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+		} else {
+			String message = "Enterprise not found for loginUser with email = "
+					+ loginUserEmailDTO.getLoginUserEmail();
+			return GenericsUtil.objectToResponse(message);
+		}
+	}
 }

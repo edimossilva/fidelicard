@@ -12,7 +12,7 @@ import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.service.LoginUserService;
 
 @Service
-public class EnterpriseService  {
+public class EnterpriseService {
 	@Autowired
 	private EnterpriseRepository enterpriseRepository;
 	@Autowired
@@ -30,9 +30,9 @@ public class EnterpriseService  {
 
 		loginUser.setEnterprise(enterprise);
 		enterprise.setOwnerLoginUser(loginUser);
-			
+
 		enterpriseRepository.save(enterprise);
-		
+
 		return enterprise;
 	}
 
@@ -46,5 +46,17 @@ public class EnterpriseService  {
 
 	public Enterprise findById(Long enterpriseId) {
 		return enterpriseRepository.findById(enterpriseId).get();
+	}
+
+	public Enterprise findByOwnerLoginUser(Long loginUserId) {
+		LoginUser loginUser = loginUserService.findById(loginUserId);
+
+		return enterpriseRepository.findByOwnerLoginUser(loginUser);
+	}
+
+	public Enterprise findByOwnerLoginUserEmail(String loginUserEmail) {
+		LoginUser loginUser = loginUserService.findByEmail(loginUserEmail);
+		
+		return enterpriseRepository.findByOwnerLoginUser(loginUser);
 	}
 }
