@@ -55,4 +55,8 @@ public class OfferService {
 		}
 		return null;
 	}
+
+	public void save(Offer offer) {
+		offerRepository.save(offer);
+	}
 }

@@ -43,7 +43,7 @@ public class FinalClientService {
 		return finalClientRepository.findByUniqueIdentifier(uniqueIdentifir);
 	}
 
-	public FinalClient existClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO) {
+	public FinalClient findClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO) {
 		FinalClient finalClient = findByUI(clientUIAndEnterpriseIdDTO.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(clientUIAndEnterpriseIdDTO.getEnterpriseId());
 		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
@@ -52,6 +52,10 @@ public class FinalClientService {
 			return finalClient;
 		}
 		return null;
+	}
+
+	public void save(FinalClient finalClient) {
+		finalClientRepository.save(finalClient);
 	}
 
 }

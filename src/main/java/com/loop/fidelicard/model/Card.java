@@ -53,4 +53,30 @@ public class Card implements Serializable {
 		setFinalClient(finalClient);
 		setOffer(offer);
 	}
+
+	public int getNormalizedQuantity() {
+		int stampQuantity = getStamps().size();
+		int offerQuantity = getOffer().getQuantity();
+
+		if (isFull()) {
+			if (stampQuantity == 0) {
+				return 0;
+			} else {
+				return 10;
+			}
+		} else {
+			return stampQuantity % offerQuantity;
+		}
+	}
+
+	public boolean isFull() {
+
+		int stampQuantity = getStamps().size();
+		int offerQuantity = getOffer().getQuantity();
+		if (stampQuantity == 0) {
+			return false;
+		}
+		return stampQuantity % offerQuantity == 0;
+
+	}
 }

@@ -21,10 +21,10 @@ import com.loop.fidelicard.security.model.LoginUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "enterprise")
@@ -33,8 +33,8 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class Enterprise extends DefaultModel {
+@EqualsAndHashCode(of = "id")
+public class Enterprise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -58,4 +58,5 @@ public class Enterprise extends DefaultModel {
 	public void addFinalClient(FinalClient finalCLient) {
 		getFinalClients().add(finalCLient);
 	}
+
 }

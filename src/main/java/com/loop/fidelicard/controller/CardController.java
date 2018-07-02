@@ -17,12 +17,15 @@ import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
+import com.loop.fidelicard.service.FinalClientService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
 public class CardController {
 	@Autowired
 	private CardService cardService;
+	@Autowired
+	private FinalClientService finalClientService;
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card", method = GET)
@@ -33,21 +36,29 @@ public class CardController {
 		return GenericsUtil.objectToResponse(responseCardDTOList);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card", method = POST)
-	public ResponseEntity<Card> save(@RequestBody CardDTO cardDTO) {
+	public ResponseEntity save(@RequestBody CardDTO cardDTO) {
 		Card card = cardService.createCardFromCardDTO(cardDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "card/createWithStamp/", method = POST)
-	public ResponseEntity<Card> createWithStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/card/createWithStamp/", method = POST)
+	public ResponseEntity createWithStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = cardService.createCardFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/card/isLastStamp/", method = POST)
+	public ResponseEntity isLastStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Boolean isLastStamp = cardService.isLastStamp(clientIDAndEnterpriseIdDTO);
+
+		return GenericsUtil.objectToResponse(isLastStamp);
 	}
 }

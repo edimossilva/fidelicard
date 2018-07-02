@@ -71,4 +71,18 @@ public class CardService {
 		return cardRepository.save(card);
 	}
 
+	public Boolean isLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
+		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		Offer offer = offerService.findAllByEnterprise(enterprise).get(0);
+		FinalClient finalClient = finalClientService.findById(finalClientId);
+		boolean isCardFull = finalClient.isCardFull(offer);
+		return isCardFull;
+	}
+
+	public Card save(Card card) {
+		return cardRepository.save(card);
+	}
+
 }

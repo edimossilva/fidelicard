@@ -58,4 +58,24 @@ public class FinalClient implements Serializable {
 		setEmail(finalClientDTO.getEmail());
 	}
 
+	public boolean isCardFull(Offer offer) {
+		for (Card card : cards) {
+			if (card.getOffer().equals(offer)) {
+				if (card.isFull()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public Card getCardByEnterprise(Enterprise enterprise) {
+		for (Card card : cards) {
+			if (card.getOffer().getEnterprise().equals(enterprise)) {
+				return card;
+			}
+		}
+		return null;
+	}
+
 }

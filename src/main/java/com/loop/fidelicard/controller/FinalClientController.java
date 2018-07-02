@@ -60,7 +60,7 @@ public class FinalClientController {
 	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
 	public ResponseEntity existClientbyUICardInEnterprise(
 			@RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
-		FinalClient finalClient = finalClientService.existClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
+		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
 		if (finalClient != null) {
 			ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient);
 

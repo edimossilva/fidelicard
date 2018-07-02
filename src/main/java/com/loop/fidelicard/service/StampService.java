@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.card.CardDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.stamp.StampDTO;
 import com.loop.fidelicard.model.Card;
+import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.model.Stamp;
@@ -23,6 +25,8 @@ public class StampService {
 	private FinalClientService finalClientService;
 	@Autowired
 	private OfferService offerService;
+	@Autowired
+	private EnterpriseService enterpriseService;
 
 	public Iterable<Stamp> findAll() {
 		return stampRepository.findAll();
@@ -54,6 +58,15 @@ public class StampService {
 		}
 		addStamp(card);
 		return card;
+	}
+
+	public Card addStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
+		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
+		Card card = finalClient.getCardByEnterprise(enterprise);
+
+		addStamp(card);
+		return cardService.save(card);
 	}
 
 }
