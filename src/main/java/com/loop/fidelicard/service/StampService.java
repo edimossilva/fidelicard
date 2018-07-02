@@ -1,5 +1,6 @@
 package com.loop.fidelicard.service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,15 @@ public class StampService {
 		return stamp;
 	}
 
-	public Stamp addStamp(Card card) {
+	public Stamp addNewStamp(Card card) {
 		Stamp stamp = new Stamp();
 		stamp.setCard(card);
-		return stampRepository.save(stamp);
+		stamp = stampRepository.save(stamp);
+		if (card.getStamps() == null) {
+			card.setStamps(new ArrayList<Stamp>());
+		}
+		card.getStamps().add(stamp);
+		return stamp;
 	}
 
 	public Card addStamp(CardDTO cardIdDTO) {
@@ -56,8 +62,8 @@ public class StampService {
 		} else {
 			card = optionalCard.get();
 		}
-		addStamp(card);
-		return card;
+		addNewStamp(card);
+		return cardService.findById(card.getId()).get();
 	}
 
 	public Card addStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
@@ -65,7 +71,7 @@ public class StampService {
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		Card card = finalClient.getCardByEnterprise(enterprise);
 
-		addStamp(card);
+		addNewStamp(card);
 		return cardService.save(card);
 	}
 

@@ -28,6 +28,9 @@ public class CardService {
 	@Autowired
 	private OfferService offerService;
 
+	@Autowired
+	private StampService stampService;
+
 	public Iterable<Card> findAll() {
 		return cardRepository.findAll();
 	}
@@ -68,10 +71,27 @@ public class CardService {
 		FinalClient finalClient = finalClientService.findById(finalClientId);
 
 		Card card = new Card(finalClient, offer);
+		card = cardRepository.save(card);
+		stampService.addNewStamp(card);
+
+		return card;
+	}
+
+	public Boolean isBeforeLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
+		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		Offer offer = offerService.findAllByEnterprise(enterprise).get(0);
+		FinalClient finalClient = finalClientService.findById(finalClientId);
+		boolean isCardFull = finalClient.isCardAlmostFull(offer);
+		return isCardFull;
+	}
+
+	public Card save(Card card) {
 		return cardRepository.save(card);
 	}
 
-	public Boolean isLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Boolean isFull(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
 		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
@@ -81,8 +101,8 @@ public class CardService {
 		return isCardFull;
 	}
 
-	public Card save(Card card) {
-		return cardRepository.save(card);
+	public void delete(Long id) {
+		cardRepository.delete(findById(id).get());
 	}
 
 }

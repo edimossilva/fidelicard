@@ -58,6 +58,16 @@ public class FinalClient implements Serializable {
 		setEmail(finalClientDTO.getEmail());
 	}
 
+	public boolean isCardAlmostFull(Offer offer) {
+		for (Card card : cards) {
+			if (card.getOffer().equals(offer)) {
+				if (card.isAlmostFull()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	public boolean isCardFull(Offer offer) {
 		for (Card card : cards) {
 			if (card.getOffer().equals(offer)) {
@@ -68,7 +78,6 @@ public class FinalClient implements Serializable {
 		}
 		return false;
 	}
-
 	public Card getCardByEnterprise(Enterprise enterprise) {
 		for (Card card : cards) {
 			if (card.getOffer().getEnterprise().equals(enterprise)) {

@@ -29,8 +29,9 @@ public class StampController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/stamp", method = GET)
 	public ResponseEntity index() {
+
 		List<ResponseStampDTO> responseStampDTOList = new ArrayList<>();
-		stampService.findAll().forEach(s -> new ResponseStampDTO(s));
+		stampService.findAll().forEach(s -> responseStampDTOList.add(new ResponseStampDTO(s)));
 
 		return GenericsUtil.objectToResponse(responseStampDTOList);
 	}
