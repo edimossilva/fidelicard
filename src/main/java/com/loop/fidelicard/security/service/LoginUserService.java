@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.security.ConfigSecurity;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
-import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.repository.LoginUserRepository;
 import com.loop.fidelicard.util.PasswordUtils;
@@ -27,12 +26,11 @@ public class LoginUserService {
 		return loginUserRepository.findAll();
 	}
 
-	public ResponseLoginUserDTO save(LoginUserDTO loginUserDTO) {
+	public LoginUser save(LoginUserDTO loginUserDTO) {
 		LoginUser loginUser = myUserDetailService.userDetailFromLoginUserDTO(loginUserDTO);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
-		// System.out.println("LOGINUSER" + loginUserDTO);
 		loginUser = loginUserRepository.save(loginUser);
-		return loginUser.toResponseLoginUserDTO();
+		return loginUser;
 	}
 
 	public LoginUser save(LoginUser loginUser) {
@@ -48,10 +46,14 @@ public class LoginUserService {
 	}
 
 	public LoginUser findByEmail(String email) {
-		return loginUserRepository.findAllByEmail(email);
+		return loginUserRepository.findByEmail(email);
 	}
 
 	public LoginUser findById(Long loginUserId) {
 		return loginUserRepository.findById(loginUserId).get();
+	}
+
+	public void update(LoginUser loginUser) {
+		loginUserRepository.save(loginUser);
 	}
 }

@@ -39,7 +39,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/enterprise", method = POST)
 	public ResponseEntity save(@RequestBody EnterpriseDTO enterpriseDTO) {
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
-		ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
+		ResponseEnterpriseDTO responseEnterpriseDTO = enterprise.toResponseEnterpriseDTO();
 
 		return GenericsUtil.objectToResponse(responseEnterpriseDTO);
 	}
@@ -66,6 +66,7 @@ public class EnterpriseController {
 			return GenericsUtil.objectToResponse(message);
 		}
 	}
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise/findByLoginUserEmail", method = POST)
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserEmailDTO loginUserEmailDTO) {
@@ -74,8 +75,7 @@ public class EnterpriseController {
 			ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
 			return GenericsUtil.objectToResponse(responseEnterpriseDTO);
 		} else {
-			String message = "Enterprise not found for loginUser with email = "
-					+ loginUserEmailDTO.getLoginUserEmail();
+			String message = "Enterprise not found for loginUser with email = " + loginUserEmailDTO.getLoginUserEmail();
 			return GenericsUtil.objectToResponse(message);
 		}
 	}

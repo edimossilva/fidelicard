@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.offer.OfferDTO;
+import com.loop.fidelicard.dto.offer.ResponseOfferDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,11 +56,15 @@ public class Offer implements Serializable {
 
 	@OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
-	
+
 	public Offer(OfferDTO offerDTO) {
 		setName(offerDTO.getName());
 		setDescription(offerDTO.getDescription());
 		setQuantity(offerDTO.getQuantity());
+	}
+
+	public ResponseOfferDTO toResponseOfferDTO() {
+		return new ResponseOfferDTO(this);
 	}
 
 }

@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 
 import lombok.AllArgsConstructor;
@@ -48,7 +49,7 @@ public class Enterprise {
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "enterprise")
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")
 	private LoginUser ownerLoginUser;
 
 	public Enterprise(EnterpriseDTO enterpriseDTO) {
@@ -57,6 +58,10 @@ public class Enterprise {
 
 	public void addFinalClient(FinalClient finalCLient) {
 		getFinalClients().add(finalCLient);
+	}
+
+	public ResponseEnterpriseDTO toResponseEnterpriseDTO() {
+		return new ResponseEnterpriseDTO(this);
 	}
 
 }

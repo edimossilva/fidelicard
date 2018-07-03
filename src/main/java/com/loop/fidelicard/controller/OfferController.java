@@ -35,7 +35,6 @@ public class OfferController {
 	@RequestMapping(value = "/offer", method = POST)
 	public ResponseEntity save(@RequestBody OfferDTO offerDTO) {
 		Offer offer = offerService.save(offerDTO);
-		ResponseOfferDTO responseOfferDTO = new ResponseOfferDTO(offer);
-		return GenericsUtil.objectToResponse(responseOfferDTO);
+		return GenericsUtil.objectToResponse(offer.toResponseOfferDTO());
 	}
 }

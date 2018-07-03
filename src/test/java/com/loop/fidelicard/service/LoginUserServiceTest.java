@@ -1,4 +1,4 @@
-package com.loop.fidelicard.controller;
+package com.loop.fidelicard.service;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,20 +15,14 @@ import com.loop.fidelicard.security.model.UserRole;
 import com.loop.fidelicard.security.service.LoginUserService;
 import com.loop.fidelicard.util.PasswordUtils;
 
-//@DataJpaTest
-//@AutoConfigureBefore(DataSourceAutoConfiguration.class)
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-// @SpringBootConfiguration
-// @AutoConfigurationPackage
 public class LoginUserServiceTest {
 	@Autowired
 	LoginUserService loginUserService;
 
 	@Test
 	public void saveTest() {
-		// = mock(LoginUserService.class);
 
 		String email = "enterprise34@gmail.com";
 		String password = "secretword";
@@ -39,7 +33,7 @@ public class LoginUserServiceTest {
 		loginUserDTO.setPassword(password);
 		loginUserDTO.setUserRole(userRole);
 
-		ResponseLoginUserDTO responseLoginUserDTO = loginUserService.save(loginUserDTO);
+		ResponseLoginUserDTO responseLoginUserDTO = loginUserService.save(loginUserDTO).toResponseLoginUserDTO();
 
 		String encryptedPassword = PasswordUtils.gerarBCrypt(password);
 		LoginUser expectedLoginUser = new LoginUser();

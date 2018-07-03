@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.loop.fidelicard.security.model.LoginUser;
 
-public interface LoginUserRepository extends JpaRepository<LoginUser, Long>{
+public interface LoginUserRepository extends JpaRepository<LoginUser, Long> {
 
-	LoginUser findAllByEmail(String email);
+	LoginUser findByEmail(String email);
 
 }

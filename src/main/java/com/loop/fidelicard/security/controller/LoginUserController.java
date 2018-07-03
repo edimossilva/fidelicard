@@ -44,8 +44,9 @@ public class LoginUserController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/loginUser", method = POST)
 	public ResponseEntity save(@RequestBody LoginUserDTO loginUserDTO) {
-		ResponseLoginUserDTO responseLoginUserDTO = loginUserService.save(loginUserDTO);;
-		return GenericsUtil.objectToResponse(responseLoginUserDTO);
+		LoginUser loginUser = loginUserService.save(loginUserDTO);
+
+		return GenericsUtil.objectToResponse(loginUser.toResponseLoginUserDTO());
 	}
 
 	@SuppressWarnings("rawtypes")
