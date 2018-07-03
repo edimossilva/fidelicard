@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.loop.fidelicard.dto.card.ResponseCardDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -92,5 +93,9 @@ public class Card implements Serializable {
 		}
 		return stampQuantity % offerQuantity == 0;
 
+	}
+
+	public ResponseCardDTO toResponseCardDTO() {
+		return new ResponseCardDTO(this);
 	}
 }

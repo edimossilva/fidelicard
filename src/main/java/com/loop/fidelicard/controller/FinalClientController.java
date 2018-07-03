@@ -31,7 +31,7 @@ public class FinalClientController {
 	@RequestMapping(value = "/finalClient", method = GET)
 	public ResponseEntity index() {
 		List<ResponseFinalClientDTO> finalClientDTOList = new ArrayList<>();
-		finalClientService.findAll().forEach(fc -> finalClientDTOList.add(new ResponseFinalClientDTO(fc)));
+		finalClientService.findAll().forEach(fc -> finalClientDTOList.add(fc.toResponseFinalClientDTO()));
 
 		return GenericsUtil.objectToResponse(finalClientDTOList);
 	}
@@ -41,8 +41,7 @@ public class FinalClientController {
 	public ResponseEntity findByUniqueIdentifier(@PathVariable("id") String uniqueIdentifir) {
 
 		FinalClient finalClient = finalClientService.findByUI(uniqueIdentifir);
-		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient);
-		return GenericsUtil.objectToResponse(responseFinalClientDTO);
+		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -50,9 +49,8 @@ public class FinalClientController {
 	@RequestMapping(value = "/finalClient", method = POST)
 	public ResponseEntity save(@RequestBody FinalClientCreateDTO finalClientDTO) {
 		FinalClient finalClient = finalClientService.save(finalClientDTO);
-		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient);
 
-		return GenericsUtil.objectToResponse(responseFinalClientDTO);
+		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -60,16 +58,21 @@ public class FinalClientController {
 	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
 	public ResponseEntity existClientbyUICardInEnterprise(
 			@RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
+		
 		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
+		
 		if (finalClient != null) {
-			ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient);
 
-			return GenericsUtil.objectToResponse(responseFinalClientDTO);
+			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+		
 		} else {
+			
 			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClientUI();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
+		
 			return GenericsUtil.objectToResponse(message);
+		
 		}
 	}
 
@@ -79,8 +82,7 @@ public class FinalClientController {
 	public ResponseEntity existClientbyUI(@RequestBody UIDTO uIDTO) {
 		FinalClient finalClient = finalClientService.findByUI(uIDTO.getUniqueIdentifier());
 		if (finalClient != null) {
-			ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient);
-			return GenericsUtil.objectToResponse(responseFinalClientDTO);
+			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
 		} else {
 			String message = "User not found with UI = " + uIDTO.getUniqueIdentifier();
 			return GenericsUtil.objectToResponse(message);

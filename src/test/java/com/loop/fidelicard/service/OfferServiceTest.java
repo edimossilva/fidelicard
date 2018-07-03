@@ -2,6 +2,7 @@ package com.loop.fidelicard.service;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,11 @@ public class OfferServiceTest {
 	public void before() {
 		MyMock.createLoginUser(loginUserService);
 		MyMock.createEnterprise(loginUserService, enterpriseService);
+	}
+
+	@After
+	public void after() {
+		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL);
 	}
 
 	@Test

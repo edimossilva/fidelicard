@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
+import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -85,6 +86,10 @@ public class FinalClient implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public ResponseFinalClientDTO toResponseFinalClientDTO() {
+		return new ResponseFinalClientDTO(this);
 	}
 
 }

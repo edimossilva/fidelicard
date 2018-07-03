@@ -2,12 +2,16 @@ package com.loop.fidelicard.dto.card;
 
 import com.loop.fidelicard.model.Card;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@EqualsAndHashCode
 public class ResponseCardDTO {
 	private @NonNull Long id;
 	private @NonNull Long offerId;
