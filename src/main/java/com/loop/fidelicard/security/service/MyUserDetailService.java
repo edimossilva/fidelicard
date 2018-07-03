@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;
+import com.loop.fidelicard.util.PasswordUtils;
 
 @Service
 public class MyUserDetailService {
@@ -29,7 +30,9 @@ public class MyUserDetailService {
 		return users;
 	}
 
-	public LoginUser userDetailFromLoginUserDTO(LoginUserDTO loginUserDTO, String password) {
+	public LoginUser userDetailFromLoginUserDTO(LoginUserDTO loginUserDTO) {
+		String password = PasswordUtils.gerarBCrypt(loginUserDTO.getPassword());
+
 		return LoginUser.builder().email(loginUserDTO.getEmail()).password(password)
 				.userRole(loginUserDTO.getUserRole()).build();
 	}
@@ -39,7 +42,7 @@ public class MyUserDetailService {
 		String password = loginUser.getPassword();
 		List<GrantedAuthority> authorities = getAuthorities(loginUser.getUserRole());
 		User user = new User(email, password, authorities);
-		System.out.println(user.getUsername()+user.getPassword()+user.getAuthorities());
+		System.out.println(user.getUsername() + user.getPassword() + user.getAuthorities());
 		inMemoryUserDetailsManager.createUser(user);
 	}
 

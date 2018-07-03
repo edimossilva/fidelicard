@@ -27,10 +27,9 @@ public class LoginUserService {
 	}
 
 	public LoginUser save(LoginUserDTO loginUserDTO) {
-		String password = PasswordUtils.gerarBCrypt(loginUserDTO.getPassword());
-		LoginUser loginUser = myUserDetailService.userDetailFromLoginUserDTO(loginUserDTO, password);
+		LoginUser loginUser = myUserDetailService.userDetailFromLoginUserDTO(loginUserDTO);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
-
+		System.out.println("LOGINUSER" + loginUser);
 		return loginUserRepository.save(loginUser);
 	}
 
