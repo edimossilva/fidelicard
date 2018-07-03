@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.loop.fidelicard.model.Enterprise;
+import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,4 +55,7 @@ public class LoginUser implements Serializable {
 	@JoinColumn(name = "login_user_id", nullable = true)
 	private Enterprise enterprise;
 
+	public ResponseLoginUserDTO toResponseLoginUserDTO() {
+		return new ResponseLoginUserDTO(this);
+	}
 }
