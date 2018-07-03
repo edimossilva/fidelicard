@@ -32,12 +32,13 @@ public class LoginUserService {
 		loginUser = loginUserRepository.save(loginUser);
 		return loginUser;
 	}
-
+	public void removeCredentials(String username) {
+		configSecurity.inMemoryUserDetailsManager().deleteUser(username);
+	}
 	public LoginUser save(LoginUser loginUser) {
 		String password = PasswordUtils.gerarBCrypt(loginUser.getPassword());
 		loginUser.setPassword(password);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
-
 		return loginUserRepository.save(loginUser);
 	}
 

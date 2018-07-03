@@ -56,7 +56,6 @@ public class EnterpriseService {
 
 	public Enterprise findByOwnerLoginUserEmail(String loginUserEmail) {
 		LoginUser loginUser = loginUserService.findByEmail(loginUserEmail);
-		System.out.println("aqui = " + loginUser);
 		return enterpriseRepository.findByOwnerLoginUser(loginUser);
 	}
 

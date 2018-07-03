@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.dto.offer.ResponseOfferDTO;
+import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.security.model.LoginUser;
-import com.loop.fidelicard.security.model.UserRole;
 import com.loop.fidelicard.security.service.LoginUserService;
 
 @RunWith(SpringRunner.class)
@@ -27,32 +25,10 @@ public class OfferServiceTest {
 	@Autowired
 	OfferService offerService;
 
-	private final String email = "enterprise@gmail.com";
-
 	@Before
 	public void before() {
-		createLoginUser();
-		createEnterprise();
-	}
-
-	private void createLoginUser() {
-		String password = "secretword";
-		UserRole userRole = UserRole.ENTERPRISE;
-
-		LoginUser loginUser = LoginUser.builder().email(email).password(password).userRole(userRole).build();
-		System.out.println("ID = " + loginUserService.save(loginUser).getId());
-
-	}
-
-	private void createEnterprise() {
-		String name = "super acai";
-		Long loginUserId = loginUserService.findByEmail(email).getId();
-
-		EnterpriseDTO enterpriseDTO = new EnterpriseDTO();
-		enterpriseDTO.setName(name);
-		enterpriseDTO.setLoginUserId(loginUserId);
-
-		enterpriseService.save(enterpriseDTO);
+		MyMock.createLoginUser(loginUserService);
+		MyMock.createEnterprise(loginUserService, enterpriseService);
 	}
 
 	@Test
