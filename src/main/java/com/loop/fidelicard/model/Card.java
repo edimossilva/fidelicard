@@ -65,7 +65,7 @@ public class Card implements Serializable {
 			if (stampQuantity == 0) {
 				return 0;
 			} else {
-				return 10;
+				return offerQuantity;
 			}
 		} else {
 			return stampQuantity % offerQuantity;
