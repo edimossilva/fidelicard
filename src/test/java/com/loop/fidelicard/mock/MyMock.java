@@ -134,7 +134,7 @@ public class MyMock {
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 
-		Card card = cardService.createCardFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		Card card = cardService.createCardWithStampFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		setCard2(card);
 	}
 

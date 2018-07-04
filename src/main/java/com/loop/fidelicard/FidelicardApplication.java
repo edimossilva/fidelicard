@@ -42,7 +42,7 @@ public class FidelicardApplication {
 			}
 //			history29();
 //			history3();
-//			System.out.println(loginUserService.findAll());
+			System.out.println(loginUserService.findAll());
 		};
 	}
 

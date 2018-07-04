@@ -42,7 +42,7 @@ public class MyUserDetailService {
 		String password = loginUser.getPassword();
 		List<GrantedAuthority> authorities = getAuthorities(loginUser.getUserRole());
 		User user = new User(email, password, authorities);
-	//	System.out.println(user.getUsername() + user.getPassword() + user.getAuthorities());
+		System.out.println(user.getUsername() + user.getPassword() + user.getAuthorities());
 		inMemoryUserDetailsManager.createUser(user);
 	}
 

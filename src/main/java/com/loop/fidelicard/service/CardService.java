@@ -63,7 +63,7 @@ public class CardService {
 		return null;
 	}
 
-	public Card createCardFromClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
 		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
@@ -78,7 +78,7 @@ public class CardService {
 	}
 
 	public Boolean isBeforeLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return card.isAlmostFull();
 	}
 
@@ -87,7 +87,7 @@ public class CardService {
 	}
 
 	public Boolean isFull(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return card.isFull();
 	}
 
@@ -101,12 +101,12 @@ public class CardService {
 	}
 
 	public Card cleanCard(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		card = removeAllStamps(card);
 		return card;
 	}
 
-	private Card getCardByClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card findByClientIdAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		return finalClient.getCardByEnterprise(enterprise);

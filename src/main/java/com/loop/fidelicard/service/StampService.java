@@ -48,9 +48,12 @@ public class StampService {
 		return stamp;
 	}
 
-	public Card addStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card addStampAndSave(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-
+		return addStampAndSave(card);
+	}
+	
+	public Card addStampAndSave(Card card) {
 		addNewStamp(card);
 		return cardService.save(card);
 	}

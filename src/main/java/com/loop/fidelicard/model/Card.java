@@ -98,4 +98,8 @@ public class Card implements Serializable {
 	public ResponseCardDTO toResponseCardDTO() {
 		return new ResponseCardDTO(this);
 	}
+
+	public int getStampQuantity() {
+		return getStamps().size();
+	}
 }

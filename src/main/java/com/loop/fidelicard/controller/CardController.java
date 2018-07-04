@@ -1,8 +1,8 @@
 package com.loop.fidelicard.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/{id}", method = DELETE)
 	public ResponseEntity save(@PathVariable("id") Long id) {
@@ -55,7 +55,7 @@ public class CardController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/createWithStamp/", method = POST)
 	public ResponseEntity createWithStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = cardService.createCardFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		Card card = cardService.createCardWithStampFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
@@ -68,7 +68,7 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(isLastStamp);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/isLastStamp/", method = POST)
 	public ResponseEntity isFull(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
@@ -76,6 +76,7 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(isFull);
 	}
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/cleanCard/", method = POST)
 	public ResponseEntity cleanCard(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
@@ -84,4 +85,14 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/card/cardStatus/", method = POST)
+	public ResponseEntity findByClientIdAndEnterpriseIdDTO(
+			@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Card card = cardService.findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+	}
+
 }
