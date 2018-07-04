@@ -78,13 +78,8 @@ public class CardService {
 	}
 
 	public Boolean isBeforeLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
-		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
-		Enterprise enterprise = enterpriseService.findById(enterpriseId);
-		Offer offer = offerService.findAllByEnterprise(enterprise).get(0);
-		FinalClient finalClient = finalClientService.findById(finalClientId);
-		boolean isCardFull = finalClient.isCardAlmostFull(offer);
-		return isCardFull;
+		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		return card.isAlmostFull();
 	}
 
 	public Card save(Card card) {
@@ -92,17 +87,29 @@ public class CardService {
 	}
 
 	public Boolean isFull(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
-		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
-		Enterprise enterprise = enterpriseService.findById(enterpriseId);
-		Offer offer = offerService.findAllByEnterprise(enterprise).get(0);
-		FinalClient finalClient = finalClientService.findById(finalClientId);
-		boolean isCardFull = finalClient.isCardFull(offer);
-		return isCardFull;
+		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		return card.isFull();
 	}
 
 	public void delete(Long id) {
 		cardRepository.delete(findById(id).get());
+	}
+
+	public Card removeAllStamps(Card card) {
+		card.getStamps().clear();
+		return cardRepository.save(card);
+	}
+
+	public Card cleanCard(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		card = removeAllStamps(card);
+		return card;
+	}
+
+	private Card getCardByClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
+		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
+		return finalClient.getCardByEnterprise(enterprise);
 	}
 
 }

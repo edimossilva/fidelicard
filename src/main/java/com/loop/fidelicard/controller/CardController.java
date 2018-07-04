@@ -75,4 +75,12 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(isFull);
 	}
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/card/cleanCard/", method = POST)
+	public ResponseEntity cleanCard(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+		Card card = cardService.cleanCard(clientIDAndEnterpriseIdDTO);
+		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
+
+		return GenericsUtil.objectToResponse(responseCardDTO);
+	}
 }

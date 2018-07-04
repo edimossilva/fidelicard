@@ -36,7 +36,7 @@ public class Stamp implements Serializable {
 	private Long id;
 
 	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Card card;
 
 	@Column(name = "date", nullable = false)
