@@ -30,4 +30,8 @@ public class Response<T> {
 		this.errors = errors;
 	}
 
+	public void addErrors(String error) {
+		getErrors().add(error);
+	}
+
 }

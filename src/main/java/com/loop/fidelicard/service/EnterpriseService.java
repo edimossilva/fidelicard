@@ -1,8 +1,14 @@
 package com.loop.fidelicard.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loop.fidelicard.controller.validator.MyValidator;
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
@@ -61,5 +67,25 @@ public class EnterpriseService {
 
 	public void save(Enterprise enterprise) {
 		enterpriseRepository.save(enterprise);
+	}
+
+	public List<String> errorsToSave(@Valid EnterpriseDTO enterpriseDTO) {
+
+		List<String> errors = new ArrayList<String>();
+
+		String enterpriseNotUniqueNameMessage = "Ja existe empresa com o nome [" + enterpriseDTO.getName() + "]";
+		Enterprise enterprise = findByName(enterpriseDTO.getName());
+
+		String loginUseNotFoundMessage = "nao existe loginUser com o id [" + enterpriseDTO.getLoginUserId() + "]";
+		LoginUser loginUser = loginUserService.findById(enterpriseDTO.getLoginUserId());
+
+		MyValidator.addErrorsWhenNotNull(errors, enterpriseNotUniqueNameMessage, enterprise);
+		MyValidator.addErrorsWhenNull(errors, loginUseNotFoundMessage, loginUser);
+
+		return errors;
+	}
+
+	private Enterprise findByName(String name) {
+		return enterpriseRepository.findByName(name);
 	}
 }

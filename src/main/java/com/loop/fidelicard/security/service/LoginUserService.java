@@ -1,6 +1,7 @@
 package com.loop.fidelicard.security.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +33,11 @@ public class LoginUserService {
 		loginUser = loginUserRepository.save(loginUser);
 		return loginUser;
 	}
+
 	public void removeCredentials(String username) {
 		configSecurity.inMemoryUserDetailsManager().deleteUser(username);
 	}
+
 	public LoginUser save(LoginUser loginUser) {
 		String password = PasswordUtils.gerarBCrypt(loginUser.getPassword());
 		loginUser.setPassword(password);
@@ -51,7 +54,11 @@ public class LoginUserService {
 	}
 
 	public LoginUser findById(Long loginUserId) {
-		return loginUserRepository.findById(loginUserId).get();
+		Optional<LoginUser> loginUser = loginUserRepository.findById(loginUserId);
+		if (loginUser.isPresent()) {
+			return loginUser.get();
+		}
+		return null;
 	}
 
 	public void update(LoginUser loginUser) {

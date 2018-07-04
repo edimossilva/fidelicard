@@ -9,4 +9,6 @@ public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
 
 	Enterprise findByOwnerLoginUser(LoginUser loginUser);
 
+	Enterprise findByName(String name);
+
 }

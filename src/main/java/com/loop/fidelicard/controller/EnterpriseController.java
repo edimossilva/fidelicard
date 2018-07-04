@@ -6,8 +6,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,9 +40,18 @@ public class EnterpriseController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise", method = POST)
-	public ResponseEntity save(@RequestBody EnterpriseDTO enterpriseDTO) {
+	public ResponseEntity save(@Valid @RequestBody EnterpriseDTO enterpriseDTO, BindingResult result) {
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+		
+		List<String> errors = enterpriseService.errorsToSave(enterpriseDTO);
+		if(!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+		
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
-
+		
 		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 	}
 
