@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.loop.fidelicard.dto.offer.OfferDTO;
@@ -18,6 +20,8 @@ import com.loop.fidelicard.security.service.LoginUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+
 public class OfferServiceTest {
 	@Autowired
 	LoginUserService loginUserService;
@@ -28,13 +32,13 @@ public class OfferServiceTest {
 
 	@Before
 	public void before() {
-		MyMock.createLoginUser(loginUserService);
-		MyMock.createEnterprise(loginUserService, enterpriseService);
+		MyMock.createLoginUser1(loginUserService);
+		MyMock.createEnterprise1(loginUserService, enterpriseService);
 	}
 
 	@After
 	public void after() {
-		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL);
+		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL_1);
 	}
 
 	@Test
@@ -42,7 +46,7 @@ public class OfferServiceTest {
 		String name = "compre 8 ganhe 1";
 		String description = "na compra de 8 acais o proximo eh de graca :)";
 		Integer quantity = 8;
-		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail("enterprise@gmail.com");
+		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(MyMock.LOGIN_USER_EMAIL_1);
 		Long enterpriseId = enterprise.getId();
 
 		OfferDTO offerDTO = new OfferDTO();

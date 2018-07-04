@@ -34,21 +34,21 @@ public class EnterpriseServiceTest {
 
 	@Before
 	public void before() {
-		MyMock.createLoginUser(loginUserService);
-		MyMock.createEnterprise(loginUserService, enterpriseService);
-		MyMock.createOffer(offerService, enterpriseService);
+		MyMock.createLoginUser1(loginUserService);
+		MyMock.createEnterprise1(loginUserService, enterpriseService);
+		MyMock.createOffer1(offerService, enterpriseService);
 	}
 
 	@After
 	public void after() {
-		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL);
+		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL_1);
 	}
 
 	@Test
 	public void saveTest() {
 
 		String name = "super acai";
-		Long loginUserId = loginUserService.findByEmail(MyMock.LOGIN_USER_EMAIL).getId();
+		Long loginUserId = loginUserService.findByEmail(MyMock.LOGIN_USER_EMAIL_1).getId();
 		LoginUser loginUser = loginUserService.findById(loginUserId);
 
 		EnterpriseDTO enterpriseDTO = new EnterpriseDTO();
@@ -69,7 +69,7 @@ public class EnterpriseServiceTest {
 	public void findByOwnerLoginUserEmail() {
 
 		LoginUserEmailDTO loginUserEmailDTO = new LoginUserEmailDTO();
-		loginUserEmailDTO.setLoginUserEmail(MyMock.LOGIN_USER_EMAIL);
+		loginUserEmailDTO.setLoginUserEmail(MyMock.LOGIN_USER_EMAIL_1);
 
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
 
@@ -80,5 +80,7 @@ public class EnterpriseServiceTest {
 
 		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseDTO());
 	}
+
+	
 
 }

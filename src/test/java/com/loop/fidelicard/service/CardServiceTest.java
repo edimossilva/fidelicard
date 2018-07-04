@@ -35,11 +35,16 @@ public class CardServiceTest {
 
 	@Before
 	public void before() {
-		MyMock.createLoginUser(loginUserService);
-		MyMock.createEnterprise(loginUserService, enterpriseService);
-		MyMock.createOffer(offerService, enterpriseService);
-		MyMock.createFinalClient(finalClientService);
-
+		MyMock.createLoginUser1(loginUserService);
+		MyMock.createEnterprise1(loginUserService, enterpriseService);
+		MyMock.createOffer1(offerService, enterpriseService);
+		MyMock.createFinalClient1(finalClientService);
+		MyMock.createLoginUser2(loginUserService);
+		MyMock.createEnterprise2(loginUserService, enterpriseService);
+		MyMock.createOffer2(offerService, enterpriseService);
+		MyMock.createFinalClient2(finalClientService);
+		
+		MyMock.createCard2(cardService);
 	}
 
 	@Test
@@ -59,8 +64,10 @@ public class CardServiceTest {
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
 
+	
+
 	@After
 	public void after() {
-		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL);
+		loginUserService.removeCredentials(MyMock.LOGIN_USER_EMAIL_1);
 	}
 }

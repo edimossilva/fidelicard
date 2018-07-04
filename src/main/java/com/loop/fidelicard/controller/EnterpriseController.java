@@ -30,7 +30,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/enterprise", method = GET)
 	public ResponseEntity index() {
 		List<ResponseEnterpriseDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseDTO>();
-		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(new ResponseEnterpriseDTO(e)));
+		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(e.toResponseEnterpriseDTO()));
 
 		return GenericsUtil.objectToResponse(enterpriseDTOList);
 	}
@@ -39,18 +39,15 @@ public class EnterpriseController {
 	@RequestMapping(value = "/enterprise", method = POST)
 	public ResponseEntity save(@RequestBody EnterpriseDTO enterpriseDTO) {
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
-		ResponseEnterpriseDTO responseEnterpriseDTO = enterprise.toResponseEnterpriseDTO();
 
-		return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise/addFinalClientToEnterprise", method = POST)
 	public ResponseEntity addFinalClientToEnterprise(@RequestBody FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
 		Enterprise enterprise = enterpriseService.addFinalClientToEnterprise(enterpriseFinalClientDTO);
-		ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
-
-		return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -58,8 +55,7 @@ public class EnterpriseController {
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserIdDTO enterpriseFinalClientDTO) {
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUser(enterpriseFinalClientDTO.getLoginUserId());
 		if (enterprise != null) {
-			ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
-			return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 		} else {
 			String message = "Enterprise not found for loginUser with id = "
 					+ enterpriseFinalClientDTO.getLoginUserId();
@@ -68,12 +64,11 @@ public class EnterpriseController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise/findByLoginUserEmail", method = POST)
+	@RequestMapping(value = "/enterprise/findByOwnerLoginUserEmail", method = POST)
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserEmailDTO loginUserEmailDTO) {
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
 		if (enterprise != null) {
-			ResponseEnterpriseDTO responseEnterpriseDTO = new ResponseEnterpriseDTO(enterprise);
-			return GenericsUtil.objectToResponse(responseEnterpriseDTO);
+			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 		} else {
 			String message = "Enterprise not found for loginUser with email = " + loginUserEmailDTO.getLoginUserEmail();
 			return GenericsUtil.objectToResponse(message);

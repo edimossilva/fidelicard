@@ -43,6 +43,7 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(responseCardDTO);
 	}
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/{id}", method = DELETE)
 	public ResponseEntity save(@PathVariable("id") Long id) {

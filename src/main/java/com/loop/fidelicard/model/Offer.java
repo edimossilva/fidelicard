@@ -47,7 +47,7 @@ public class Offer implements Serializable {
 	@Column(name = "description", nullable = false, unique = true)
 	private String description;
 
-	@Column(name = "quantity", nullable = false, unique = true)
+	@Column(name = "quantity", nullable = false)
 	private Integer quantity;
 
 	@JsonIgnore
