@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class EnterpriseController {
 	@Autowired
 	private EnterpriseService enterpriseService;
@@ -38,6 +40,7 @@ public class EnterpriseController {
 		return GenericsUtil.objectToResponse(enterpriseDTOList);
 	}
 
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise", method = POST)
 	public ResponseEntity save(@Valid @RequestBody EnterpriseDTO enterpriseDTO, BindingResult result) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,23 @@ import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class CardController {
 	@Autowired
 	private CardService cardService;
+
+	@RequestMapping(value = "/admin/test", method = GET)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	public String test() {
+
+		return "hello";
+	}
+
+	@RequestMapping(value = "/admin/test2", method = GET)
+	public String test2() {
+
+		return "hello2";
+	}
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card", method = GET)

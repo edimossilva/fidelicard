@@ -41,11 +41,11 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
-				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**");
-	}
+//	@Override
+//	public void configure(WebSecurity web) throws Exception {
+//		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
+//				"/swagger-ui.html", "/webjars/**", "/swagger-resources/**");
+//	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -60,6 +60,9 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**").hasAuthority("ROLE_ADMIN");
+		// http.authorizeRequests().antMatchers("/**").hasRole("ADMIN");
+		http.authorizeRequests()
+		.anyRequest().denyAll();
+		
 	}
 }

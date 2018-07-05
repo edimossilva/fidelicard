@@ -29,6 +29,7 @@ import com.loop.fidelicard.service.FinalClientService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class FinalClientController {
 	@Autowired
 	private FinalClientService finalClientService;
@@ -51,7 +52,6 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient", method = POST)
 	public ResponseEntity save(@RequestBody FinalClientCreateDTO finalClientDTO) {
 		FinalClient finalClient = finalClientService.save(finalClientDTO);
@@ -60,7 +60,6 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
 	public ResponseEntity existClientbyUICardInEnterprise(
 			@RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
@@ -83,7 +82,7 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	// @PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientByUIAndEnterpriseOwnerEmail", method = POST)
 	public ResponseEntity existClientByUIAndEnterpriseOwnerEmail(
 			@Valid @RequestBody ClientUIAndEnterpriseOwnerEmailDTO dto, BindingResult result) {
@@ -104,6 +103,7 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/createWithStamp", method = POST)
 	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientAndEnterpriseOwnerEmailDTO dto,
 			BindingResult result) {
