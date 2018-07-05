@@ -1,6 +1,7 @@
 package com.loop.fidelicard.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.After;
@@ -13,10 +14,13 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.mock.MyMock;
+import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.security.service.LoginUserService;
 
@@ -41,7 +45,7 @@ public class FinalClientServiceTest {
 		MyMock.createLoginUser1(loginUserService);
 		MyMock.createEnterprise1(loginUserService, enterpriseService);
 		MyMock.createOffer1(offerService, enterpriseService);
-		
+
 		MyMock.createLoginUser2(loginUserService);
 		MyMock.createEnterprise2(loginUserService, enterpriseService);
 		MyMock.createOffer2(offerService, enterpriseService);
@@ -56,7 +60,7 @@ public class FinalClientServiceTest {
 	}
 
 	@Test
-	public void save() {
+	public void testSave() {
 		FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
 		String email = "clientemail@gmail.com";
 		String uniqueIdentifier = "54321";
@@ -75,7 +79,7 @@ public class FinalClientServiceTest {
 	}
 
 	@Test
-	public void existClientbyUICardInEnterpriseWHENnotExist() {
+	public void testExistClientbyUICardInEnterpriseWHENnotExist() {
 		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
 		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 		clientUIAndEnterpriseIdDTO.setFinalClientUI("anything");
@@ -86,7 +90,7 @@ public class FinalClientServiceTest {
 	}
 
 	@Test
-	public void existClientbyUICardInEnterpriseWHENexist() {
+	public void testExistClientbyUICardInEnterpriseWHENexist() {
 		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
 		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		clientUIAndEnterpriseIdDTO.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
@@ -99,5 +103,63 @@ public class FinalClientServiceTest {
 		expectedResponseFinalClientDTO.setUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
 
 		assertEquals(expectedResponseFinalClientDTO, finalClient.toResponseFinalClientDTO());
+	}
+
+	@Test
+	public void testFindClientByUIAndEnterpriseOwnerEmailWhenHasNotOwnerEmailAndUI() {
+		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
+		dto.setEnterpriseOwnerEmail("unknown owner email");
+		dto.setFinalClientUI("unknown client UI");
+		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(finalClient);
+	}
+
+	@Test
+	public void testFindClientByUIAndEnterpriseOwnerEmailWhenHasNotOwnerEmailAndHasUI() {
+		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
+		dto.setEnterpriseOwnerEmail("unknown owner email");
+		dto.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
+		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(finalClient);
+	}
+
+	@Test
+	public void testFindClientByUIAndEnterpriseOwnerEmailWhenHasOwnerEmailAndHasNotUI() {
+		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
+		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUser().getEmail());
+		dto.setFinalClientUI("unknown client UI");
+		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(finalClient);
+	}
+
+	@Test
+	public void testFindClientByUIAndEnterpriseOwnerEmailWhenHasOwnerEmailAndHasUI() {
+		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
+		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUserEmail());
+		dto.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
+		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		FinalClient expectedFinalClient = MyMock.getFinalClient2();
+		assertEquals(expectedFinalClient, finalClient);
+	}
+
+	@Test
+	public void testCreateWithStamp() {
+		String newClientEmail = "newClient@gmail.com";
+		String uniqueIdentifier = "newUniqueIdentifier";
+
+		FinalClientAndEnterpriseOwnerEmailDTO dto = new FinalClientAndEnterpriseOwnerEmailDTO();
+		dto.setEmail(newClientEmail);
+		dto.setUniqueIdentifier(uniqueIdentifier);
+		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUserEmail());
+		
+		Card card = finalClientService.createWithStamp(dto);
+		
+		assertNotNull(card);
+		
+		assertEquals(1, card.getStampQuantity());
+		assertNotNull(card.getFinalClient().getId());
+		assertEquals(newClientEmail, card.getFinalClient().getEmail());
+		assertEquals(uniqueIdentifier, card.getFinalClient().getUniqueIdentifier());
+		
 	}
 }

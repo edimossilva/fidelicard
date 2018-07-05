@@ -64,4 +64,8 @@ public class Enterprise {
 		return new ResponseEnterpriseDTO(this);
 	}
 
+	public String getOwnerLoginUserEmail() {
+		return getOwnerLoginUser().getEmail();
+	}
+
 }
