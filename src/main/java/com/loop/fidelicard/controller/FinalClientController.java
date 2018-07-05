@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.UIDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseOwnerEmailDTO;
+import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.service.FinalClientService;
 import com.loop.fidelicard.util.GenericsUtil;
@@ -54,25 +57,59 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/finalClient/createWithStamp", method = POST)
+	public ResponseEntity createWithStamp(
+			@RequestBody FinalClientAndEnterpriseOwnerEmailDTO finalClientAndEnterpriseOwnerEmailDTO) {
+		Card card = finalClientService.createWithStamp(finalClientAndEnterpriseOwnerEmailDTO);
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+	}
+
+	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
 	public ResponseEntity existClientbyUICardInEnterprise(
 			@RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
-		
+
 		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
-		
+
 		if (finalClient != null) {
 
 			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
-		
+
 		} else {
-			
+
 			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClientUI();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
-		
+
 			return GenericsUtil.objectToResponse(message);
-		
+
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	// @PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/finalClient/existClientByUIAndEnterpriseOwnerEmail", method = POST)
+	public ResponseEntity existClientByUIAndEnterpriseOwnerEmail(
+			@RequestBody ClientUIAndEnterpriseOwnerEmailDTO clientUIAndEnterpriseOwnerEmailDTO) {
+
+		FinalClient finalClient = finalClientService
+				.findClientByUIAndEnterpriseOwnerEmail(clientUIAndEnterpriseOwnerEmailDTO);
+
+		if (finalClient != null) {
+
+			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+
+		} else {
+
+			String notFoundByUI = "User not found with UI = " + clientUIAndEnterpriseOwnerEmailDTO.getFinalClientUI();
+			String notFoundByEnterpriseId = " and enterprise email = "
+					+ clientUIAndEnterpriseOwnerEmailDTO.getEnterpriseOwnerEmail();
+			String message = notFoundByUI + notFoundByEnterpriseId;
+
+			return GenericsUtil.objectToResponse(message);
+
 		}
 	}
 

@@ -45,7 +45,7 @@ public class EnterpriseServiceTest {
 	}
 
 	@Test
-	public void saveTest() {
+	public void testSave() {
 
 		String name = "super acai";
 		Long loginUserId = loginUserService.findByEmail(MyMock.LOGIN_USER_EMAIL_1).getId();

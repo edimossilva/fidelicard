@@ -112,4 +112,12 @@ public class CardService {
 		return finalClient.getCardByEnterprise(enterprise);
 	}
 
+	public Card createCardWithStampFromFinalClientAndOffer(FinalClient finalClient, Offer offer) {
+		Card card = new Card(finalClient, offer);
+		card = cardRepository.save(card);
+		stampService.addNewStamp(card);
+
+		return card;
+	}
+
 }

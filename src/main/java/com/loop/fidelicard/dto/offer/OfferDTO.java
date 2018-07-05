@@ -1,15 +1,21 @@
 package com.loop.fidelicard.dto.offer;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class OfferDTO {
-	private @NonNull String name;
-	private @NonNull String description;
-	private @NonNull Integer quantity;
-	private @NonNull Long enterpriseId;
-	
+	@NotEmpty(message = "O atributo [name] da oferta nao pode ser vazio")
+	private String name;
+	@NotEmpty(message = "O atributo [description] da oferta nao pode ser vazio")
+	private String description;
+	@NotNull(message = "O atributo [quantity] da oferta nao pode ser vazio")
+	private Integer quantity;
+	@NotNull(message = "O atributo [enterpriseId] da oferta nao pode ser vazio")
+	private Long enterpriseId;
+
 }

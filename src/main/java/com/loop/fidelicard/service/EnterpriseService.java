@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.controller.validator.MyValidator;
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
@@ -25,6 +24,8 @@ public class EnterpriseService {
 	private FinalClientService finalClientService;
 	@Autowired
 	private LoginUserService loginUserService;
+	@Autowired
+	private ErrorsService eS;
 
 	public Iterable<Enterprise> findAll() {
 		return enterpriseRepository.findAll();
@@ -73,19 +74,18 @@ public class EnterpriseService {
 
 		List<String> errors = new ArrayList<String>();
 
-		String enterpriseNotUniqueNameMessage = "Ja existe empresa com o nome [" + enterpriseDTO.getName() + "]";
-		Enterprise enterprise = findByName(enterpriseDTO.getName());
-
-		String loginUseNotFoundMessage = "nao existe loginUser com o id [" + enterpriseDTO.getLoginUserId() + "]";
-		LoginUser loginUser = loginUserService.findById(enterpriseDTO.getLoginUserId());
-
-		MyValidator.addErrorsWhenNotNull(errors, enterpriseNotUniqueNameMessage, enterprise);
-		MyValidator.addErrorsWhenNull(errors, loginUseNotFoundMessage, loginUser);
+		eS.addErrorsIfEnterpriseByNameExist(enterpriseDTO.getName(), errors);
+		eS.addErrorsIfLoginUserByIdNotExist(enterpriseDTO, errors);
 
 		return errors;
 	}
 
-	private Enterprise findByName(String name) {
+	public Enterprise findByName(String name) {
 		return enterpriseRepository.findByName(name);
+	}
+
+	public Enterprise findByOwnerEmail(String enterpriseOwnerEmail) {
+		LoginUser loginUser = loginUserService.findByEmail(enterpriseOwnerEmail);
+		return enterpriseRepository.findByOwnerLoginUser(loginUser);
 	}
 }

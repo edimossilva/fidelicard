@@ -11,4 +11,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 	List<Offer> findAllByEnterprise(Enterprise enterprise);
 
+	Offer findByDescription(String offerDescription);
+
 }

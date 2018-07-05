@@ -1,6 +1,9 @@
 package com.loop.fidelicard.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class OfferService {
 	private EnterpriseService enterpriseService;
 	@Autowired
 	private CardService cardService;
+	@Autowired
+	private ErrorsService eS;
 
 	public Iterable<Offer> findAll() {
 		return offerRepository.findAll();
@@ -42,6 +47,10 @@ public class OfferService {
 		return offerRepository.findById(offerId).get();
 	}
 
+	public Offer findByDescriprion(String offerDescription) {
+		return offerRepository.findByDescription(offerDescription);
+	}
+
 	public List<Offer> findAllByEnterprise(Enterprise enterprise) {
 		return offerRepository.findAllByEnterprise(enterprise);
 	}
@@ -59,4 +68,11 @@ public class OfferService {
 	public void save(Offer offer) {
 		offerRepository.save(offer);
 	}
+
+	public List<String> errorsToSave(@Valid OfferDTO offerDTO) {
+		List<String> errors = new ArrayList<String>();
+		eS.addErrorsIfOfferByDescriptionExist(offerDTO.getDescription(), errors);
+		return errors;
+	}
+
 }

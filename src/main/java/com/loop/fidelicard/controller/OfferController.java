@@ -6,8 +6,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +36,14 @@ public class OfferController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/offer", method = POST)
-	public ResponseEntity save(@RequestBody OfferDTO offerDTO) {
+	public ResponseEntity save(@Valid @RequestBody OfferDTO offerDTO, BindingResult result) {
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+		List<String> errors = offerService.errorsToSave(offerDTO);
+		if(!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
 		Offer offer = offerService.save(offerDTO);
 		return GenericsUtil.objectToResponse(offer.toResponseOfferDTO());
 	}
