@@ -1,6 +1,6 @@
 package com.loop.fidelicard.dto.hybrid;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,6 +10,9 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class ClientUIAndEnterpriseOwnerEmailDTO {
-	private @NotNull String finalClientUI;
-	private @NotNull String enterpriseOwnerEmail;
+	@NotEmpty(message = "O atributo [finalClientUI] nao pode ser vazio")
+	private String finalClientUI;
+	@NotEmpty(message = "O atributo [enterpriseOwnerEmail] nao pode ser vazio")
+	private String enterpriseOwnerEmail;
+
 }

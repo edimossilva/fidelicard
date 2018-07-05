@@ -75,7 +75,7 @@ public class EnterpriseService {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfEnterpriseByNameExist(enterpriseDTO.getName(), errors);
-		eS.addErrorsIfLoginUserByIdNotExist(enterpriseDTO, errors);
+		eS.addErrorsIfLoginUserByIdNotExist(enterpriseDTO.getLoginUserId(), errors);
 
 		return errors;
 	}

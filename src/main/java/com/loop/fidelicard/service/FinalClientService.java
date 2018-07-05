@@ -1,6 +1,9 @@
 package com.loop.fidelicard.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class FinalClientService {
 	private EnterpriseService enterpriseService;
 	@Autowired
 	private CardService cardService;
+	@Autowired
+	private ErrorsService eS;
 
 	public Iterable<FinalClient> findAll() {
 		return finalClientRepository.findAll();
@@ -33,7 +38,9 @@ public class FinalClientService {
 	public FinalClient findById(Long finalClientId) {
 		return finalClientRepository.findById(finalClientId).get();
 	}
-
+	public FinalClient findByEmail(String email) {
+		return finalClientRepository.findByEmail(email);
+	}
 	public FinalClient getFromDTO(FinalClientCreateDTO finalClientDTO) {
 		return finalClientRepository.findByUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
 	}
@@ -91,5 +98,25 @@ public class FinalClientService {
 		Card card = cardService.createCardWithStampFromFinalClientAndOffer(finalClient, offer);
 		return card;
 	}
+
+	public List<String> errorsToExistClientByUIAndEnterpriseOwnerEmail(@Valid ClientUIAndEnterpriseOwnerEmailDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		eS.addErrosIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
+		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+
+		return errors;
+	}
+
+	public List<String> errorsToCreateWithStamp(@Valid FinalClientAndEnterpriseOwnerEmailDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		
+		eS.addErrosIfFinalClientByUIExist(dto.getUniqueIdentifier(), errors);
+		eS.addErrosIfFinalClientByEmailExist(dto.getEmail(),errors);
+		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+
+		return errors;
+	}
+
+	
 
 }

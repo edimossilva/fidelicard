@@ -6,9 +6,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,15 +60,6 @@ public class FinalClientController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/finalClient/createWithStamp", method = POST)
-	public ResponseEntity createWithStamp(
-			@RequestBody FinalClientAndEnterpriseOwnerEmailDTO finalClientAndEnterpriseOwnerEmailDTO) {
-		Card card = finalClientService.createWithStamp(finalClientAndEnterpriseOwnerEmailDTO);
-
-		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
-	}
-
-	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
 	public ResponseEntity existClientbyUICardInEnterprise(
@@ -92,25 +86,40 @@ public class FinalClientController {
 	// @PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientByUIAndEnterpriseOwnerEmail", method = POST)
 	public ResponseEntity existClientByUIAndEnterpriseOwnerEmail(
-			@RequestBody ClientUIAndEnterpriseOwnerEmailDTO clientUIAndEnterpriseOwnerEmailDTO) {
+			@Valid @RequestBody ClientUIAndEnterpriseOwnerEmailDTO dto, BindingResult result) {
 
-		FinalClient finalClient = finalClientService
-				.findClientByUIAndEnterpriseOwnerEmail(clientUIAndEnterpriseOwnerEmailDTO);
-
-		if (finalClient != null) {
-
-			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
-
-		} else {
-
-			String notFoundByUI = "User not found with UI = " + clientUIAndEnterpriseOwnerEmailDTO.getFinalClientUI();
-			String notFoundByEnterpriseId = " and enterprise email = "
-					+ clientUIAndEnterpriseOwnerEmailDTO.getEnterpriseOwnerEmail();
-			String message = notFoundByUI + notFoundByEnterpriseId;
-
-			return GenericsUtil.objectToResponse(message);
-
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
 		}
+
+		List<String> errors = finalClientService.errorsToExistClientByUIAndEnterpriseOwnerEmail(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+
+		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+
+	}
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value = "/finalClient/createWithStamp", method = POST)
+	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientAndEnterpriseOwnerEmailDTO dto,
+			BindingResult result) {
+
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = finalClientService.errorsToCreateWithStamp(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		Card card = finalClientService.createWithStamp(dto);
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -8,4 +8,6 @@ public interface FinalClientRepository extends JpaRepository<FinalClient, Long> 
 
 	FinalClient findByUniqueIdentifier(String uniqueIdentifier);
 
+	FinalClient findByEmail(String email);
+
 }
