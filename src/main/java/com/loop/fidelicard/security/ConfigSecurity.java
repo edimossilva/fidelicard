@@ -61,7 +61,7 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.authorizeRequests().antMatchers("/**").hasRole("ADMIN");
-		http.authorizeRequests().anyRequest().denyAll();
+		http.cors().and().authorizeRequests().anyRequest().denyAll();
 
 	}
 }
