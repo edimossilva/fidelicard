@@ -36,12 +36,19 @@ public class ErrorsService {
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, enterprise);
 	}
 
-	
 	public void addErrosIfEnterprisByOwnerEmailFinalClientNotExist(String enterpriseOwnerEmail, List<String> errors) {
 		String errorMessage = "Nao existe empresa com dono [" + enterpriseOwnerEmail + "]";
 		Enterprise enterprise = enterpriseService.findByOwnerEmail(enterpriseOwnerEmail);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, enterprise);
 	}
+
+	public void addErrosIfEnterprisByIdNotExist(Long enterpriseId, List<String> errors) {
+		String errorMessage = "Nao existe empresa com id [" + enterpriseId + "]";
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		MyValidator.addErrorsWhenNull(errors, errorMessage, enterprise);
+		
+	}
+
 
 	public void addErrorsIfOfferByDescriptionExist(String offerDescription, List<String> errors) {
 		String errorMessage = "Ja existe oferta com o descricao [" + offerDescription + "]";
@@ -62,11 +69,17 @@ public class ErrorsService {
 
 	}
 
+	public void addErrosIfFinalClientByIdNotExist(Long finalClientId, List<String> errors) {
+		String errorMessage = "Nao existe cliente com o id [" + finalClientId + "]";
+		FinalClient finalClient = finalClientService.findById(finalClientId);
+		MyValidator.addErrorsWhenNull(errors, errorMessage, finalClient);
+	}
+
 	public void addErrosIfFinalClientByEmailExist(String email, List<String> errors) {
 		String errorMessage = "Ja existe cliente com o email [" + email + "]";
 		FinalClient finalClient = finalClientService.findByEmail(email);
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, finalClient);
 	}
-	
 
+	
 }

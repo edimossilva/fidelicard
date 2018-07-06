@@ -7,9 +7,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,12 +96,24 @@ public class CardController {
 	}
 
 	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/card/cleanCard/", method = POST)
-	public ResponseEntity cleanCard(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = cardService.cleanCard(clientIDAndEnterpriseIdDTO);
-		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
+	public ResponseEntity cleanCard(@Valid @RequestBody ClientIDAndEnterpriseIdDTO dto,
+			BindingResult result) {
 
-		return GenericsUtil.objectToResponse(responseCardDTO);
+		
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = cardService.errorsTocleanCard(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		Card card = cardService.cleanCard(dto);
+		
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
 
 	@SuppressWarnings("rawtypes")

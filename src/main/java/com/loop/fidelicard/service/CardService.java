@@ -1,7 +1,10 @@
 package com.loop.fidelicard.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class CardService {
 	@Autowired
 	private StampService stampService;
 
+	@Autowired
+	private ErrorsService eS;
+
 	public Iterable<Card> findAll() {
 		return cardRepository.findAll();
 	}
@@ -47,7 +53,6 @@ public class CardService {
 		return cardRepository.findByFinalClientAndOffer(finalClient, offer);
 	}
 
-	
 	public Card createCardFromCardDTO(CardDTO cardDTO) {
 		FinalClient finalClient = finalClientService.findById(cardDTO.getFinalClientId());
 		Offer offer = offerService.findById(cardDTO.getOfferId());
@@ -64,7 +69,8 @@ public class CardService {
 		return null;
 	}
 
-	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(
+			ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
 		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
@@ -119,6 +125,15 @@ public class CardService {
 		stampService.addNewStamp(card);
 
 		return card;
+	}
+
+	public List<String> errorsTocleanCard(@Valid ClientIDAndEnterpriseIdDTO dto) {
+		List<String> errors = new ArrayList<String>();
+
+		eS.addErrosIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
+		eS.addErrosIfEnterprisByIdNotExist(dto.getEnterpriseId(), errors);
+
+		return errors;
 	}
 
 }

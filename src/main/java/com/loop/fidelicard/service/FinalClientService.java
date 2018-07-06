@@ -2,6 +2,7 @@ package com.loop.fidelicard.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -36,7 +37,11 @@ public class FinalClientService {
 	}
 
 	public FinalClient findById(Long finalClientId) {
-		return finalClientRepository.findById(finalClientId).get();
+		Optional<FinalClient> finalClient = finalClientRepository.findById(finalClientId);
+		if(finalClient.isPresent()) {
+			return finalClient.get();
+		}
+		return null;
 	}
 	public FinalClient findByEmail(String email) {
 		return finalClientRepository.findByEmail(email);
@@ -108,7 +113,9 @@ public class FinalClientService {
 		return errors;
 	}
 
-	public List<String> errorsToCreateWithStamp(@Valid FinalClientAndEnterpriseOwnerEmailDTO dto) {
+	
+	
+	public List<String> errorsToCreateWithStamp( FinalClientAndEnterpriseOwnerEmailDTO dto) {
 		List<String> errors = new ArrayList<String>();
 		
 		eS.addErrosIfFinalClientByUIExist(dto.getUniqueIdentifier(), errors);

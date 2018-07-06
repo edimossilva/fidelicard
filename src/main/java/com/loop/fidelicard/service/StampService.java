@@ -1,6 +1,9 @@
 package com.loop.fidelicard.service;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,8 @@ public class StampService {
 	private CardService cardService;
 	@Autowired
 	private FinalClientService finalClientService;
-
+	@Autowired
+	private ErrorsService eS;
 	@Autowired
 	private EnterpriseService enterpriseService;
 
@@ -86,6 +90,16 @@ public class StampService {
 
 	public void delete(Stamp stamp) {
 		stampRepository.delete(stamp);
+	}
+
+	public List<String> errorsToAddStampByFinalClientIdAndEnterpriseOwnerEmail(
+			@Valid ClientIdAndEnterpriseOwnerEmailDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		
+		eS.addErrosIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
+		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+
+		return errors;
 	}
 
 }

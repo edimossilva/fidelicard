@@ -2,6 +2,7 @@ package com.loop.fidelicard.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -52,7 +53,11 @@ public class EnterpriseService {
 	}
 
 	public Enterprise findById(Long enterpriseId) {
-		return enterpriseRepository.findById(enterpriseId).get();
+		Optional<Enterprise> enterprise = enterpriseRepository.findById(enterpriseId);
+		if (enterprise.isPresent()) {
+			return enterprise.get();
+		}
+		return null;
 	}
 
 	public Enterprise findByOwnerLoginUser(Long loginUserId) {

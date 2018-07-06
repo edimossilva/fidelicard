@@ -73,6 +73,7 @@ public class FinalClientController {
 
 		} else {
 
+			
 			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClientUI();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
@@ -97,6 +98,7 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
+		
 		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());

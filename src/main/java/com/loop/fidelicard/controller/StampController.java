@@ -6,9 +6,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,13 +58,24 @@ public class StampController {
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/stamp/addStampByFinalClientIdAndEnterpriseOwnerEmail/", method = POST)
-	public ResponseEntity addStampByFinalClientIdAndEnterpriseOwnerEmail(@RequestBody ClientIdAndEnterpriseOwnerEmailDTO dto) {
-		Card card = stampService.addStampAndSave(dto);
+	public ResponseEntity addStampByFinalClientIdAndEnterpriseOwnerEmail(
+			@Valid @RequestBody ClientIdAndEnterpriseOwnerEmailDTO dto, BindingResult result) {
 
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = stampService.errorsToAddStampByFinalClientIdAndEnterpriseOwnerEmail(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		
+		Card card = stampService.addStampAndSave(dto);
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
 }

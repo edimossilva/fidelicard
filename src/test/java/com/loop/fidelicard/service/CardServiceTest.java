@@ -70,9 +70,12 @@ public class CardServiceTest {
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer().getId());
 		expectedResponseCardDTO.setAtualQuantity(1);
 		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer().getQuantity());
+		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise().getId());
+
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
 
+	
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWith2Stamps() {
 		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
@@ -90,6 +93,7 @@ public class CardServiceTest {
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualQuantity(2);
 		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer2().getQuantity());
+		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
 
@@ -108,12 +112,11 @@ public class CardServiceTest {
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
 		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
-
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer2().getQuantity());
-
+		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
 
