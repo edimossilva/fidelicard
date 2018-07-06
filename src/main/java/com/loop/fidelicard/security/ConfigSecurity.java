@@ -1,5 +1,6 @@
 package com.loop.fidelicard.security;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.loop.fidelicard.security.service.MyUserDetailService;
 
@@ -63,5 +67,15 @@ public class ConfigSecurity extends WebSecurityConfigurerAdapter {
 		// http.authorizeRequests().antMatchers("/**").hasRole("ADMIN");
 		http.cors().and().authorizeRequests().anyRequest().denyAll();
 
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("https://fidelicard.herokuapp.com"));
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 }
