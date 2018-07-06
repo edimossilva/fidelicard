@@ -5,6 +5,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;
@@ -40,8 +43,8 @@ public class FidelicardApplication {
 						.userRole(UserRole.ADMIN).build();
 				loginUserService.save(loginUser1);
 			}
-//			history29();
-//			history3();
+			// history29();
+			// history3();
 			System.out.println(loginUserService.findAll());
 		};
 	}
@@ -99,4 +102,13 @@ public class FidelicardApplication {
 	// LoginUser.builder().email(email).password(password).userRole(userRole).build();
 	// loginUserService.save(loginUser1);
 	// }
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("http://localhost");
+			}
+		};
+	}
 }
