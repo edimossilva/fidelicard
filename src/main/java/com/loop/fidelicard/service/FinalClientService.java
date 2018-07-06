@@ -70,7 +70,7 @@ public class FinalClientService {
 		finalClientRepository.save(finalClient);
 	}
 
-	public FinalClient findClientByUIAndEnterpriseOwnerEmail(
+	public Card findClientByUIAndEnterpriseOwnerEmail(
 			ClientUIAndEnterpriseOwnerEmailDTO cliUIAndEnterpriseOwnerEmailDTO) {
 		FinalClient finalClient = findByUI(cliUIAndEnterpriseOwnerEmailDTO.getFinalClientUI());
 		Enterprise enterprise = enterpriseService
@@ -79,10 +79,11 @@ public class FinalClientService {
 		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
 		Offer offer = offerService.findOfferByFinalClient(offers, finalClient);
 		if (offer != null) {
-			return finalClient;
+			return cardService.findByFinalClientAndOffer(finalClient, offer).get();
 		}
 		return null;
 	}
+	
 
 	public Card createWithStamp(FinalClientAndEnterpriseOwnerEmailDTO finalClientAndEnterpriseOwnerEmailDTO) {
 		FinalClient finalClient = new FinalClient();

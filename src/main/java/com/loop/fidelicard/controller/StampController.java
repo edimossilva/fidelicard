@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.stamp.ResponseStampDTO;
 import com.loop.fidelicard.dto.stamp.StampDTO;
 import com.loop.fidelicard.model.Card;
@@ -47,9 +48,19 @@ public class StampController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/stamp/addStamp/", method = POST)
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/stamp/addStampByFinalClientIdAndEnterpriseId/", method = POST)
 	public ResponseEntity addStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = stampService.addStampAndSave(clientIDAndEnterpriseIdDTO);
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/stamp/addStampByFinalClientIdAndEnterpriseOwnerEmail/", method = POST)
+	public ResponseEntity addStampByFinalClientIdAndEnterpriseOwnerEmail(@RequestBody ClientIdAndEnterpriseOwnerEmailDTO dto) {
+		Card card = stampService.addStampAndSave(dto);
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}

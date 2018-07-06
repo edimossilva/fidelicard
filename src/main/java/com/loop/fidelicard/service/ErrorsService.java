@@ -36,6 +36,7 @@ public class ErrorsService {
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, enterprise);
 	}
 
+	
 	public void addErrosIfEnterprisByOwnerEmailFinalClientNotExist(String enterpriseOwnerEmail, List<String> errors) {
 		String errorMessage = "Nao existe empresa com dono [" + enterpriseOwnerEmail + "]";
 		Enterprise enterprise = enterpriseService.findByOwnerEmail(enterpriseOwnerEmail);

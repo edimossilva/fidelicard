@@ -21,7 +21,8 @@ public class ResponseFinalClientDTO {
 		setId(fc.getId());
 		setUniqueIdentifier(fc.getUniqueIdentifier());
 		setEmail(fc.getEmail());
-
+		
+		
 	}
 
 }

@@ -65,7 +65,7 @@ public class CardServiceTest {
 		Card card = cardService.createCardWithStampFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
-		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient().getId());
+		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer().getId());
 		expectedResponseCardDTO.setAtualQuantity(1);
@@ -85,7 +85,7 @@ public class CardServiceTest {
 		card = cardService.findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
-		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient2().getId());
+		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualQuantity(2);
@@ -107,7 +107,8 @@ public class CardServiceTest {
 		card = cardService.findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
-		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient2().getId());
+		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
+
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualQuantity(MyMock.getOffer2().getQuantity());

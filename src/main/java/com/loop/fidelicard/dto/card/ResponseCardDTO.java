@@ -1,5 +1,6 @@
 package com.loop.fidelicard.dto.card;
 
+import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.model.Card;
 
 import lombok.EqualsAndHashCode;
@@ -15,15 +16,17 @@ import lombok.Setter;
 public class ResponseCardDTO {
 	private @NonNull Long id;
 	private @NonNull Long offerId;
-	private @NonNull Long finalClientId;
+	private @NonNull Long enterpriseId;
 	private @NonNull Integer atualQuantity;
 	private @NonNull Integer maxQuantity;
+	private @NonNull ResponseFinalClientDTO finalClient;
 
 	public ResponseCardDTO(Card card) {
 		setId(card.getId());
 		setOfferId(card.getOffer().getId());
-		setFinalClientId(card.getFinalClient().getId());
+		setEnterpriseId(card.getOffer().getEnterprise().getId());
 		setAtualQuantity(card.getNormalizedQuantity());
 		setMaxQuantity(card.getOffer().getQuantity());
+		setFinalClient(card.getFinalClient().toResponseFinalClientDTO());
 	}
 }

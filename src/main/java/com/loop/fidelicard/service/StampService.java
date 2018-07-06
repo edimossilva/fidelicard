@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.stamp.StampDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
@@ -52,7 +53,12 @@ public class StampService {
 		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return addStampAndSave(card);
 	}
-	
+
+	public Card addStampAndSave(ClientIdAndEnterpriseOwnerEmailDTO dto) {
+		Card card = getCardByClientIdAndEnterpriseOwnerEmailDTO(dto);
+		return addStampAndSave(card);
+	}
+
 	public Card addStampAndSave(Card card) {
 		addNewStamp(card);
 		return cardService.save(card);
@@ -61,6 +67,13 @@ public class StampService {
 	private Card getCardByClientIDAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
+		Card card = finalClient.getCardByEnterprise(enterprise);
+		return card;
+	}
+
+	private Card getCardByClientIdAndEnterpriseOwnerEmailDTO(ClientIdAndEnterpriseOwnerEmailDTO dto) {
+		FinalClient finalClient = finalClientService.findById(dto.getFinalClientId());
+		Enterprise enterprise = enterpriseService.findByOwnerEmail(dto.getEnterpriseOwnerEmail());
 		Card card = finalClient.getCardByEnterprise(enterprise);
 		return card;
 	}

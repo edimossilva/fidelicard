@@ -110,8 +110,8 @@ public class FinalClientServiceTest {
 		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
 		dto.setEnterpriseOwnerEmail("unknown owner email");
 		dto.setFinalClientUI("unknown client UI");
-		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
-		assertNull(finalClient);
+		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(card);
 	}
 
 	@Test
@@ -119,8 +119,8 @@ public class FinalClientServiceTest {
 		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
 		dto.setEnterpriseOwnerEmail("unknown owner email");
 		dto.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
-		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
-		assertNull(finalClient);
+		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(card);
 	}
 
 	@Test
@@ -128,8 +128,8 @@ public class FinalClientServiceTest {
 		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
 		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUser().getEmail());
 		dto.setFinalClientUI("unknown client UI");
-		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
-		assertNull(finalClient);
+		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		assertNull(card);
 	}
 
 	@Test
@@ -137,9 +137,9 @@ public class FinalClientServiceTest {
 		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();
 		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUserEmail());
 		dto.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
-		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
-		FinalClient expectedFinalClient = MyMock.getFinalClient2();
-		assertEquals(expectedFinalClient, finalClient);
+		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		Card expectedcard = MyMock.getCard2();
+		assertEquals(expectedcard, card);
 	}
 
 	@Test
@@ -151,15 +151,15 @@ public class FinalClientServiceTest {
 		dto.setEmail(newClientEmail);
 		dto.setUniqueIdentifier(uniqueIdentifier);
 		dto.setEnterpriseOwnerEmail(MyMock.getEnterprise2().getOwnerLoginUserEmail());
-		
+
 		Card card = finalClientService.createWithStamp(dto);
-		
+
 		assertNotNull(card);
-		
+
 		assertEquals(1, card.getStampQuantity());
 		assertNotNull(card.getFinalClient().getId());
 		assertEquals(newClientEmail, card.getFinalClient().getEmail());
 		assertEquals(uniqueIdentifier, card.getFinalClient().getUniqueIdentifier());
-		
+
 	}
 }

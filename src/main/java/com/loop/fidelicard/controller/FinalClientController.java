@@ -42,6 +42,7 @@ public class FinalClientController {
 
 		return GenericsUtil.objectToResponse(finalClientDTOList);
 	}
+	
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/finalClient/{id}", method = GET)
@@ -96,9 +97,9 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		FinalClient finalClient = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
+		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
 
-		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 
 	}
 
