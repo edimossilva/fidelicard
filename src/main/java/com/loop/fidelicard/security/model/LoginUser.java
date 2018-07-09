@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 
@@ -32,7 +34,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-
+@Proxy(lazy = false)
 public class LoginUser implements Serializable {
 
 	private static final long serialVersionUID = -4911355131744430193L;

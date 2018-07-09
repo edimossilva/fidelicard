@@ -1,13 +1,12 @@
 package com.loop.fidelicard.security.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.jwt.filter.WebSecurityConfig;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
+import com.loop.fidelicard.security.jwt.filter.WebSecurityConfig;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.repository.LoginUserRepository;
 
@@ -53,7 +52,6 @@ public class LoginUserService {
 	}
 
 	public LoginUser findById(Long loginUserId) {
-		
 
 		return loginUserRepository.findById(loginUserId);
 	}

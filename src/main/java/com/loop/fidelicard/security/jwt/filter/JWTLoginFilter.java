@@ -1,4 +1,4 @@
-package com.loop.fidelicard.jwt.filter;
+package com.loop.fidelicard.security.jwt.filter;
 
 import java.io.IOException;
 import java.util.Collections;

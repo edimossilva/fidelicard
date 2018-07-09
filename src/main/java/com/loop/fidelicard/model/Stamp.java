@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Proxy(lazy = false)
 public class Stamp implements Serializable {
 
 	private static final long serialVersionUID = 1L;

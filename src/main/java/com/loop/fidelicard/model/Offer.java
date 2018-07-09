@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.dto.offer.ResponseOfferDTO;
@@ -35,6 +37,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @ToString
+@Proxy(lazy = false)
 public class Offer implements Serializable {
 
 	private static final long serialVersionUID = 1L;

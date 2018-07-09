@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;
-import com.loop.fidelicard.util.PasswordUtils;
 
 @Service
 public class MyUserDetailService {

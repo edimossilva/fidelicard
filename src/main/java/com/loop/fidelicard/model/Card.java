@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
 
@@ -31,6 +33,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Proxy(lazy=false)
 public class Card implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +46,7 @@ public class Card implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private FinalClient finalClient;
 
-	@OneToMany(orphanRemoval = true, mappedBy = "card", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(orphanRemoval = true, mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Stamp> stamps;
 
 	@JsonIgnore

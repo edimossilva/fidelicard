@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
@@ -33,7 +35,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-
+@Proxy(lazy = false)
 public class FinalClient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -69,6 +71,7 @@ public class FinalClient implements Serializable {
 		}
 		return false;
 	}
+
 	public boolean isCardFull(Offer offer) {
 		for (Card card : cards) {
 			if (card.getOffer().equals(offer)) {
@@ -79,6 +82,7 @@ public class FinalClient implements Serializable {
 		}
 		return false;
 	}
+
 	public Card getCardByEnterprise(Enterprise enterprise) {
 		for (Card card : cards) {
 			if (card.getOffer().getEnterprise().equals(enterprise)) {

@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
 import com.loop.fidelicard.security.model.LoginUser;
@@ -24,7 +26,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -34,6 +35,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 // @NoArgsConstructor
+@Proxy(lazy = false)
 @EqualsAndHashCode(of = "id")
 public class Enterprise {
 	@Id
@@ -48,7 +50,6 @@ public class Enterprise {
 
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Offer> offers;
-	
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")
 	private LoginUser ownerLoginUser;
