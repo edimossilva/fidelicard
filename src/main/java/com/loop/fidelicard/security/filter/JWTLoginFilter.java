@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security.jwt.filter;
+package com.loop.fidelicard.security.filter;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -20,12 +20,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+
 	@Autowired
-	WebSecurityConfig webSecurityConfig;
+	private TokenAuthenticationService tokenAuthenticationService;
 
 	public JWTLoginFilter(String url, AuthenticationManager authManager) {
 		super(new AntPathRequestMatcher(url));
 		setAuthenticationManager(authManager);
+		
 	}
 
 	@Override
@@ -41,6 +43,9 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-		TokenAuthenticationService.addAuthentication(res, auth.getName());
+		if (tokenAuthenticationService == null) {
+			System.out.println("tokenAuthenticationService = NULL");
+		}
+		tokenAuthenticationService.addAuthentication(res, auth.getName());
 	}
 }

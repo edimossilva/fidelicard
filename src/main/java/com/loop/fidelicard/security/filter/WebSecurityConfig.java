@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security.jwt.filter;
+package com.loop.fidelicard.security.filter;
 
 import java.util.Properties;
 
@@ -51,17 +51,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new InMemoryUserDetailsManager(users);
 	}
 
+	@Bean
+	public JWTLoginFilter getJWTLoginFilterBean() throws Exception {
+		return new JWTLoginFilter("/login", authenticationManager());
+	}
+
+	@Bean
+	public JWTAuthenticationFilter getJWTAuthenticationFilterBean() {
+		return new JWTAuthenticationFilter();
+	}
+
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/home").permitAll()
 				.antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
-				.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
-						UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(getJWTLoginFilterBean(), UsernamePasswordAuthenticationFilter.class)
 
 				// filtra outras requisições para verificar a presença do JWT no header
-				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(getJWTAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

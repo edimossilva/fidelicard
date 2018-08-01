@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.security.dto.LoginUserDTO;
-import com.loop.fidelicard.security.jwt.filter.WebSecurityConfig;
+import com.loop.fidelicard.security.filter.WebSecurityConfig;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.repository.LoginUserRepository;
 

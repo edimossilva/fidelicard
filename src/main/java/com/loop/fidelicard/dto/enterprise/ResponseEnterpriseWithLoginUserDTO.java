@@ -1,6 +1,7 @@
 package com.loop.fidelicard.dto.enterprise;
 
 import com.loop.fidelicard.model.Enterprise;
+import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,13 +13,15 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-public class ResponseEnterpriseDTO {
+public class ResponseEnterpriseWithLoginUserDTO {
 	private @NonNull Long id;
 	private @NonNull String name;
+	private @NonNull ResponseLoginUserDTO ownerLoginUser;
 
-	public ResponseEnterpriseDTO(Enterprise enterprise) {
+	public ResponseEnterpriseWithLoginUserDTO(Enterprise enterprise) {
 		setId(enterprise.getId());
 		setName(enterprise.getName());
+		setOwnerLoginUser(new ResponseLoginUserDTO(enterprise.getOwnerLoginUser()));
 	}
 
 }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 
 import lombok.AllArgsConstructor;
@@ -65,8 +65,8 @@ public class Enterprise {
 		getFinalClients().add(finalCLient);
 	}
 
-	public ResponseEnterpriseDTO toResponseEnterpriseDTO() {
-		return new ResponseEnterpriseDTO(this);
+	public ResponseEnterpriseWithLoginUserDTO toResponseEnterpriseDTO() {
+		return new ResponseEnterpriseWithLoginUserDTO(this);
 	}
 
 	public String getOwnerLoginUserEmail() {

@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security.jwt.filter;
+package com.loop.fidelicard.security.filter;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

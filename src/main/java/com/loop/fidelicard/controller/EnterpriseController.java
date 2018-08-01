@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
@@ -34,7 +34,7 @@ public class EnterpriseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise", method = GET)
 	public ResponseEntity index() {
-		List<ResponseEnterpriseDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseDTO>();
+		List<ResponseEnterpriseWithLoginUserDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseWithLoginUserDTO>();
 		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(e.toResponseEnterpriseDTO()));
 
 		return GenericsUtil.objectToResponse(enterpriseDTOList);

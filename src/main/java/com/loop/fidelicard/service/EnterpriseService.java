@@ -92,4 +92,7 @@ public class EnterpriseService {
 		}
 		return loginUser.getEnterprise();
 	}
+
+
+
 }

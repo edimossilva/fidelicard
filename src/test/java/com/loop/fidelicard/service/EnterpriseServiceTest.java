@@ -13,7 +13,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
@@ -57,7 +57,7 @@ public class EnterpriseServiceTest {
 
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
 
-		ResponseEnterpriseDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseDTO();
+		ResponseEnterpriseWithLoginUserDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseWithLoginUserDTO();
 		expectedResponseEnterpriseDTO.setId(enterprise.getId());
 		expectedResponseEnterpriseDTO.setName(name);
 		expectedResponseEnterpriseDTO.setOwnerLoginUser(loginUser.toResponseLoginUserDTO());
@@ -73,7 +73,7 @@ public class EnterpriseServiceTest {
 
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
 
-		ResponseEnterpriseDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseDTO();
+		ResponseEnterpriseWithLoginUserDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseWithLoginUserDTO();
 		expectedResponseEnterpriseDTO.setId(enterprise.getId());
 		expectedResponseEnterpriseDTO.setOwnerLoginUser(enterprise.getOwnerLoginUser().toResponseLoginUserDTO());
 		expectedResponseEnterpriseDTO.setName(MyMock.ENTERPRISE_NAME);
