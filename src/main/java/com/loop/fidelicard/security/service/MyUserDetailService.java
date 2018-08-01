@@ -22,19 +22,14 @@ public class MyUserDetailService {
 
 	public Properties getAll() {
 		Properties users = new Properties();
-		System.out.println("1111111");
 		for (LoginUser loginUser : loginUserService.findAll()) {
 			String credentials = loginUser.getPassword() + ",ROLE_" + loginUser.getUserRole() + ",enabled";
-//			String credentials = 123 + ",ROLE_" + loginUser.getUserRole() + ",enabled";
-			System.out.println(credentials);
 			users.put(loginUser.getEmail(), credentials);
 		}
 		return users;
 	}
 
 	public LoginUser userDetailFromLoginUserDTO(LoginUserDTO loginUserDTO) {
-//		String password = PasswordUtils.gerarBCrypt(loginUserDTO.getPassword());
-
 		return LoginUser.builder().email(loginUserDTO.getEmail()).password(loginUserDTO.getPassword())
 				.userRole(loginUserDTO.getUserRole()).build();
 	}
@@ -44,7 +39,6 @@ public class MyUserDetailService {
 		String password = loginUser.getPassword();
 		List<GrantedAuthority> authorities = getAuthorities(loginUser.getUserRole());
 		User user = new User(email, password, authorities);
-		System.out.println(user.getUsername() + user.getPassword() + user.getAuthorities());
 		inMemoryUserDetailsManager.createUser(user);
 	}
 

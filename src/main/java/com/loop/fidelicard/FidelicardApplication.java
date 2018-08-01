@@ -14,13 +14,12 @@ import com.loop.fidelicard.security.service.LoginUserService;
 @SpringBootApplication
 @RestController
 
-public class AuthenticationApplication {
+public class FidelicardApplication {
 	@Autowired
 	LoginUserService loginUserService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthenticationApplication.class, args);
-
+		SpringApplication.run(FidelicardApplication.class, args);
 	}
 
 	@Bean
@@ -32,7 +31,6 @@ public class AuthenticationApplication {
 						.userRole(UserRole.ADMIN).build();
 				loginUserService.save(loginUser1);
 			}
-			System.out.println(loginUserService.findAll());
 		};
 	}
 

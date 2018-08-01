@@ -30,11 +30,11 @@ public class TokenAuthenticationService {
 
 		String token = TOKEN_PREFIX + " " + JWT;
 
-		String jsonInString = tokenToJson(token);
-		res.addHeader(HEADER_STRING, jsonInString);
+		String tokenAsJson = tokenToJson(token);
+		res.addHeader(HEADER_STRING, tokenAsJson);
 
 		try {
-			res.getOutputStream().print(jsonInString);
+			res.getOutputStream().print(tokenAsJson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

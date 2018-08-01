@@ -94,10 +94,8 @@ public class FinalClientService {
 		save(finalClient);
 		Enterprise enterprise = enterpriseService
 				.findByOwnerEmail(finalClientAndEnterpriseOwnerEmailDTO.getEnterpriseOwnerEmail());
-		System.out.println("enterprise " + enterprise);
 		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
 		Offer offer = offers.get(0);
-		System.out.println("offer " + offer);
 		Card card = cardService.createCardWithStampFromFinalClientAndOffer(finalClient, offer);
 		return card;
 	}

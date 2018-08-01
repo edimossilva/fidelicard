@@ -30,20 +30,7 @@ import com.loop.fidelicard.util.GenericsUtil;
 public class CardController {
 	@Autowired
 	private CardService cardService;
-
-	@RequestMapping(value = "/admin/test", method = GET)
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
-	public String test() {
-
-		return "hello";
-	}
-
-	@RequestMapping(value = "/admin/test2", method = GET)
-	public String test2() {
-
-		return "hello2";
-	}
-
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card", method = GET)
 	public ResponseEntity index() {

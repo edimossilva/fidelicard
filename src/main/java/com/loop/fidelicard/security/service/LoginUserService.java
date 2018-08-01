@@ -37,8 +37,6 @@ public class LoginUserService {
 	}
 
 	public LoginUser save(LoginUser loginUser) {
-		// String password = PasswordUtils.gerarBCrypt(loginUser.getPassword());
-		// loginUser.setPassword(password);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
 		return loginUserRepository.save(loginUser);
 	}

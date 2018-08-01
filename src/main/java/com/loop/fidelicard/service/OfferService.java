@@ -39,9 +39,6 @@ public class OfferService {
 		}
 		Offer offer = new Offer(offerDTO);
 		offer.setEnterprise(enterprise);
-//		enterprise.getOffers().add(offer);
-//		enterpriseService.save(enterprise);
-		System.out.println(offer);
 		offerRepository.save(offer);
 		return offer;
 	}

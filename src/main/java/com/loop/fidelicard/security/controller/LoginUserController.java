@@ -25,14 +25,6 @@ public class LoginUserController {
 	@Autowired
 	private LoginUserService loginUserService;
 
-	// @PreAuthorize("hasAuthority('ROLE_FINAL_CLIENT')")
-
-	// @PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
-	// @RequestMapping(value = "/roleEnterprise", method = GET)
-	// public Iterable<LoginUser> admin() {
-	// return loginUserService.findAll();
-	// }
-
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/loginUser", method = GET)
 	public ResponseEntity guest() {
