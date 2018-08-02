@@ -56,7 +56,7 @@ public class EnterpriseService {
 		return enterpriseRepository.findById(enterpriseId);
 	}
 
-	public Enterprise findByOwnerLoginUser(Long loginUserId) {
+	public Enterprise findByOwnerLoginUserId(Long loginUserId) {
 		LoginUser loginUser = loginUserService.findById(loginUserId);
 
 		return enterpriseRepository.findByOwnerLoginUser(loginUser);
@@ -75,8 +75,9 @@ public class EnterpriseService {
 
 		List<String> errors = new ArrayList<String>();
 
-		eS.addErrorsIfEnterpriseByNameExist(enterpriseDTO.getName(), errors);
+		eS.addErrorsIfEnterpriseByNameExist(enterpriseDTO.getEnterpriseName(), errors);
 		eS.addErrorsIfLoginUserByIdNotExist(enterpriseDTO.getLoginUserId(), errors);
+		eS.addErrosIfEnterprisByOwnerIdFinalClientExist(enterpriseDTO.getLoginUserId(), errors);
 
 		return errors;
 	}

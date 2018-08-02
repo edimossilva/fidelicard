@@ -42,7 +42,7 @@ public class EnterpriseController {
 
 	
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise", method = POST)
+	@RequestMapping(value = "/v1/enterprise", method = POST)
 	public ResponseEntity save(@Valid @RequestBody EnterpriseDTO enterpriseDTO, BindingResult result) {
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
@@ -68,7 +68,7 @@ public class EnterpriseController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise/findByLoginUserId", method = POST)
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserIdDTO enterpriseFinalClientDTO) {
-		Enterprise enterprise = enterpriseService.findByOwnerLoginUser(enterpriseFinalClientDTO.getLoginUserId());
+		Enterprise enterprise = enterpriseService.findByOwnerLoginUserId(enterpriseFinalClientDTO.getLoginUserId());
 		if (enterprise != null) {
 			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 		} else {

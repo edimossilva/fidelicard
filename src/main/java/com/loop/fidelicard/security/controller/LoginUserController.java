@@ -42,12 +42,12 @@ public class LoginUserController {
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
 		}
-		
+
 		List<String> errors = loginUserService.errorsToSave(loginUserDTO);
-		if(!errors.isEmpty()) {
+		if (!errors.isEmpty()) {
 			return GenericsUtil.errorsToResponse(errors);
 		}
-		
+
 		LoginUser loginUser = loginUserService.save(loginUserDTO);
 		return GenericsUtil.objectToResponse(loginUser.toResponseLoginUserDTO());
 	}

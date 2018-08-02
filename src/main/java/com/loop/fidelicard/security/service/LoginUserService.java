@@ -31,7 +31,7 @@ public class LoginUserService {
 	}
 
 	public LoginUser save(LoginUserDTO loginUserDTO) {
-		LoginUser loginUser = myUserDetailService.userDetailFromLoginUserDTO(loginUserDTO);
+		LoginUser loginUser = loginUserFromLoginUserDTO(loginUserDTO);
 		myUserDetailService.giveCredentials(loginUser, configSecurity.inMemoryUserDetailsManager());
 		loginUser = loginUserRepository.save(loginUser);
 		return loginUser;
@@ -69,5 +69,10 @@ public class LoginUserService {
 		eS.addErrorsIfLoginUserByEmailExist(loginUserDTO.getLoginUserEmail(), errors);
 
 		return errors;
+	}
+
+	public LoginUser loginUserFromLoginUserDTO(LoginUserDTO loginUserDTO) {
+		return LoginUser.builder().email(loginUserDTO.getLoginUserEmail()).password(loginUserDTO.getLoginUserPassword())
+				.userRole(loginUserDTO.getLoginUserRole()).build();
 	}
 }

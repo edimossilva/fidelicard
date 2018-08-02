@@ -42,6 +42,21 @@ public class ErrorsService {
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, enterprise);
 	}
 
+	public void addErrosIfEnterprisByOwnerEmailFinalClientExist(String enterpriseOwnerEmail, List<String> errors) {
+		String errorMessage = "O loginUser com email [" + enterpriseOwnerEmail + "] ja possui uma empresa";
+		Enterprise enterprise = enterpriseService.findByOwnerEmail(enterpriseOwnerEmail);
+		MyValidator.addErrorsWhenNotNull(errors, errorMessage, enterprise);
+
+	}
+
+	public void addErrosIfEnterprisByOwnerIdFinalClientExist(Long loginUserId, List<String> errors) {
+		LoginUser ownerLoginUser = loginUserService.findById(loginUserId);
+		String errorMessage = "O loginUser com id [" + loginUserId + "] ja possui uma empresa";
+		Enterprise enterprise = ownerLoginUser.getEnterprise();
+		MyValidator.addErrorsWhenNotNull(errors, errorMessage, enterprise);
+
+	}
+
 	public void addErrosIfEnterprisByOwnerEmailFinalClientNotExist(String enterpriseOwnerEmail, List<String> errors) {
 		String errorMessage = "Nao existe empresa com dono [" + enterpriseOwnerEmail + "]";
 		Enterprise enterprise = enterpriseService.findByOwnerEmail(enterpriseOwnerEmail);

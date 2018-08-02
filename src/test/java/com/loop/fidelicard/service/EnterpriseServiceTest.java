@@ -52,7 +52,7 @@ public class EnterpriseServiceTest {
 		LoginUser loginUser = loginUserService.findById(loginUserId);
 
 		EnterpriseDTO enterpriseDTO = new EnterpriseDTO();
-		enterpriseDTO.setName(name);
+		enterpriseDTO.setEnterpriseName(name);
 		enterpriseDTO.setLoginUserId(loginUserId);
 
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);

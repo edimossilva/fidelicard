@@ -57,7 +57,7 @@ public class MyMock {
 		Long loginUserId = loginUserService.findByEmail(LOGIN_USER_EMAIL_1).getId();
 
 		EnterpriseDTO enterpriseDTO = new EnterpriseDTO();
-		enterpriseDTO.setName(ENTERPRISE_NAME);
+		enterpriseDTO.setEnterpriseName(ENTERPRISE_NAME);
 		enterpriseDTO.setLoginUserId(loginUserId);
 
 		setEnterprise(enterpriseService.save(enterpriseDTO));
@@ -67,7 +67,7 @@ public class MyMock {
 		Long loginUserId = loginUserService.findByEmail(LOGIN_USER_EMAIL_2).getId();
 
 		EnterpriseDTO enterpriseDTO = new EnterpriseDTO();
-		enterpriseDTO.setName(ENTERPRISE_NAME_2);
+		enterpriseDTO.setEnterpriseName(ENTERPRISE_NAME_2);
 		enterpriseDTO.setLoginUserId(loginUserId);
 
 		setEnterprise2(enterpriseService.save(enterpriseDTO));

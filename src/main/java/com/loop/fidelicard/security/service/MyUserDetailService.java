@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;
 
@@ -29,16 +28,12 @@ public class MyUserDetailService {
 		return users;
 	}
 
-	public LoginUser userDetailFromLoginUserDTO(LoginUserDTO loginUserDTO) {
-		return LoginUser.builder().email(loginUserDTO.getLoginUserEmail()).password(loginUserDTO.getLoginUserPassword())
-				.userRole(loginUserDTO.getLoginUserRole()).build();
-	}
-
 	public void giveCredentials(LoginUser loginUser, InMemoryUserDetailsManager inMemoryUserDetailsManager) {
 		String email = loginUser.getEmail();
 		String password = loginUser.getPassword();
 		List<GrantedAuthority> authorities = getAuthorities(loginUser.getUserRole());
 		User user = new User(email, password, authorities);
+		System.out.println(user);
 		inMemoryUserDetailsManager.createUser(user);
 	}
 

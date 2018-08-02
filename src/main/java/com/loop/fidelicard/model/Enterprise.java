@@ -58,7 +58,7 @@ public class Enterprise {
 	}
 
 	public Enterprise(EnterpriseDTO enterpriseDTO) {
-		setName(enterpriseDTO.getName());
+		setName(enterpriseDTO.getEnterpriseName());
 	}
 
 	public void addFinalClient(FinalClient finalCLient) {
