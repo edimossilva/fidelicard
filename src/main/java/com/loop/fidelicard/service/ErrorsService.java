@@ -62,8 +62,8 @@ public class ErrorsService {
 		Enterprise enterprise = enterpriseService.findByOwnerEmail(enterpriseOwnerEmail);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, enterprise);
 	}
-
-	public void addErrosIfEnterprisByIdNotExist(Long enterpriseId, List<String> errors) {
+	
+	public void addErrorsIfEnterpriseByIdNotExist(Long enterpriseId, List<String> errors) {
 		String errorMessage = "Nao existe empresa com id [" + enterpriseId + "]";
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, enterprise);
@@ -73,6 +73,13 @@ public class ErrorsService {
 	public void addErrorsIfOfferByDescriptionExist(String offerDescription, List<String> errors) {
 		String errorMessage = "Ja existe oferta com o descricao [" + offerDescription + "]";
 		Offer offer = offerService.findByDescriprion(offerDescription);
+		MyValidator.addErrorsWhenNotNull(errors, errorMessage, offer);
+	}
+
+	public void addErrorsIfOfferByEnterpriseExist(Long enterpriseId, List<String> errors) {
+		String errorMessage = "Ja existe oferta para a empresa com id [" + enterpriseId
+				+ "], atualmente cada empresa so pode ter uma oferta";
+		Offer offer = offerService.findByEnterpriseId(enterpriseId);
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, offer);
 	}
 
@@ -100,5 +107,7 @@ public class ErrorsService {
 		FinalClient finalClient = finalClientService.findByEmail(email);
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, finalClient);
 	}
+
+	
 
 }

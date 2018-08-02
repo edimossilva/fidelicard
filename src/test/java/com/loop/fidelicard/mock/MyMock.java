@@ -81,9 +81,9 @@ public class MyMock {
 		Long enterpriseId = enterprise.getId();
 
 		OfferDTO offerDTO = new OfferDTO();
-		offerDTO.setName(name);
-		offerDTO.setDescription(description);
-		offerDTO.setQuantity(quantity);
+		offerDTO.setOfferName(name);
+		offerDTO.setOfferDescription(description);
+		offerDTO.setOfferQuantity(quantity);
 		offerDTO.setEnterpriseId(enterpriseId);
 
 		setOffer(offerService.save(offerDTO));
@@ -98,9 +98,9 @@ public class MyMock {
 		Long enterpriseId = enterprise.getId();
 
 		OfferDTO offerDTO = new OfferDTO();
-		offerDTO.setName(name);
-		offerDTO.setDescription(description);
-		offerDTO.setQuantity(quantity);
+		offerDTO.setOfferName(name);
+		offerDTO.setOfferDescription(description);
+		offerDTO.setOfferQuantity(quantity);
 		offerDTO.setEnterpriseId(enterpriseId);
 
 		setOffer2(offerService.save(offerDTO));

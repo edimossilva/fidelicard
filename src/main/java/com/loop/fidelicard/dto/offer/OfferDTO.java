@@ -10,12 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OfferDTO {
-	@NotEmpty(message = "O atributo [name] da oferta nao pode ser vazio")
-	private String name;
-	@NotEmpty(message = "O atributo [description] da oferta nao pode ser vazio")
-	private String description;
-	@NotNull(message = "O atributo [quantity] da oferta nao pode ser vazio")
-	private Integer quantity;
+	@NotEmpty(message = "O atributo [offerName] da oferta nao pode ser vazio")
+	private String offerName;
+	@NotEmpty(message = "O atributo [offerDescription] da oferta nao pode ser vazio")
+	private String offerDescription;
+	@NotNull(message = "O atributo [offerQuantity] da oferta nao pode ser vazio")
+	private Integer offerQuantity;
 	@NotNull(message = "O atributo [enterpriseId] da oferta nao pode ser vazio")
 	private Long enterpriseId;
 

@@ -31,12 +31,7 @@ public class OfferService {
 	}
 
 	public Offer save(OfferDTO offerDTO) {
-
 		Enterprise enterprise = enterpriseService.findById(offerDTO.getEnterpriseId());
-		List<Offer> offers = findAllByEnterprise(enterprise);
-		if (offers.size() > 0) {
-			return offers.get(0);
-		}
 		Offer offer = new Offer(offerDTO);
 		offer.setEnterprise(enterprise);
 		offerRepository.save(offer);
@@ -49,6 +44,16 @@ public class OfferService {
 
 	public Offer findByDescriprion(String offerDescription) {
 		return offerRepository.findByDescription(offerDescription);
+	}
+
+	public Offer findByEnterpriseId(Long enterpriseId) {
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		if (enterprise != null) {
+			if (enterprise.getOffers().size() > 0) {
+				return enterprise.getOffers().get(0);
+			}
+		}
+		return null;
 	}
 
 	public List<Offer> findAllByEnterprise(Enterprise enterprise) {
@@ -71,7 +76,10 @@ public class OfferService {
 
 	public List<String> errorsToSave(@Valid OfferDTO offerDTO) {
 		List<String> errors = new ArrayList<String>();
-		eS.addErrorsIfOfferByDescriptionExist(offerDTO.getDescription(), errors);
+		
+		eS.addErrorsIfEnterpriseByIdNotExist(offerDTO.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseExist(offerDTO.getEnterpriseId(), errors);
+		
 		return errors;
 	}
 

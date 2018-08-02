@@ -50,9 +50,9 @@ public class OfferServiceTest {
 		Long enterpriseId = enterprise.getId();
 
 		OfferDTO offerDTO = new OfferDTO();
-		offerDTO.setName(name);
-		offerDTO.setDescription(description);
-		offerDTO.setQuantity(quantity);
+		offerDTO.setOfferName(name);
+		offerDTO.setOfferDescription(description);
+		offerDTO.setOfferQuantity(quantity);
 		offerDTO.setEnterpriseId(enterpriseId);
 
 		ResponseOfferDTO responseOfferDTO = offerService.save(offerDTO).toResponseOfferDTO();

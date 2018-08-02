@@ -63,9 +63,9 @@ public class Offer implements Serializable {
 	private List<Card> cards;
 
 	public Offer(OfferDTO offerDTO) {
-		setName(offerDTO.getName());
-		setDescription(offerDTO.getDescription());
-		setQuantity(offerDTO.getQuantity());
+		setName(offerDTO.getOfferName());
+		setDescription(offerDTO.getOfferDescription());
+		setQuantity(offerDTO.getOfferQuantity());
 	}
 
 	public ResponseOfferDTO toResponseOfferDTO() {

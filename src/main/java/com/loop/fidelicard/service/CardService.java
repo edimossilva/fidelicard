@@ -130,7 +130,7 @@ public class CardService {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrosIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
-		eS.addErrosIfEnterprisByIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 
 		return errors;
 	}

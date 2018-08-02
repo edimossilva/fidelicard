@@ -38,7 +38,7 @@ public class OfferController {
 	}
 
 	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/offer", method = POST)
+	@RequestMapping(value = "/v1/offer", method = POST)
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	public ResponseEntity save(@Valid @RequestBody OfferDTO offerDTO, BindingResult result) {
 		if (result.hasErrors()) {
