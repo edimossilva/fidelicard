@@ -15,12 +15,12 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class ResponseTokenAndEnterpriseDTO {
-	private String token;
 	private ResponseEnterpriseDTO enterprise;
+	private String token;
 
 	public ResponseTokenAndEnterpriseDTO(String token, Enterprise enterprise) {
-		setToken(token);
 		setEnterprise(new ResponseEnterpriseDTO(enterprise));
+		setToken(token);
 	}
 
 }

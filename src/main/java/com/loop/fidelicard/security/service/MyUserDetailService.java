@@ -30,8 +30,8 @@ public class MyUserDetailService {
 	}
 
 	public LoginUser userDetailFromLoginUserDTO(LoginUserDTO loginUserDTO) {
-		return LoginUser.builder().email(loginUserDTO.getEmail()).password(loginUserDTO.getPassword())
-				.userRole(loginUserDTO.getUserRole()).build();
+		return LoginUser.builder().email(loginUserDTO.getLoginUserEmail()).password(loginUserDTO.getLoginUserPassword())
+				.userRole(loginUserDTO.getLoginUserRole()).build();
 	}
 
 	public void giveCredentials(LoginUser loginUser, InMemoryUserDetailsManager inMemoryUserDetailsManager) {

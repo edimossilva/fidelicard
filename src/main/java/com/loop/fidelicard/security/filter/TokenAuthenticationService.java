@@ -42,20 +42,23 @@ public class TokenAuthenticationService {
 
 		Enterprise enterprise = enterpriseService.findByOwnerEmail(username);
 
-		String returnJson = "{}";
-		if (enterprise != null) {
-			System.out.println("eh do tipo enterprise");
-			returnJson = tokenAndEnterpriseJson(token, enterprise);
-		} else {
-			System.out.println("NAO eh do tipo enterprise");
-			returnJson = tokenToJson(token);
-		}
+		String returnJson = getReturnJsonWithTokenByEnterprise(token, enterprise);
 
 		try {
 			res.getOutputStream().print(returnJson);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private String getReturnJsonWithTokenByEnterprise(String token, Enterprise enterprise) {
+		String returnJson;
+		if (enterprise != null) {
+			returnJson = tokenAndEnterpriseJson(token, enterprise);
+		} else {
+			returnJson = tokenToJson(token);
+		}
+		return returnJson;
 	}
 
 	private String tokenAndEnterpriseJson(String token, Enterprise enterprise) {

@@ -43,9 +43,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
-		if (tokenAuthenticationService == null) {
-			System.out.println("tokenAuthenticationService = NULL");
-		}
 		tokenAuthenticationService.addAuthentication(res, auth.getName());
 	}
 }

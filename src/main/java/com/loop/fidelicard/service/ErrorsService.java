@@ -30,6 +30,12 @@ public class ErrorsService {
 		MyValidator.addErrorsWhenNull(errors, errorMessage, loginUser);
 	}
 
+	public void addErrorsIfLoginUserByEmailExist(String loginUserEmail, List<String> errors) {
+		String errorMessage = "Ja existe loginUser com o email [" + loginUserEmail + "]";
+		LoginUser loginUser = loginUserService.findByEmail(loginUserEmail);
+		MyValidator.addErrorsWhenNotNull(errors, errorMessage, loginUser);
+	}
+
 	public void addErrorsIfEnterpriseByNameExist(String enterpriseName, List<String> errors) {
 		String errorMessage = "Ja existe empresa com o nome [" + enterpriseName + "]";
 		Enterprise enterprise = enterpriseService.findByName(enterpriseName);
@@ -46,9 +52,8 @@ public class ErrorsService {
 		String errorMessage = "Nao existe empresa com id [" + enterpriseId + "]";
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, enterprise);
-		
-	}
 
+	}
 
 	public void addErrorsIfOfferByDescriptionExist(String offerDescription, List<String> errors) {
 		String errorMessage = "Ja existe oferta com o descricao [" + offerDescription + "]";
@@ -81,5 +86,4 @@ public class ErrorsService {
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, finalClient);
 	}
 
-	
 }

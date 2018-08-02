@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public JWTLoginFilter getJWTLoginFilterBean() throws Exception {
-		return new JWTLoginFilter("/login", authenticationManager());
+		return new JWTLoginFilter("/v1/login", authenticationManager());
 	}
 
 	@Bean
@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/home").permitAll()
-				.antMatchers(HttpMethod.POST, "/login").permitAll().anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.POST, "/v1/login").permitAll().anyRequest().authenticated().and()
 
 				// filtra requisições de login
 				.addFilterBefore(getJWTLoginFilterBean(), UsernamePasswordAuthenticationFilter.class)

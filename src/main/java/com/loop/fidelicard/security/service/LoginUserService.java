@@ -1,5 +1,6 @@
 package com.loop.fidelicard.security.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.filter.WebSecurityConfig;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.repository.LoginUserRepository;
+import com.loop.fidelicard.service.ErrorsService;
 
 @Service
 public class LoginUserService {
@@ -20,6 +22,9 @@ public class LoginUserService {
 
 	@Autowired
 	private MyUserDetailService myUserDetailService;
+
+	@Autowired
+	private ErrorsService eS;
 
 	public List<LoginUser> findAll() {
 		return (List<LoginUser>) loginUserRepository.findAll();
@@ -56,5 +61,13 @@ public class LoginUserService {
 
 	public void update(LoginUser loginUser) {
 		loginUserRepository.save(loginUser);
+	}
+
+	public List<String> errorsToSave(LoginUserDTO loginUserDTO) {
+		List<String> errors = new ArrayList<String>();
+
+		eS.addErrorsIfLoginUserByEmailExist(loginUserDTO.getLoginUserEmail(), errors);
+
+		return errors;
 	}
 }

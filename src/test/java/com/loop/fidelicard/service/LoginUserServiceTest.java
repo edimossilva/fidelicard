@@ -29,9 +29,9 @@ public class LoginUserServiceTest {
 
 		UserRole userRole = UserRole.ENTERPRISE;
 		LoginUserDTO loginUserDTO = new LoginUserDTO();
-		loginUserDTO.setEmail(email);
-		loginUserDTO.setPassword(password);
-		loginUserDTO.setUserRole(userRole);
+		loginUserDTO.setLoginUserEmail(email);
+		loginUserDTO.setLoginUserPassword(password);
+		loginUserDTO.setLoginUserRole(userRole);
 
 		ResponseLoginUserDTO responseLoginUserDTO = loginUserService.save(loginUserDTO).toResponseLoginUserDTO();
 
