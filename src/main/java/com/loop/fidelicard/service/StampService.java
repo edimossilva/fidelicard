@@ -97,7 +97,7 @@ public class StampService {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrosIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
-		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+		eS.addErrorsIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
 
 		return errors;
 	}

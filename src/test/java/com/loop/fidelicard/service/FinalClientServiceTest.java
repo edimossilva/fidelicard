@@ -45,7 +45,8 @@ public class FinalClientServiceTest {
 		MyMock.createLoginUser1(loginUserService);
 		MyMock.createEnterprise1(loginUserService, enterpriseService);
 		MyMock.createOffer1(offerService, enterpriseService);
-
+		MyMock.createFinalClient1(finalClientService);
+		
 		MyMock.createLoginUser2(loginUserService);
 		MyMock.createEnterprise2(loginUserService, enterpriseService);
 		MyMock.createOffer2(offerService, enterpriseService);
@@ -79,7 +80,7 @@ public class FinalClientServiceTest {
 	}
 
 	@Test
-	public void testExistClientbyUICardInEnterpriseWHENnotExist() {
+	public void testExistClientbyUICardInEnterpriseWHENExist() {
 		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
 		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 		clientUIAndEnterpriseIdDTO.setFinalClientUI("anything");
@@ -104,7 +105,17 @@ public class FinalClientServiceTest {
 
 		assertEquals(expectedResponseFinalClientDTO, finalClient.toResponseFinalClientDTO());
 	}
+	
+	@Test
+	public void testFindClientCardByUIAndEnterpriseIdWhenExists() {
+		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
+		dto.setEnterpriseId(MyMock.getEnterprise().getId());
 
+		dto.setFinalClientUI(MyMock.getFinalClient().getUniqueIdentifier());
+		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
+		assertNull(card);
+	}
+	
 	@Test
 	public void testFindClientByUIAndEnterpriseOwnerEmailWhenHasNotOwnerEmailAndUI() {
 		ClientUIAndEnterpriseOwnerEmailDTO dto = new ClientUIAndEnterpriseOwnerEmailDTO();

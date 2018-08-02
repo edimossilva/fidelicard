@@ -78,7 +78,7 @@ public class OfferService {
 		List<String> errors = new ArrayList<String>();
 		
 		eS.addErrorsIfEnterpriseByIdNotExist(offerDTO.getEnterpriseId(), errors);
-		eS.addErrorsIfOfferByEnterpriseExist(offerDTO.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseIdExist(offerDTO.getEnterpriseId(), errors);
 		
 		return errors;
 	}

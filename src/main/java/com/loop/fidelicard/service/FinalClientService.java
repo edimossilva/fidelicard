@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
@@ -87,6 +88,13 @@ public class FinalClientService {
 		return null;
 	}
 
+	public Card findClientCardByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
+		FinalClient finalClient = findByUI(dto.getFinalClientUI());
+		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
+		Card card = cardService.findByFinalClientAndEnterprise(finalClient, enterprise);
+		return card;
+	}
+
 	public Card createWithStamp(FinalClientAndEnterpriseOwnerEmailDTO finalClientAndEnterpriseOwnerEmailDTO) {
 		FinalClient finalClient = new FinalClient();
 		finalClient.setEmail(finalClientAndEnterpriseOwnerEmailDTO.getEmail());
@@ -100,21 +108,50 @@ public class FinalClientService {
 		return card;
 	}
 
-	public List<String> errorsToExistClientByUIAndEnterpriseOwnerEmail(@Valid ClientUIAndEnterpriseOwnerEmailDTO dto) {
-		List<String> errors = new ArrayList<String>();
-		eS.addErrosIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
-		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+	public Card createWithStamp(FinalClientAndEnterpriseIdDTO dto) {
+		FinalClient finalClient = new FinalClient(dto);
+		save(finalClient);
+		
+		Offer offer = offerService.findByEnterpriseId(dto.getEnterpriseId());
+		Card card = cardService.createCardWithStampFromFinalClientAndOffer(finalClient, offer);
 
-		return errors;
+		return card;
 	}
 
 	public List<String> errorsToCreateWithStamp(FinalClientAndEnterpriseOwnerEmailDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
-		eS.addErrosIfFinalClientByUIExist(dto.getUniqueIdentifier(), errors);
-		eS.addErrosIfFinalClientByEmailExist(dto.getEmail(), errors);
-		eS.addErrosIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+		eS.addErrorsIfFinalClientByUIExist(dto.getUniqueIdentifier(), errors);
+		eS.addErrorsIfFinalClientByEmailExist(dto.getEmail(), errors);
+		eS.addErrorsIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
 
+		return errors;
+	}
+
+	public List<String> errorsToCreateWithStamp(FinalClientAndEnterpriseIdDTO dto) {
+		List<String> errors = new ArrayList<String>();
+
+		eS.addErrorsIfFinalClientByUIExist(dto.getFinalClienteUniqueIdentifier(), errors);
+		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
+		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
+
+		return errors;
+	}
+
+	public List<String> errorsToExistClientByUIAndEnterpriseOwnerEmail(@Valid ClientUIAndEnterpriseOwnerEmailDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
+		eS.addErrorsIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
+
+		return errors;
+	}
+
+	public List<String> errorsToExistClientByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
+		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		return errors;
 	}
 

@@ -48,7 +48,7 @@ public class Enterprise {
 	@JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
 	private List<FinalClient> finalClients;
 
-	@OneToMany(mappedBy = "enterprise", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")

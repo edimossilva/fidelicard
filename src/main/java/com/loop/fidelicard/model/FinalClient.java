@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 
@@ -94,6 +95,11 @@ public class FinalClient implements Serializable {
 
 	public ResponseFinalClientDTO toResponseFinalClientDTO() {
 		return new ResponseFinalClientDTO(this);
+	}
+
+	public FinalClient(FinalClientAndEnterpriseIdDTO dto) {
+		setEmail(dto.getFinalClientEmail());
+		setUniqueIdentifier(dto.getFinalClienteUniqueIdentifier());
 	}
 
 }
