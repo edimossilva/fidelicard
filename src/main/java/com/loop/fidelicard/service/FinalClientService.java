@@ -60,7 +60,7 @@ public class FinalClientService {
 	}
 
 	public FinalClient findClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO) {
-		FinalClient finalClient = findByUI(clientUIAndEnterpriseIdDTO.getFinalClientUI());
+		FinalClient finalClient = findByUI(clientUIAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier());
 		Enterprise enterprise = enterpriseService.findById(clientUIAndEnterpriseIdDTO.getEnterpriseId());
 		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
 		Offer offer = offerService.findOfferByFinalClient(offers, finalClient);
@@ -89,7 +89,7 @@ public class FinalClientService {
 	}
 
 	public Card findClientCardByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = findByUI(dto.getFinalClientUI());
+		FinalClient finalClient = findByUI(dto.getFinalClienteUniqueIdentifier());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Card card = cardService.findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
@@ -104,16 +104,16 @@ public class FinalClientService {
 				.findByOwnerEmail(finalClientAndEnterpriseOwnerEmailDTO.getEnterpriseOwnerEmail());
 		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
 		Offer offer = offers.get(0);
-		Card card = cardService.createCardWithStampFromFinalClientAndOffer(finalClient, offer);
+		Card card = cardService.createWithStampFromFinalClientAndOffer(finalClient, offer);
 		return card;
 	}
 
 	public Card createWithStamp(FinalClientAndEnterpriseIdDTO dto) {
 		FinalClient finalClient = new FinalClient(dto);
 		save(finalClient);
-		
+
 		Offer offer = offerService.findByEnterpriseId(dto.getEnterpriseId());
-		Card card = cardService.createCardWithStampFromFinalClientAndOffer(finalClient, offer);
+		Card card = cardService.createWithStampFromFinalClientAndOffer(finalClient, offer);
 
 		return card;
 	}
@@ -135,7 +135,9 @@ public class FinalClientService {
 		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-
+		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClienteUniqueIdentifier(),
+				dto.getEnterpriseId(), errors);
+	
 		return errors;
 	}
 
@@ -149,7 +151,7 @@ public class FinalClientService {
 
 	public List<String> errorsToExistClientByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
-		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClienteUniqueIdentifier(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		return errors;

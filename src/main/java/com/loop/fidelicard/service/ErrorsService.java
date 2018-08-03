@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.controller.validator.MyValidator;
+import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
@@ -20,6 +21,8 @@ public class ErrorsService {
 	private FinalClientService finalClientService;
 	@Autowired
 	private LoginUserService loginUserService;
+	@Autowired
+	private CardService cardService;
 
 	@Autowired
 	OfferService offerService;
@@ -112,6 +115,15 @@ public class ErrorsService {
 		String errorMessage = "Ja existe cliente com o email [" + email + "]";
 		FinalClient finalClient = finalClientService.findByEmail(email);
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, finalClient);
+	}
+
+	public void addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(String finalClientUI, Long enterpriseId,
+			List<String> errors) {
+		String errorMessage = "Ja existe cartao para o cliente com UI [" + finalClientUI + "] na empresa com id ["
+				+ enterpriseId + "]";
+		Card card = cardService.findByFinalClientUIAndEnterpriseId(finalClientUI, enterpriseId);
+		MyValidator.addErrorsWhenNotNull(errors, errorMessage, card);
+
 	}
 
 }

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
-import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
 import com.loop.fidelicard.security.dto.LoginUserIdDTO;
@@ -40,30 +39,32 @@ public class EnterpriseController {
 		return GenericsUtil.objectToResponse(enterpriseDTOList);
 	}
 
-	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/v1/enterprise", method = POST)
 	public ResponseEntity save(@Valid @RequestBody EnterpriseDTO enterpriseDTO, BindingResult result) {
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
 		}
-		
+
 		List<String> errors = enterpriseService.errorsToSave(enterpriseDTO);
-		if(!errors.isEmpty()) {
+		if (!errors.isEmpty()) {
 			return GenericsUtil.errorsToResponse(errors);
 		}
-		
+
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
-		
+
 		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
 	}
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise/addFinalClientToEnterprise", method = POST)
-	public ResponseEntity addFinalClientToEnterprise(@RequestBody FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
-		Enterprise enterprise = enterpriseService.addFinalClientToEnterprise(enterpriseFinalClientDTO);
-		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
-	}
+	// @SuppressWarnings("rawtypes")
+	// @RequestMapping(value = "/enterprise/addFinalClientToEnterprise", method =
+	// POST)
+	// public ResponseEntity addFinalClientToEnterprise(@RequestBody
+	// FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
+	// Enterprise enterprise =
+	// enterpriseService.addFinalClientToEnterprise(enterpriseFinalClientDTO);
+	// return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
+	// }
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/enterprise/findByLoginUserId", method = POST)

@@ -69,8 +69,8 @@ public class CardServiceTest {
 		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer().getId());
-		expectedResponseCardDTO.setAtualQuantity(1);
-		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer().getQuantity());
+		expectedResponseCardDTO.setAtualStampQuantity(1);
+		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
@@ -91,8 +91,8 @@ public class CardServiceTest {
 		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
-		expectedResponseCardDTO.setAtualQuantity(2);
-		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer2().getQuantity());
+		expectedResponseCardDTO.setAtualStampQuantity(2);
+		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
@@ -114,8 +114,8 @@ public class CardServiceTest {
 		expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
-		expectedResponseCardDTO.setAtualQuantity(MyMock.getOffer2().getQuantity());
-		expectedResponseCardDTO.setMaxQuantity(MyMock.getOffer2().getQuantity());
+		expectedResponseCardDTO.setAtualStampQuantity(MyMock.getOffer2().getQuantity());
+		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}

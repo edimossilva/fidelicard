@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -100,6 +101,9 @@ public class CardService {
 
 	public Boolean isFull(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+		if (card == null) {
+			return false;
+		}
 		return card.isFull();
 	}
 
@@ -133,14 +137,32 @@ public class CardService {
 	public Card findByClientIdAndEnterpriseIdDTO(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
+		if (finalClient == null) {
+			return null;
+		}
 		return finalClient.getCardByEnterprise(enterprise);
 	}
 
-	public Card createCardWithStampFromFinalClientAndOffer(FinalClient finalClient, Offer offer) {
+	public Card findByFinalClientUIAndEnterpriseId(String finalClientUI, Long enterpriseId) {
+		FinalClient finalClient = finalClientService.findByUI(finalClientUI);
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		Card card = findByFinalClientAndEnterprise(finalClient, enterprise);
+		return card;
+	}
+
+	public Card createWithStampFromFinalClientAndOffer(FinalClient finalClient, Offer offer) {
 		Card card = new Card(finalClient, offer);
 		card = cardRepository.save(card);
 		stampService.addNewStamp(card);
 
+		return card;
+	}
+
+	public Card createWithStamp(ClientUIAndEnterpriseIdDTO dto) {
+		FinalClient finalClient = finalClientService.findByUI(dto.getFinalClienteUniqueIdentifier());
+		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
+		Offer offer = enterprise.getOffer();
+		Card card = createWithStampFromFinalClientAndOffer(finalClient, offer);
 		return card;
 	}
 
@@ -160,9 +182,22 @@ public class CardService {
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		if (!isFull(dto)) {
-			errors.add("O cartao do cliente com id [" + dto.getFinalClientId() + "] NAO esta cheio para a empresa com id ["
-					+ dto.getEnterpriseId() + "], para receber o premio eh preciso completa-lo");
+			errors.add(
+					"O cartao do cliente com id [" + dto.getFinalClientId() + "] NAO esta cheio para a empresa com id ["
+							+ dto.getEnterpriseId() + "], para receber o premio eh preciso completa-lo");
 		}
+		return errors;
+	}
+
+	public List<String> errorsToCreateWithStamp(ClientUIAndEnterpriseIdDTO dto) {
+		List<String> errors = new ArrayList<String>();
+
+		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClienteUniqueIdentifier(), errors);
+		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClienteUniqueIdentifier(),
+				dto.getEnterpriseId(), errors);
+
 		return errors;
 	}
 

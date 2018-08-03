@@ -72,7 +72,7 @@ public class FinalClientController {
 
 		} else {
 
-			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClientUI();
+			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.util.GenericsUtil;
@@ -104,7 +105,7 @@ public class CardController {
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
-	@RequestMapping(value = "/v1/card/getReward/", method = POST)
+	@RequestMapping(value = "/v1/card/getReward", method = POST)
 	public ResponseEntity getReward(@Valid @RequestBody ClientIdAndEnterpriseIdDTO dto, BindingResult result) {
 
 		if (result.hasErrors()) {
@@ -121,6 +122,25 @@ public class CardController {
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
 
+	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/v1/card/createWithStamp", method = POST)
+	public ResponseEntity createWithStamp(@Valid @RequestBody ClientUIAndEnterpriseIdDTO dto, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = cardService.errorsToCreateWithStamp(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		Card card = cardService.createWithStamp(dto);
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+	}
+	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/cardStatus/", method = POST)
 	public ResponseEntity findByClientIdAndEnterpriseIdDTO(

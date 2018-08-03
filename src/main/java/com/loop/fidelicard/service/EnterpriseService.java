@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.finalclient.FinalClientToEnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.repository.EnterpriseRepository;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.service.LoginUserService;
@@ -20,8 +18,6 @@ import com.loop.fidelicard.security.service.LoginUserService;
 public class EnterpriseService {
 	@Autowired
 	private EnterpriseRepository enterpriseRepository;
-	@Autowired
-	private FinalClientService finalClientService;
 	@Autowired
 	private LoginUserService loginUserService;
 	@Autowired
@@ -43,13 +39,16 @@ public class EnterpriseService {
 		return enterprise;
 	}
 
-	public Enterprise addFinalClientToEnterprise(FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
-		FinalClient finalCLient = finalClientService.findById(enterpriseFinalClientDTO.getFinalClientId());
-		Enterprise enterprise = enterpriseRepository.findById(enterpriseFinalClientDTO.getEnterpriseId());
-		enterprise.addFinalClient(finalCLient);
-		enterpriseRepository.save(enterprise);
-		return enterprise;
-	}
+	// public Enterprise addFinalClientToEnterprise(FinalClientToEnterpriseDTO
+	// enterpriseFinalClientDTO) {
+	// FinalClient finalCLient =
+	// finalClientService.findById(enterpriseFinalClientDTO.getFinalClientId());
+	// Enterprise enterprise =
+	// enterpriseRepository.findById(enterpriseFinalClientDTO.getEnterpriseId());
+	// enterprise.addFinalClient(finalCLient);
+	// enterpriseRepository.save(enterprise);
+	// return enterprise;
+	// }
 
 	public Enterprise findById(Long enterpriseId) {
 
@@ -93,7 +92,5 @@ public class EnterpriseService {
 		}
 		return loginUser.getEnterprise();
 	}
-
-
 
 }

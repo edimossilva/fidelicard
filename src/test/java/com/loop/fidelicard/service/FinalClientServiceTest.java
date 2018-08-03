@@ -84,7 +84,7 @@ public class FinalClientServiceTest {
 	public void testExistClientbyUICardInEnterpriseWHENExist() {
 		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
 		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
-		clientUIAndEnterpriseIdDTO.setFinalClientUI("anything");
+		clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier("anything");
 
 		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
 
@@ -95,7 +95,7 @@ public class FinalClientServiceTest {
 	public void testExistClientbyUICardInEnterpriseWHENexist() {
 		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
 		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
-		clientUIAndEnterpriseIdDTO.setFinalClientUI(MyMock.getFinalClient2().getUniqueIdentifier());
+		clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
 
 		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
 
@@ -112,7 +112,7 @@ public class FinalClientServiceTest {
 		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
 		dto.setEnterpriseId(MyMock.getEnterprise().getId());
 
-		dto.setFinalClientUI(MyMock.getFinalClient().getUniqueIdentifier());
+		dto.setFinalClienteUniqueIdentifier(MyMock.getFinalClient().getUniqueIdentifier());
 		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
 		assertNull(card);
 	}

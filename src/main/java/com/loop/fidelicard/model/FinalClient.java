@@ -10,13 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
@@ -53,9 +51,9 @@ public class FinalClient implements Serializable {
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "finalClients")
-	private List<Enterprise> enterprises;
+	// @JsonIgnore
+	// @ManyToMany(mappedBy = "finalClients")
+	// private List<Enterprise> enterprises;
 
 	public FinalClient(FinalClientCreateDTO finalClientDTO) {
 		setUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
