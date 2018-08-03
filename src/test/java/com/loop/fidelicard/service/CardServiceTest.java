@@ -17,6 +17,7 @@ import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
+import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.security.service.LoginUserService;
 
 @RunWith(SpringRunner.class)
@@ -75,7 +76,6 @@ public class CardServiceTest {
 		assertEquals(expectedResponseCardDTO, card.toResponseCardDTO());
 	}
 
-	
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWith2Stamps() {
 		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
@@ -138,4 +138,23 @@ public class CardServiceTest {
 		assertEquals(0, card.getStampQuantity());
 	}
 
+	@Test
+	public void testSetRewardReceived() {
+		Card card = MyMock.getCard2();
+		Offer offer = MyMock.getOffer2();
+		while (card.getStamps().size() < offer.getQuantity()) {
+			stampService.addStampAndSave(card);
+		}
+
+		int stampQuantity = card.getStamps().size();
+		int expectedStampQuanity = offer.getQuantity();
+
+		assertEquals(expectedStampQuanity, stampQuantity);
+
+		ClientIdAndEnterpriseIdDTO dto = new ClientIdAndEnterpriseIdDTO();
+		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
+		dto.setFinalClientId(MyMock.getFinalClient2().getId());
+		card = cardService.setRewardReceivedCard(dto);
+		assertEquals(0, card.getNormalizedQuantity());
+	}
 }

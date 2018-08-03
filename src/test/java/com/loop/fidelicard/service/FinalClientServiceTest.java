@@ -64,8 +64,8 @@ public class FinalClientServiceTest {
 	@Test
 	public void testSave() {
 		FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
-		String email = "clientemail@gmail.com";
-		String uniqueIdentifier = "54321";
+		String email = "newclientemail@gmail.com";
+		String uniqueIdentifier = "654321";
 
 		finalClientCreateDTO.setEmail(email);
 		finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);

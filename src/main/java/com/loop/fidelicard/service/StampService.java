@@ -50,6 +50,7 @@ public class StampService {
 			card.setStamps(new ArrayList<Stamp>());
 		}
 		card.getStamps().add(stamp);
+		card.setRewardReceived(false);
 		return stamp;
 	}
 
@@ -84,7 +85,7 @@ public class StampService {
 
 	public Card cleanCard(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-		card = cardService.removeAllStamps(card);
+		card = cardService.removeAllStampsAndSave(card);
 		return card;
 	}
 
@@ -102,14 +103,16 @@ public class StampService {
 		return errors;
 	}
 
-	
-
 	public List<String> errorsToAddStampByFinalClientIdAndEnterpriseId(ClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
+		if (cardService.isFull(dto)) {
+			errors.add("O cartao do cliente com id [" + dto.getFinalClientId() + "] esta cheio para a empresa com id ["
+					+ dto.getEnterpriseId() + "]");
+		}
 
 		return errors;
 	}

@@ -30,7 +30,7 @@ import com.loop.fidelicard.util.GenericsUtil;
 public class CardController {
 	@Autowired
 	private CardService cardService;
-	
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card", method = GET)
 	public ResponseEntity index() {
@@ -85,10 +85,8 @@ public class CardController {
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/card/cleanCard/", method = POST)
-	public ResponseEntity cleanCard(@Valid @RequestBody ClientIdAndEnterpriseIdDTO dto,
-			BindingResult result) {
+	public ResponseEntity cleanCard(@Valid @RequestBody ClientIdAndEnterpriseIdDTO dto, BindingResult result) {
 
-		
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
 		}
@@ -99,7 +97,27 @@ public class CardController {
 		}
 
 		Card card = cardService.cleanCard(dto);
-		
+
+		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+	}
+	// v1/card/getReward/
+
+	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/v1/card/getReward/", method = POST)
+	public ResponseEntity getReward(@Valid @RequestBody ClientIdAndEnterpriseIdDTO dto, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = cardService.errorsToGetReward(dto);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		Card card = cardService.setRewardReceivedCard(dto);
+
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 	}
 

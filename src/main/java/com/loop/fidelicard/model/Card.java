@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Card implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -53,6 +54,9 @@ public class Card implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Offer offer;
 
+	@Column(name = "rewardReceivede")
+	private boolean RewardReceived;
+
 	public Card(FinalClient finalClient, Offer offer) {
 		setFinalClient(finalClient);
 		setOffer(offer);
@@ -66,7 +70,7 @@ public class Card implements Serializable {
 		int offerQuantity = getOffer().getQuantity();
 
 		if (isFull()) {
-			if (stampQuantity == 0) {
+			if (isRewardReceived()) {
 				return 0;
 			} else {
 				return offerQuantity;
@@ -81,6 +85,8 @@ public class Card implements Serializable {
 		int stampQuantity = getStamps().size();
 		int offerQuantity = getOffer().getQuantity();
 		if (stampQuantity == 0) {
+			return false;
+		} else if (isRewardReceived()) {
 			return false;
 		}
 		return stampQuantity % offerQuantity == 0;

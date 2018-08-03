@@ -107,14 +107,26 @@ public class CardService {
 		cardRepository.delete(findById(id));
 	}
 
-	public Card removeAllStamps(Card card) {
+	public Card removeAllStampsAndSave(Card card) {
 		card.getStamps().clear();
 		return cardRepository.save(card);
 	}
 
-	public Card cleanCard(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-		card = removeAllStamps(card);
+	private Card setRewardReceivedCardAndSave(Card card) {
+		card.setRewardReceived(true);
+		cardRepository.save(card);
+		return card;
+	}
+
+	public Card cleanCard(ClientIdAndEnterpriseIdDTO dto) {
+		Card card = findByClientIdAndEnterpriseIdDTO(dto);
+		card = removeAllStampsAndSave(card);
+		return card;
+	}
+
+	public Card setRewardReceivedCard(ClientIdAndEnterpriseIdDTO dto) {
+		Card card = findByClientIdAndEnterpriseIdDTO(dto);
+		card = setRewardReceivedCardAndSave(card);
 		return card;
 	}
 
@@ -138,6 +150,19 @@ public class CardService {
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 
+		return errors;
+	}
+
+	public List<String> errorsToGetReward(ClientIdAndEnterpriseIdDTO dto) {
+		List<String> errors = new ArrayList<String>();
+
+		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
+		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
+		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
+		if (!isFull(dto)) {
+			errors.add("O cartao do cliente com id [" + dto.getFinalClientId() + "] NAO esta cheio para a empresa com id ["
+					+ dto.getEnterpriseId() + "], para receber o premio eh preciso completa-lo");
+		}
 		return errors;
 	}
 
