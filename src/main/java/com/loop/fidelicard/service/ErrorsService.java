@@ -102,7 +102,7 @@ public class ErrorsService {
 
 	}
 
-	public void addErrosIfFinalClientByIdNotExist(Long finalClientId, List<String> errors) {
+	public void addErrorsIfFinalClientByIdNotExist(Long finalClientId, List<String> errors) {
 		String errorMessage = "Nao existe cliente com o id [" + finalClientId + "]";
 		FinalClient finalClient = finalClientService.findById(finalClientId);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, finalClient);

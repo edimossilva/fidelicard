@@ -2,7 +2,7 @@ package com.loop.fidelicard.mock;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
@@ -130,7 +130,7 @@ public class MyMock {
 	}
 
 	public static void createCard2(CardService cardService) {
-		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
+		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 

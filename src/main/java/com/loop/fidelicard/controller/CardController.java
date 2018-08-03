@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.util.GenericsUtil;
@@ -59,7 +59,7 @@ public class CardController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/createWithStamp/", method = POST)
-	public ResponseEntity createWithStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public ResponseEntity createWithStamp(@RequestBody ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = cardService.createCardWithStampFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		ResponseCardDTO responseCardDTO = new ResponseCardDTO(card);
 
@@ -68,7 +68,7 @@ public class CardController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/isBeforeLastStamp/", method = POST)
-	public ResponseEntity isLastStamp(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public ResponseEntity isLastStamp(@RequestBody ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Boolean isLastStamp = cardService.isBeforeLastStamp(clientIDAndEnterpriseIdDTO);
 
 		return GenericsUtil.objectToResponse(isLastStamp);
@@ -76,7 +76,7 @@ public class CardController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/isLastStamp/", method = POST)
-	public ResponseEntity isFull(@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public ResponseEntity isFull(@RequestBody ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Boolean isFull = cardService.isFull(clientIDAndEnterpriseIdDTO);
 
 		return GenericsUtil.objectToResponse(isFull);
@@ -85,7 +85,7 @@ public class CardController {
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/card/cleanCard/", method = POST)
-	public ResponseEntity cleanCard(@Valid @RequestBody ClientIDAndEnterpriseIdDTO dto,
+	public ResponseEntity cleanCard(@Valid @RequestBody ClientIdAndEnterpriseIdDTO dto,
 			BindingResult result) {
 
 		
@@ -106,7 +106,7 @@ public class CardController {
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/cardStatus/", method = POST)
 	public ResponseEntity findByClientIdAndEnterpriseIdDTO(
-			@RequestBody ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+			@RequestBody ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = cardService.findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());

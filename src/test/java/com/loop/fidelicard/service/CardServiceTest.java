@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.security.service.LoginUserService;
@@ -58,7 +58,7 @@ public class CardServiceTest {
 
 	@Test
 	public void testCreateCardFromClientIDAndEnterpriseIdDTO() {
-		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
+		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 
@@ -78,7 +78,7 @@ public class CardServiceTest {
 	
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWith2Stamps() {
-		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
+		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 
@@ -99,7 +99,7 @@ public class CardServiceTest {
 
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWithMaxStamps() {
-		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
+		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 
@@ -131,7 +131,7 @@ public class CardServiceTest {
 
 		assertEquals(expectedStampQuanity, stampQuantity);
 
-		ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIDAndEnterpriseIdDTO();
+		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		card = cardService.cleanCard(clientIDAndEnterpriseIdDTO);

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.card.CardDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIDAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -75,7 +75,7 @@ public class CardService {
 	}
 
 	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(
-			ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+			ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
 		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
@@ -89,7 +89,7 @@ public class CardService {
 		return card;
 	}
 
-	public Boolean isBeforeLastStamp(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Boolean isBeforeLastStamp(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return card.isAlmostFull();
 	}
@@ -98,7 +98,7 @@ public class CardService {
 		return cardRepository.save(card);
 	}
 
-	public Boolean isFull(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Boolean isFull(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return card.isFull();
 	}
@@ -112,13 +112,13 @@ public class CardService {
 		return cardRepository.save(card);
 	}
 
-	public Card cleanCard(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card cleanCard(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		card = removeAllStamps(card);
 		return card;
 	}
 
-	public Card findByClientIdAndEnterpriseIdDTO(ClientIDAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card findByClientIdAndEnterpriseIdDTO(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		return finalClient.getCardByEnterprise(enterprise);
@@ -132,10 +132,10 @@ public class CardService {
 		return card;
 	}
 
-	public List<String> errorsTocleanCard(@Valid ClientIDAndEnterpriseIdDTO dto) {
+	public List<String> errorsTocleanCard(@Valid ClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
-		eS.addErrosIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
+		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 
 		return errors;

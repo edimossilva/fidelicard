@@ -12,6 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.security.service.LoginUserService;
@@ -55,10 +56,26 @@ public class StampServiceTest {
 	}
 
 	@Test
-	public void testAddStampAndSave() {
+	public void testAddStampAndSaveByCard() {
 		Card card = MyMock.getCard2();
 		int stampQuantity = card.getStamps().size();
 		card = stampService.addStampAndSave(card);
+		int expectedStampQuanity = cardService.findById(card.getId()).getStamps().size();
+
+		assertEquals(expectedStampQuanity, stampQuantity + 1);
+
+	}
+
+	@Test
+	public void testAddStampByFinalClientIdAndEnterpriseId() {
+		Card card = MyMock.getCard2();
+		ClientIdAndEnterpriseIdDTO dto = new ClientIdAndEnterpriseIdDTO();
+		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
+		dto.setFinalClientId(MyMock.getFinalClient2().getId());
+		
+		int stampQuantity = card.getStamps().size();
+		card = stampService.addStampAndSave(dto);
+
 		int expectedStampQuanity = cardService.findById(card.getId()).getStamps().size();
 
 		assertEquals(expectedStampQuanity, stampQuantity + 1);

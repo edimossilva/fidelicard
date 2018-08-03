@@ -1,4 +1,4 @@
-	package com.loop.fidelicard.controller;
+package com.loop.fidelicard.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
-import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.UIDTO;
@@ -43,7 +42,6 @@ public class FinalClientController {
 
 		return GenericsUtil.objectToResponse(finalClientDTOList);
 	}
-	
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/finalClient/{id}", method = GET)
@@ -74,7 +72,6 @@ public class FinalClientController {
 
 		} else {
 
-			
 			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClientUI();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
@@ -99,18 +96,17 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		
 		Card card = finalClientService.findClientByUIAndEnterpriseOwnerEmail(dto);
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/v1/finalClient/existClientByUIAndEnterpriseId", method = POST)
-	public ResponseEntity existClientByUIAndEnterpriseId(
-			@Valid @RequestBody ClientUIAndEnterpriseIdDTO dto, BindingResult result) {
+	public ResponseEntity existClientByUIAndEnterpriseId(@Valid @RequestBody ClientUIAndEnterpriseIdDTO dto,
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
@@ -121,18 +117,16 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		
 		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
 
 		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
 
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/v1/finalClient/createWithStamp", method = POST)
-	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientAndEnterpriseIdDTO dto,
-			BindingResult result) {
+	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientAndEnterpriseIdDTO dto, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
