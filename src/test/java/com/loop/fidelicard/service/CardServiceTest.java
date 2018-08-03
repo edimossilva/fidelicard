@@ -15,8 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
+import com.loop.fidelicard.model.Enterprise;
+import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.security.service.LoginUserService;
 
@@ -156,5 +159,18 @@ public class CardServiceTest {
 		dto.setFinalClientId(MyMock.getFinalClient2().getId());
 		card = cardService.setRewardReceivedCard(dto);
 		assertEquals(0, card.getNormalizedQuantity());
+	}
+
+	@Test
+	public void testCreateWithStamp() {
+		Enterprise enterprise = MyMock.getEnterprise();
+		FinalClient finalClient2 = MyMock.getFinalClient2();
+
+		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
+		dto.setEnterpriseId(enterprise.getId());
+		dto.setFinalClienteUniqueIdentifier(finalClient2.getUniqueIdentifier());
+
+		Card card = cardService.createWithStamp(dto);
+		assertEquals(card.getStampQuantity(), 1);
 	}
 }
