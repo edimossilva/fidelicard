@@ -17,16 +17,19 @@ public class ResponseCardDTO {
 	private @NonNull Long id;
 	private @NonNull Long offerId;
 	private @NonNull Long enterpriseId;
-	private @NonNull Integer atualQuantity;
-	private @NonNull Integer maxQuantity;
+	private @NonNull Integer atualStampQuantity;
+	private @NonNull Integer maxStampQuantity;
+	//private @NonNull Integer totalStampQuantity;
+
 	private @NonNull ResponseFinalClientDTO finalClient;
 
 	public ResponseCardDTO(Card card) {
 		setId(card.getId());
 		setOfferId(card.getOffer().getId());
 		setEnterpriseId(card.getOffer().getEnterprise().getId());
-		setAtualQuantity(card.getNormalizedQuantity());
-		setMaxQuantity(card.getOffer().getQuantity());
+		setAtualStampQuantity(card.getNormalizedQuantity());
+		setMaxStampQuantity(card.getOffer().getQuantity());
+		//setTotalStampQuantity(card.getStamps().size());
 		setFinalClient(card.getFinalClient().toResponseFinalClientDTO());
 	}
 }
