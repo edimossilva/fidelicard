@@ -14,6 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
@@ -185,14 +186,14 @@ public class FinalClientServiceTest {
 		dto.setFinalClienteUniqueIdentifier(uniqueIdentifier);
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 
-		Card card = finalClientService.createWithStamp(dto);
-
+		ResponseFinalClientDTO responseFinalClientDTO = finalClientService.createWithStamp(dto);
+		ResponseCardDTO card =responseFinalClientDTO.getCard();
 		assertNotNull(card);
 
-		assertEquals(1, card.getStampQuantity());
-		assertNotNull(card.getFinalClient().getId());
-		assertEquals(newClientEmail, card.getFinalClient().getEmail());
-		assertEquals(uniqueIdentifier, card.getFinalClient().getUniqueIdentifier());
+		assertEquals(1, card.getAtualStampQuantity().intValue());
+		assertNotNull(card.getFinalClientId());
+		assertEquals(newClientEmail, responseFinalClientDTO.getEmail());
+		assertEquals(uniqueIdentifier, responseFinalClientDTO.getUniqueIdentifier());
 
 	}
 }
