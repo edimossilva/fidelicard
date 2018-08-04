@@ -1,6 +1,7 @@
 package com.loop.fidelicard.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
+import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
@@ -109,6 +111,12 @@ public class FinalClient implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public List<ResponseCardDTO> getResponseCardsDTO() {
+		List<ResponseCardDTO> dTOList = new ArrayList<ResponseCardDTO>();
+		getCards().forEach(c -> dTOList.add(c.toResponseCardDTO()));
+		return dTOList;
 	}
 
 }

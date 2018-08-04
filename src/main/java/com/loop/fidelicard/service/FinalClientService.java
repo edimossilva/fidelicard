@@ -12,6 +12,7 @@ import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
+import com.loop.fidelicard.dto.finalclient.UIDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.model.Card;
@@ -123,7 +124,6 @@ public class FinalClientService {
 		Offer offer = offerService.findByEnterpriseId(dto.getEnterpriseId());
 		Card card = cardService.createWithStampFromFinalClientAndOffer(finalClient, offer);
 
-
 		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(card);
 
 		return responseFinalClientDTO;
@@ -165,8 +165,14 @@ public class FinalClientService {
 		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClienteUniqueIdentifier(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-//		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdNotExist(dto.getFinalClienteUniqueIdentifier(),
-//				dto.getEnterpriseId(), errors);
+		// eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdNotExist(dto.getFinalClienteUniqueIdentifier(),
+		// dto.getEnterpriseId(), errors);
+		return errors;
+	}
+
+	public List<String> errorsToGetAllCardsByUI(UIDTO dto) {
+		List<String> errors = new ArrayList<String>();
+		eS.addErrorsIfFinalClientByUINotExist(dto.getUniqueIdentifier(), errors);
 		return errors;
 	}
 

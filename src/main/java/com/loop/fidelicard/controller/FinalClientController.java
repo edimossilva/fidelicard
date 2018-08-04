@@ -72,7 +72,8 @@ public class FinalClientController {
 
 		} else {
 
-			String notFoundByUI = "User not found with UI = " + clientUiAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier();
+			String notFoundByUI = "User not found with UI = "
+					+ clientUiAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier();
 			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
 			String message = notFoundByUI + notFoundByEnterpriseId;
 
@@ -117,8 +118,9 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		//Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
-		ResponseFinalClientDTO finalClientResponseDTO = finalClientService.findClientResponseDTOByUIAndEnterpriseId(dto);
+		// Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
+		ResponseFinalClientDTO finalClientResponseDTO = finalClientService
+				.findClientResponseDTOByUIAndEnterpriseId(dto);
 
 		return GenericsUtil.objectToResponse(finalClientResponseDTO);
 
@@ -154,5 +156,23 @@ public class FinalClientController {
 			String message = "User not found with UI = " + uIDTO.getUniqueIdentifier();
 			return GenericsUtil.objectToResponse(message);
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
+	@RequestMapping(value = "/v1/finalClient/getAllCardsByUI", method = POST)
+	public ResponseEntity getAllCardsByUI(@Valid @RequestBody UIDTO uIDTO, BindingResult result) {
+		if (result.hasErrors()) {
+			return GenericsUtil.errorsToResponse(result);
+		}
+
+		List<String> errors = finalClientService.errorsToGetAllCardsByUI(uIDTO);
+		if (!errors.isEmpty()) {
+			return GenericsUtil.errorsToResponse(errors);
+		}
+
+		FinalClient finalClient = finalClientService.findByUI(uIDTO.getUniqueIdentifier());
+		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+
 	}
 }
