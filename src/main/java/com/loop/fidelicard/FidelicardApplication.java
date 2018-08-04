@@ -38,9 +38,9 @@ public class FidelicardApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
-			createAdminUser();
-			createEnterprise1();
-			createEnterprise2();
+//			createAdminUser();
+//			createEnterprise1();
+//			createEnterprise2();
 		};
 	}
 
