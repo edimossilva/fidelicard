@@ -117,9 +117,10 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
+		//Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
+		ResponseFinalClientDTO finalClientResponseDTO = finalClientService.findClientResponseDTOByUIAndEnterpriseId(dto);
 
-		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+		return GenericsUtil.objectToResponse(finalClientResponseDTO);
 
 	}
 
@@ -137,9 +138,9 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		Card card = finalClientService.createWithStamp(dto);
+		ResponseFinalClientDTO finalClientResponseDTO = finalClientService.createWithStamp(dto);
 
-		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+		return GenericsUtil.objectToResponse(finalClientResponseDTO);
 	}
 
 	@SuppressWarnings("rawtypes")

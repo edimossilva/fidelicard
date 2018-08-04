@@ -111,4 +111,8 @@ public class Card implements Serializable {
 	public int getStampQuantity() {
 		return getStamps().size();
 	}
+
+	public Enterprise getEnterprise() {
+		return getOffer().getEnterprise();
+	}
 }

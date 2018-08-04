@@ -100,4 +100,15 @@ public class FinalClient implements Serializable {
 		setUniqueIdentifier(dto.getFinalClienteUniqueIdentifier());
 	}
 
+	public Card findCardByEnterpriseId(Long enterpriseId) {
+		if (cards != null) {
+			for (Card card : cards) {
+				if (card.getEnterprise().getId() == enterpriseId) {
+					return card;
+				}
+			}
+		}
+		return null;
+	}
+
 }

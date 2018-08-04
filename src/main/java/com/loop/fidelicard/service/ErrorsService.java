@@ -126,4 +126,13 @@ public class ErrorsService {
 
 	}
 
+	public void addErrorsIfCardByFinalClientUIAndEnterpriseIdNotExist(String finalClientUI,
+			Long enterpriseId, List<String> errors) {
+		String errorMessage = "Nao existe cartao para o cliente com UI [" + finalClientUI + "] na empresa com id ["
+				+ enterpriseId + "]";
+		Card card = cardService.findByFinalClientUIAndEnterpriseId(finalClientUI, enterpriseId);
+		MyValidator.addErrorsWhenNull(errors, errorMessage, card);
+
+	}
+
 }

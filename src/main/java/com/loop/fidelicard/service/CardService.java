@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.card.CardDTO;
+import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
@@ -54,7 +55,8 @@ public class CardService {
 	}
 
 	public Card findByFinalClientAndEnterprise(FinalClient finalClient, Enterprise enterprise) {
-		Offer offer = enterprise.getOffers().get(0);
+		List<Offer> offers =enterprise.getOffers();
+		Offer offer = offers.get(0);
 
 		return findByFinalClientAndOffer(finalClient, offer);
 	}
@@ -146,6 +148,7 @@ public class CardService {
 	public Card findByFinalClientUIAndEnterpriseId(String finalClientUI, Long enterpriseId) {
 		FinalClient finalClient = finalClientService.findByUI(finalClientUI);
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		System.out.println(enterpriseId);
 		Card card = findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
 	}
@@ -158,12 +161,13 @@ public class CardService {
 		return card;
 	}
 
-	public Card createWithStamp(ClientUIAndEnterpriseIdDTO dto) {
+	public ResponseFinalClientDTO createWithStamp(ClientUIAndEnterpriseIdDTO dto) {
 		FinalClient finalClient = finalClientService.findByUI(dto.getFinalClienteUniqueIdentifier());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Offer offer = enterprise.getOffer();
 		Card card = createWithStampFromFinalClientAndOffer(finalClient, offer);
-		return card;
+		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(card.getFinalClient(), card);
+		return responseFinalClientDTO;
 	}
 
 	public List<String> errorsTocleanCard(@Valid ClientIdAndEnterpriseIdDTO dto) {
