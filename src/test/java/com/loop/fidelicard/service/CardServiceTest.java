@@ -175,6 +175,6 @@ public class CardServiceTest {
 		dto.setFinalClienteUniqueIdentifier(finalClient2.getUniqueIdentifier());
 
 		ResponseFinalClientDTO responseFinalClientDTO = cardService.createWithStamp(dto);
-		assertEquals(responseFinalClientDTO.getCard().getAtualStampQuantity().intValue(), 1);
+		assertEquals(responseFinalClientDTO.getCards().get(0).getAtualStampQuantity().intValue(), 1);
 	}
 }

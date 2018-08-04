@@ -187,7 +187,7 @@ public class FinalClientServiceTest {
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 
 		ResponseFinalClientDTO responseFinalClientDTO = finalClientService.createWithStamp(dto);
-		ResponseCardDTO card =responseFinalClientDTO.getCard();
+		ResponseCardDTO card =responseFinalClientDTO.getCards().get(0);
 		assertNotNull(card);
 
 		assertEquals(1, card.getAtualStampQuantity().intValue());
