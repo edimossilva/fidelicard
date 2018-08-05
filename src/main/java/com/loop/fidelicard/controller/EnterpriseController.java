@@ -34,7 +34,7 @@ public class EnterpriseController {
 	@RequestMapping(value = "/enterprise", method = GET)
 	public ResponseEntity index() {
 		List<ResponseEnterpriseWithLoginUserDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseWithLoginUserDTO>();
-		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(e.toResponseEnterpriseDTO()));
+		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(e.toResponseEnterpriseWithLoginUserDTO()));
 
 		return GenericsUtil.objectToResponse(enterpriseDTOList);
 	}
@@ -53,7 +53,7 @@ public class EnterpriseController {
 
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
 
-		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
+		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
 	}
 
 	// @SuppressWarnings("rawtypes")
@@ -71,7 +71,7 @@ public class EnterpriseController {
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserIdDTO enterpriseFinalClientDTO) {
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUserId(enterpriseFinalClientDTO.getLoginUserId());
 		if (enterprise != null) {
-			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
+			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
 		} else {
 			String message = "Enterprise not found for loginUser with id = "
 					+ enterpriseFinalClientDTO.getLoginUserId();
@@ -84,7 +84,7 @@ public class EnterpriseController {
 	public ResponseEntity findByLoginUserId(@RequestBody LoginUserEmailDTO loginUserEmailDTO) {
 		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
 		if (enterprise != null) {
-			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
+			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
 		} else {
 			String message = "Enterprise not found for loginUser with email = " + loginUserEmailDTO.getLoginUserEmail();
 			return GenericsUtil.objectToResponse(message);

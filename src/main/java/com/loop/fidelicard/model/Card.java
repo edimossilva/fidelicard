@@ -19,6 +19,7 @@ import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
+import com.loop.fidelicard.dto.consumer.ConsumerCardDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -121,5 +122,9 @@ public class Card implements Serializable {
 		List<ResponseCardDTO> dtoList = new ArrayList<>();
 		dtoList.add(this.toResponseCardDTO());
 		return dtoList;
+	}
+
+	public ConsumerCardDTO toConsumerCardDTO() {
+		return new ConsumerCardDTO(this);
 	}
 }

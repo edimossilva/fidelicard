@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
+import com.loop.fidelicard.dto.consumer.ConsumerCardDTO;
+import com.loop.fidelicard.dto.consumer.ConsumerFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
@@ -97,6 +99,10 @@ public class FinalClient implements Serializable {
 		return new ResponseFinalClientDTO(this);
 	}
 
+	public ConsumerFinalClientDTO toConsumerFinalClientDTO() {
+		return new ConsumerFinalClientDTO(this);
+	}
+
 	public FinalClient(FinalClientAndEnterpriseIdDTO dto) {
 		setEmail(dto.getFinalClientEmail());
 		setUniqueIdentifier(dto.getFinalClienteUniqueIdentifier());
@@ -114,8 +120,19 @@ public class FinalClient implements Serializable {
 	}
 
 	public List<ResponseCardDTO> getResponseCardsDTO() {
-		List<ResponseCardDTO> dTOList = new ArrayList<ResponseCardDTO>();
-		getCards().forEach(c -> dTOList.add(c.toResponseCardDTO()));
+		List<ResponseCardDTO> dTOList = new ArrayList<>();
+		if (getCards() != null) {
+			getCards().forEach(c -> dTOList.add(c.toResponseCardDTO()));
+		}
+		return dTOList;
+	}
+
+	public List<ConsumerCardDTO> getConsumerCardsDTO() {
+		List<ConsumerCardDTO> dTOList = new ArrayList<>();
+		if (getCards() != null) {
+			getCards().forEach(c -> dTOList.add(c.toConsumerCardDTO()));
+		}
+
 		return dTOList;
 	}
 

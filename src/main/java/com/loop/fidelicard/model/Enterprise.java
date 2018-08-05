@@ -15,7 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
+import com.loop.fidelicard.dto.consumer.ConsumerEnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
+import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 
@@ -41,9 +43,11 @@ public class Enterprise {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
-//	private List<FinalClient> finalClients;
+	// @ManyToMany(cascade = CascadeType.ALL)
+	// @JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name =
+	// "client_id", referencedColumnName = "id"), inverseJoinColumns =
+	// @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
+	// private List<FinalClient> finalClients;
 
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
@@ -62,16 +66,24 @@ public class Enterprise {
 	// getFinalClients().add(finalCLient);
 	// }
 
-	public ResponseEnterpriseWithLoginUserDTO toResponseEnterpriseDTO() {
-		return new ResponseEnterpriseWithLoginUserDTO(this);
-	}
-
 	public String getOwnerLoginUserEmail() {
 		return getOwnerLoginUser().getEmail();
 	}
 
 	public Offer getOffer() {
 		return getOffers().get(0);
+	}
+
+	public ResponseEnterpriseWithLoginUserDTO toResponseEnterpriseWithLoginUserDTO() {
+		return new ResponseEnterpriseWithLoginUserDTO(this);
+	}
+
+	public ResponseEnterpriseDTO toResponseEnterpriseDTO() {
+		return new ResponseEnterpriseDTO(this);
+	}
+
+	public ConsumerEnterpriseDTO toConsumerEnterpriseDTO() {
+		return new ConsumerEnterpriseDTO(this);
 	}
 
 }

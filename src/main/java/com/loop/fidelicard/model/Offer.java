@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.loop.fidelicard.dto.consumer.ConsumerOfferDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.dto.offer.ResponseOfferDTO;
 
@@ -70,6 +71,10 @@ public class Offer implements Serializable {
 
 	public ResponseOfferDTO toResponseOfferDTO() {
 		return new ResponseOfferDTO(this);
+	}
+
+	public ConsumerOfferDTO toConsumerOfferDTO() {
+		return new ConsumerOfferDTO(this);
 	}
 
 }

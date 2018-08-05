@@ -62,7 +62,7 @@ public class EnterpriseServiceTest {
 		expectedResponseEnterpriseDTO.setName(name);
 		expectedResponseEnterpriseDTO.setOwnerLoginUser(loginUser.toResponseLoginUserDTO());
 
-		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseDTO());
+		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseWithLoginUserDTO());
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class EnterpriseServiceTest {
 		expectedResponseEnterpriseDTO.setOwnerLoginUser(enterprise.getOwnerLoginUser().toResponseLoginUserDTO());
 		expectedResponseEnterpriseDTO.setName(MyMock.ENTERPRISE_NAME);
 
-		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseDTO());
+		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseWithLoginUserDTO());
 	}
 
 	

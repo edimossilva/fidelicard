@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.dto.consumer.ConsumerFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
@@ -59,28 +60,31 @@ public class FinalClientController {
 		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
 	}
 
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise", method = POST)
-	public ResponseEntity existClientbyUICardInEnterprise(
-			@RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
-
-		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
-
-		if (finalClient != null) {
-
-			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
-
-		} else {
-
-			String notFoundByUI = "User not found with UI = "
-					+ clientUiAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier();
-			String notFoundByEnterpriseId = " and enterprise id = " + clientUiAndEnterpriseIdDTO.getEnterpriseId();
-			String message = notFoundByUI + notFoundByEnterpriseId;
-
-			return GenericsUtil.objectToResponse(message);
-
-		}
-	}
+	// @SuppressWarnings("rawtypes")
+	// @RequestMapping(value = "/finalClient/existClientbyUICardInEnterprise",
+	// method = POST)
+	// public ResponseEntity existClientbyUICardInEnterprise(
+	// @RequestBody ClientUIAndEnterpriseIdDTO clientUiAndEnterpriseIdDTO) {
+	//
+	// FinalClient finalClient =
+	// finalClientService.findClientByUICardInEnterprise(clientUiAndEnterpriseIdDTO);
+	//
+	// if (finalClient != null) {
+	//
+	// return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+	//
+	// } else {
+	//
+	// String notFoundByUI = "User not found with UI = "
+	// + clientUiAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier();
+	// String notFoundByEnterpriseId = " and enterprise id = " +
+	// clientUiAndEnterpriseIdDTO.getEnterpriseId();
+	// String message = notFoundByUI + notFoundByEnterpriseId;
+	//
+	// return GenericsUtil.objectToResponse(message);
+	//
+	// }
+	// }
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
@@ -171,8 +175,9 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		FinalClient finalClient = finalClientService.findByUI(uIDTO.getUniqueIdentifier());
-		return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
+		ConsumerFinalClientDTO dto = finalClientService
+				.findConsumerFinalClientByUI(uIDTO.getUniqueIdentifier());
+		return GenericsUtil.objectToResponse(dto);
 
 	}
 }

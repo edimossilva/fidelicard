@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.loop.fidelicard.dto.consumer.ConsumerFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
@@ -61,16 +62,19 @@ public class FinalClientService {
 		return finalClientRepository.findByUniqueIdentifier(uniqueIdentifir);
 	}
 
-	public FinalClient findClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO) {
-		FinalClient finalClient = findByUI(clientUIAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier());
-		Enterprise enterprise = enterpriseService.findById(clientUIAndEnterpriseIdDTO.getEnterpriseId());
-		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
-		Offer offer = offerService.findOfferByFinalClient(offers, finalClient);
-		if (offer != null) {
-			return finalClient;
-		}
-		return null;
-	}
+	// public FinalClient findClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO
+	// clientUIAndEnterpriseIdDTO) {
+	// FinalClient finalClient =
+	// findByUI(clientUIAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier());
+	// Enterprise enterprise =
+	// enterpriseService.findById(clientUIAndEnterpriseIdDTO.getEnterpriseId());
+	// List<Offer> offers = offerService.findAllByEnterprise(enterprise);
+	// Offer offer = offerService.findOfferByFinalClient(offers, finalClient);
+	// if (offer != null) {
+	// return finalClient;
+	// }
+	// return null;
+	// }
 
 	public void save(FinalClient finalClient) {
 		finalClientRepository.save(finalClient);
@@ -102,6 +106,11 @@ public class FinalClientService {
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Card card = cardService.findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
+	}
+
+	public ConsumerFinalClientDTO findConsumerFinalClientByUI(String uniqueIdentifier) {
+		FinalClient finalClient = findByUI(uniqueIdentifier);
+		return finalClient.toConsumerFinalClientDTO();
 	}
 
 	public Card createWithStamp(FinalClientAndEnterpriseOwnerEmailDTO finalClientAndEnterpriseOwnerEmailDTO) {

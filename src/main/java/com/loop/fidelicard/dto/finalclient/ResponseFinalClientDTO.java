@@ -12,11 +12,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class ResponseFinalClientDTO {
 	private @NonNull Long id;
 	private @NonNull String uniqueIdentifier;
