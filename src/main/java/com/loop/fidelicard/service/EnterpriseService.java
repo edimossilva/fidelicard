@@ -12,7 +12,7 @@ import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.repository.EnterpriseRepository;
 import com.loop.fidelicard.security.model.LoginUser;
-import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.security.model.LoginUserService;
 
 @Service
 public class EnterpriseService {

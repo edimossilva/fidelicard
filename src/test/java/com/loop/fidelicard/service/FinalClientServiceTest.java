@@ -26,7 +26,7 @@ import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseOwnerEmailDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.FinalClient;
-import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.security.model.LoginUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

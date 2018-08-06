@@ -16,7 +16,7 @@ import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.dto.offer.ResponseOfferDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.security.model.LoginUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,12 +29,14 @@ import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@CrossOrigin(origins = "*")
 public class CardController {
 	@Autowired
 	private CardService cardService;
 
 	@SuppressWarnings("rawtypes")
+	@PreAuthorize("hasAnyRole('ADMIN','ENTERPRISE')")
 	@RequestMapping(value = "/card", method = GET)
 	public ResponseEntity index() {
 		List<ResponseCardDTO> responseCardDTOList = new ArrayList<>();
@@ -141,7 +144,7 @@ public class CardController {
 
 		return GenericsUtil.objectToResponse(responseFinalClientDTO);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/card/cardStatus/", method = POST)
 	public ResponseEntity findByClientIdAndEnterpriseIdDTO(

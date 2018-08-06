@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@CrossOrigin(origins = "*")
 public class OfferController {
 	@Autowired
 	private OfferService offerService;
@@ -39,7 +41,7 @@ public class OfferController {
 
 	@SuppressWarnings("rawtypes")
 	@RequestMapping(value = "/v1/offer", method = POST)
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity save(@Valid @RequestBody OfferDTO offerDTO, BindingResult result) {
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);

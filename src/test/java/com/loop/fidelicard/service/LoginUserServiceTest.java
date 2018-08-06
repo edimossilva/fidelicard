@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
+import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.security.model.UserRole;
-import com.loop.fidelicard.security.service.LoginUserService;
 import com.loop.fidelicard.util.PasswordUtils;
 
 @RunWith(SpringRunner.class)
@@ -27,7 +27,7 @@ public class LoginUserServiceTest {
 		String email = "enterprise34@gmail.com";
 		String password = "secretword";
 
-		UserRole userRole = UserRole.ENTERPRISE;
+		UserRole userRole = UserRole.ROLE_ENTERPRISE;
 		LoginUserDTO loginUserDTO = new LoginUserDTO();
 		loginUserDTO.setLoginUserEmail(email);
 		loginUserDTO.setLoginUserPassword(password);

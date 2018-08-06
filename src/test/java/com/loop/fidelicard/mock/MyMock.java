@@ -9,8 +9,8 @@ import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.security.model.LoginUser;
+import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.security.model.UserRole;
-import com.loop.fidelicard.security.service.LoginUserService;
 import com.loop.fidelicard.service.CardService;
 import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.service.FinalClientService;
@@ -47,7 +47,7 @@ public class MyMock {
 	}
 
 	private static LoginUser createLoginUser(LoginUserService loginUserService, String password, String email) {
-		UserRole userRole = UserRole.ENTERPRISE;
+		UserRole userRole = UserRole.ROLE_ENTERPRISE;
 
 		LoginUser loginUser = LoginUser.builder().email(email).password(password).userRole(userRole).build();
 		return loginUserService.save(loginUser);

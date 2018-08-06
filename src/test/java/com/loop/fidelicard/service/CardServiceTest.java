@@ -22,7 +22,7 @@ import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
-import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.security.model.LoginUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

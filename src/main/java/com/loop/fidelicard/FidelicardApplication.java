@@ -5,8 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
@@ -14,14 +12,12 @@ import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.security.dto.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
+import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.security.model.UserRole;
-import com.loop.fidelicard.security.service.LoginUserService;
 import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.service.OfferService;
 
 @SpringBootApplication
-@RestController
-@ComponentScan("com.loop")
 public class FidelicardApplication {
 	@Autowired
 	LoginUserService loginUserService;
@@ -70,7 +66,7 @@ public class FidelicardApplication {
 		LoginUserDTO loginUserDTO = new LoginUserDTO();
 		loginUserDTO.setLoginUserEmail("enterprise@gmail.com");
 		loginUserDTO.setLoginUserPassword("123");
-		loginUserDTO.setLoginUserRole(UserRole.ENTERPRISE);
+		loginUserDTO.setLoginUserRole(UserRole.ROLE_ENTERPRISE);
 		return loginUserService.save(loginUserDTO);
 	}
 
@@ -78,7 +74,7 @@ public class FidelicardApplication {
 		LoginUserDTO loginUserDTO = new LoginUserDTO();
 		loginUserDTO.setLoginUserEmail("enterprise2@gmail.com");
 		loginUserDTO.setLoginUserPassword("123");
-		loginUserDTO.setLoginUserRole(UserRole.ENTERPRISE);
+		loginUserDTO.setLoginUserRole(UserRole.ROLE_ENTERPRISE);
 		return loginUserService.save(loginUserDTO);
 	}
 
@@ -117,7 +113,7 @@ public class FidelicardApplication {
 	private void createAdminUser() {
 		LoginUser loginUser = loginUserService.findByEmail("admin@gmail.com");
 		if (loginUser == null) {
-			LoginUser loginUser1 = LoginUser.builder().email("admin@gmail.com").password("123").userRole(UserRole.ADMIN)
+			LoginUser loginUser1 = LoginUser.builder().email("admin@gmail.com").password("123").userRole(UserRole.ROLE_ADMIN)
 					.build();
 			loginUserService.save(loginUser1);
 		}

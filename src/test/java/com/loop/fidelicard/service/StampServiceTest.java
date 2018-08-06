@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
-import com.loop.fidelicard.security.service.LoginUserService;
+import com.loop.fidelicard.security.model.LoginUserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
