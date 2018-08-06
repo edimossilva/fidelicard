@@ -10,7 +10,7 @@ import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.Offer;
-import com.loop.fidelicard.security.dto.LoginUserDTO;
+import com.loop.fidelicard.security.dto.loginuser.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.security.model.UserRole;
@@ -37,7 +37,18 @@ public class FidelicardApplication {
 			createAdminUser();
 			createEnterprise1();
 			createEnterprise2();
+			createDefaultFinalUser();
+
 		};
+	}
+
+	private void createDefaultFinalUser() {
+		LoginUser loginUser = loginUserService.findByEmail("defaultfinaluser@gmail.com");
+		if (loginUser == null) {
+			LoginUser loginUser1 = LoginUser.builder().email("defaultfinaluser@gmail.com").password("123").userRole(UserRole.ROLE_FINAL_CLIENT)
+					.build();
+			loginUserService.save(loginUser1);
+		}
 	}
 
 	private void createEnterprise1() {

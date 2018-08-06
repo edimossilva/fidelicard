@@ -21,7 +21,6 @@ public class JwtUserFactory {
 	 * @return JwtUser
 	 */
 	public static JwtUser create(LoginUser usuario) {
-		System.out.println("criando jwtuser"+usuario.getEmail());
 		return new JwtUser(usuario.getId(), usuario.getEmail(), usuario.getPassword(),
 				mapToGrantedAuthorities(usuario.getUserRole()));
 	}

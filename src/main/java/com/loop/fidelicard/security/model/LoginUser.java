@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
+import com.loop.fidelicard.security.dto.loginuser.ResponseLoginUserDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

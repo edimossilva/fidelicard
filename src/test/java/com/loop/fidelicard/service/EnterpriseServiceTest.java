@@ -16,7 +16,6 @@ import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.LoginUserService;
 
@@ -58,29 +57,11 @@ public class EnterpriseServiceTest {
 		Enterprise enterprise = enterpriseService.save(enterpriseDTO);
 
 		ResponseEnterpriseWithLoginUserDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseWithLoginUserDTO();
-		expectedResponseEnterpriseDTO.setId(enterprise.getId());
-		expectedResponseEnterpriseDTO.setName(name);
+		expectedResponseEnterpriseDTO.setEnterpriseId(enterprise.getId());
+		expectedResponseEnterpriseDTO.setEnterpriseName(name);
 		expectedResponseEnterpriseDTO.setOwnerLoginUser(loginUser.toResponseLoginUserDTO());
 
 		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseWithLoginUserDTO());
 	}
-
-	@Test
-	public void findByOwnerLoginUserEmail() {
-
-		LoginUserEmailDTO loginUserEmailDTO = new LoginUserEmailDTO();
-		loginUserEmailDTO.setLoginUserEmail(MyMock.LOGIN_USER_EMAIL_1);
-
-		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
-
-		ResponseEnterpriseWithLoginUserDTO expectedResponseEnterpriseDTO = new ResponseEnterpriseWithLoginUserDTO();
-		expectedResponseEnterpriseDTO.setId(enterprise.getId());
-		expectedResponseEnterpriseDTO.setOwnerLoginUser(enterprise.getOwnerLoginUser().toResponseLoginUserDTO());
-		expectedResponseEnterpriseDTO.setName(MyMock.ENTERPRISE_NAME);
-
-		assertEquals(expectedResponseEnterpriseDTO, enterprise.toResponseEnterpriseWithLoginUserDTO());
-	}
-
-	
 
 }

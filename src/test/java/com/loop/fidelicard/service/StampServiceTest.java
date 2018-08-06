@@ -12,7 +12,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.security.model.LoginUserService;
@@ -69,7 +69,7 @@ public class StampServiceTest {
 	@Test
 	public void testAddStampByFinalClientIdAndEnterpriseId() {
 		Card card = MyMock.getCard2();
-		ClientIdAndEnterpriseIdDTO dto = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO dto = new FinalClientIdAndEnterpriseIdDTO();
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 		dto.setFinalClientId(MyMock.getFinalClient2().getId());
 		

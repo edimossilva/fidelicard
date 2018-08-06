@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.model.Card;
@@ -63,7 +63,7 @@ public class CardServiceTest {
 
 	@Test
 	public void testCreateCardFromClientIDAndEnterpriseIdDTO() {
-		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 
@@ -82,7 +82,7 @@ public class CardServiceTest {
 
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWith2Stamps() {
-		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 
@@ -104,7 +104,7 @@ public class CardServiceTest {
 
 	@Test
 	public void testFindByClientIdAndEnterpriseIdDTOWithMaxStamps() {
-		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 
@@ -138,7 +138,7 @@ public class CardServiceTest {
 
 		assertEquals(expectedStampQuanity, stampQuantity);
 
-		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		card = cardService.cleanCard(clientIDAndEnterpriseIdDTO);
@@ -158,7 +158,7 @@ public class CardServiceTest {
 
 		assertEquals(expectedStampQuanity, stampQuantity);
 
-		ClientIdAndEnterpriseIdDTO dto = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO dto = new FinalClientIdAndEnterpriseIdDTO();
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 		dto.setFinalClientId(MyMock.getFinalClient2().getId());
 		card = cardService.setRewardReceivedCard(dto);

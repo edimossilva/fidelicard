@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ClientIdAndEnterpriseIdDTO {
+public class FinalClientIdAndEnterpriseIdDTO {
 	@NotNull(message = "O atributo [finalClientId] nao pode ser vazio")
 	private Long finalClientId;
 	@NotNull(message = "O atributo [enterpriseId] nao pode ser vazio")

@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security.dto;
+package com.loop.fidelicard.security.dto.loginuser;
 
 import javax.validation.constraints.NotNull;
 

@@ -1,9 +1,7 @@
 package com.loop.fidelicard.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,28 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.enterprise.ResponseEnterpriseWithLoginUserDTO;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.security.dto.LoginUserEmailDTO;
-import com.loop.fidelicard.security.dto.LoginUserIdDTO;
 import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
-@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @CrossOrigin(origins = "*")
 public class EnterpriseController {
 	@Autowired
 	private EnterpriseService enterpriseService;
-
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise", method = GET)
-	public ResponseEntity index() {
-		List<ResponseEnterpriseWithLoginUserDTO> enterpriseDTOList = new ArrayList<ResponseEnterpriseWithLoginUserDTO>();
-		enterpriseService.findAll().forEach(e -> enterpriseDTOList.add(e.toResponseEnterpriseWithLoginUserDTO()));
-
-		return GenericsUtil.objectToResponse(enterpriseDTOList);
-	}
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -59,38 +44,4 @@ public class EnterpriseController {
 		return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
 	}
 
-	// @SuppressWarnings("rawtypes")
-	// @RequestMapping(value = "/enterprise/addFinalClientToEnterprise", method =
-	// POST)
-	// public ResponseEntity addFinalClientToEnterprise(@RequestBody
-	// FinalClientToEnterpriseDTO enterpriseFinalClientDTO) {
-	// Enterprise enterprise =
-	// enterpriseService.addFinalClientToEnterprise(enterpriseFinalClientDTO);
-	// return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseDTO());
-	// }
-
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise/findByLoginUserId", method = POST)
-	public ResponseEntity findByLoginUserId(@RequestBody LoginUserIdDTO enterpriseFinalClientDTO) {
-		Enterprise enterprise = enterpriseService.findByOwnerLoginUserId(enterpriseFinalClientDTO.getLoginUserId());
-		if (enterprise != null) {
-			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
-		} else {
-			String message = "Enterprise not found for loginUser with id = "
-					+ enterpriseFinalClientDTO.getLoginUserId();
-			return GenericsUtil.objectToResponse(message);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	@RequestMapping(value = "/enterprise/findByOwnerLoginUserEmail", method = POST)
-	public ResponseEntity findByLoginUserId(@RequestBody LoginUserEmailDTO loginUserEmailDTO) {
-		Enterprise enterprise = enterpriseService.findByOwnerLoginUserEmail(loginUserEmailDTO.getLoginUserEmail());
-		if (enterprise != null) {
-			return GenericsUtil.objectToResponse(enterprise.toResponseEnterpriseWithLoginUserDTO());
-		} else {
-			String message = "Enterprise not found for loginUser with email = " + loginUserEmailDTO.getLoginUserEmail();
-			return GenericsUtil.objectToResponse(message);
-		}
-	}
 }

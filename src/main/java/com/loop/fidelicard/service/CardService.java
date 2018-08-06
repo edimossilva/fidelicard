@@ -8,9 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.card.CardDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
@@ -61,12 +60,6 @@ public class CardService {
 		return findByFinalClientAndOffer(finalClient, offer);
 	}
 
-	public Card createCardFromCardDTO(CardDTO cardDTO) {
-		FinalClient finalClient = finalClientService.findById(cardDTO.getFinalClientId());
-		Offer offer = offerService.findById(cardDTO.getOfferId());
-		Card card = new Card(finalClient, offer);
-		return cardRepository.save(card);
-	}
 
 	public Card findCardByFinalClient(List<Card> cards, FinalClient finalClient) {
 		for (Card card : cards) {
@@ -78,7 +71,7 @@ public class CardService {
 	}
 
 	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(
-			ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+			FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
 		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
@@ -92,7 +85,7 @@ public class CardService {
 		return card;
 	}
 
-	public Boolean isBeforeLastStamp(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Boolean isBeforeLastStamp(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		return card.isAlmostFull();
 	}
@@ -101,7 +94,7 @@ public class CardService {
 		return cardRepository.save(card);
 	}
 
-	public Boolean isFull(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Boolean isFull(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		if (card == null) {
 			return false;
@@ -124,19 +117,19 @@ public class CardService {
 		return card;
 	}
 
-	public Card cleanCard(ClientIdAndEnterpriseIdDTO dto) {
+	public Card cleanCard(FinalClientIdAndEnterpriseIdDTO dto) {
 		Card card = findByClientIdAndEnterpriseIdDTO(dto);
 		card = removeAllStampsAndSave(card);
 		return card;
 	}
 
-	public Card setRewardReceivedCard(ClientIdAndEnterpriseIdDTO dto) {
+	public Card setRewardReceivedCard(FinalClientIdAndEnterpriseIdDTO dto) {
 		Card card = findByClientIdAndEnterpriseIdDTO(dto);
 		card = setRewardReceivedCardAndSave(card);
 		return card;
 	}
 
-	public Card findByClientIdAndEnterpriseIdDTO(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card findByClientIdAndEnterpriseIdDTO(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		if (finalClient == null) {
@@ -170,7 +163,7 @@ public class CardService {
 		return responseFinalClientDTO;
 	}
 
-	public List<String> errorsTocleanCard(@Valid ClientIdAndEnterpriseIdDTO dto) {
+	public List<String> errorsTocleanCard(@Valid FinalClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
@@ -179,7 +172,7 @@ public class CardService {
 		return errors;
 	}
 
-	public List<String> errorsToGetReward(ClientIdAndEnterpriseIdDTO dto) {
+	public List<String> errorsToGetReward(FinalClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);

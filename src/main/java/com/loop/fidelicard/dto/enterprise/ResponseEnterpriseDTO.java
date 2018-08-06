@@ -5,7 +5,6 @@ import com.loop.fidelicard.model.Enterprise;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -13,8 +12,8 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class ResponseEnterpriseDTO {
-	private @NonNull Long id;
-	private @NonNull String name;
+	private Long id;
+	private String name;
 
 	public ResponseEnterpriseDTO(Enterprise enterprise) {
 		setId(enterprise.getId());

@@ -1,4 +1,4 @@
-package com.loop.fidelicard.security.dto;
+package com.loop.fidelicard.security.dto.loginuser;
 
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.UserRole;

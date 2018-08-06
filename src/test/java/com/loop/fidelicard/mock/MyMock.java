@@ -1,8 +1,7 @@
 package com.loop.fidelicard.mock;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
-import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
@@ -108,29 +107,29 @@ public class MyMock {
 	}
 
 	public static void createFinalClient1(FinalClientService finalClientService) {
-		FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
-		String email = "clientemail@gmail.com";
-		String uniqueIdentifier = "123456789";
-
-		finalClientCreateDTO.setEmail(email);
-		finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);
-
-		setFinalClient(finalClientService.save(finalClientCreateDTO));
+		// finaclient finalClientCreateDTO = new FinalClientCreateDTO();
+		// String email = "clientemail@gmail.com";
+		// String uniqueIdentifier = "123456789";
+		//
+		// finalClientCreateDTO.setEmail(email);
+		// finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);
+		//
+		// setFinalClient(finalClientService.save(finalClientCreateDTO));
 	}
 
 	public static void createFinalClient2(FinalClientService finalClientService) {
-		FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
-		String email = "clientemail@gmail.com2";
-		String uniqueIdentifier = "1234567892";
-
-		finalClientCreateDTO.setEmail(email);
-		finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);
-
-		setFinalClient2(finalClientService.save(finalClientCreateDTO));
+		// FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
+		// String email = "clientemail@gmail.com2";
+		// String uniqueIdentifier = "1234567892";
+		//
+		// finalClientCreateDTO.setEmail(email);
+		// finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);
+		//
+		// setFinalClient2(finalClientService.save(finalClientCreateDTO));
 	}
 
 	public static void createCard2(CardService cardService) {
-		ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new ClientIdAndEnterpriseIdDTO();
+		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
 		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
 		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 

@@ -20,7 +20,6 @@ import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.consumer.ConsumerCardDTO;
 import com.loop.fidelicard.dto.consumer.ConsumerFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
-import com.loop.fidelicard.dto.finalclient.FinalClientCreateDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 
 import lombok.AllArgsConstructor;
@@ -58,11 +57,6 @@ public class FinalClient implements Serializable {
 	// @JsonIgnore
 	// @ManyToMany(mappedBy = "finalClients")
 	// private List<Enterprise> enterprises;
-
-	public FinalClient(FinalClientCreateDTO finalClientDTO) {
-		setUniqueIdentifier(finalClientDTO.getUniqueIdentifier());
-		setEmail(finalClientDTO.getEmail());
-	}
 
 	public boolean isCardAlmostFull(Offer offer) {
 		for (Card card : cards) {

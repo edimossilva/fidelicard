@@ -3,14 +3,10 @@ package com.loop.fidelicard.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseIdDTO;
-import com.loop.fidelicard.dto.hybrid.ClientIdAndEnterpriseOwnerEmailDTO;
-import com.loop.fidelicard.dto.stamp.StampDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -34,14 +30,6 @@ public class StampService {
 		return stampRepository.findAll();
 	}
 
-	public Stamp save(StampDTO stampDTO) {
-		Card card = cardService.findById(stampDTO.getCardId());
-		Stamp stamp = new Stamp(card);
-		stamp.setCard(card);
-		stampRepository.save(stamp);
-		return stamp;
-	}
-
 	public Stamp addNewStamp(Card card) {
 		Stamp stamp = new Stamp();
 		stamp.setCard(card);
@@ -54,13 +42,8 @@ public class StampService {
 		return stamp;
 	}
 
-	public Card addStampAndSave(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card addStampAndSave(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-		return addStampAndSave(card);
-	}
-
-	public Card addStampAndSave(ClientIdAndEnterpriseOwnerEmailDTO dto) {
-		Card card = getCardByClientIdAndEnterpriseOwnerEmailDTO(dto);
 		return addStampAndSave(card);
 	}
 
@@ -69,21 +52,14 @@ public class StampService {
 		return cardService.save(card);
 	}
 
-	private Card getCardByClientIDAndEnterpriseIdDTO(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	private Card getCardByClientIDAndEnterpriseIdDTO(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		Card card = finalClient.getCardByEnterprise(enterprise);
 		return card;
 	}
 
-	private Card getCardByClientIdAndEnterpriseOwnerEmailDTO(ClientIdAndEnterpriseOwnerEmailDTO dto) {
-		FinalClient finalClient = finalClientService.findById(dto.getFinalClientId());
-		Enterprise enterprise = enterpriseService.findByOwnerEmail(dto.getEnterpriseOwnerEmail());
-		Card card = finalClient.getCardByEnterprise(enterprise);
-		return card;
-	}
-
-	public Card cleanCard(ClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	public Card cleanCard(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
 		card = cardService.removeAllStampsAndSave(card);
 		return card;
@@ -93,17 +69,7 @@ public class StampService {
 		stampRepository.delete(stamp);
 	}
 
-	public List<String> errorsToAddStampByFinalClientIdAndEnterpriseOwnerEmail(
-			@Valid ClientIdAndEnterpriseOwnerEmailDTO dto) {
-		List<String> errors = new ArrayList<String>();
-
-		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
-		eS.addErrorsIfEnterprisByOwnerEmailFinalClientNotExist(dto.getEnterpriseOwnerEmail(), errors);
-
-		return errors;
-	}
-
-	public List<String> errorsToAddStampByFinalClientIdAndEnterpriseId(ClientIdAndEnterpriseIdDTO dto) {
+	public List<String> errorsToAddStampByFinalClientIdAndEnterpriseId(FinalClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);

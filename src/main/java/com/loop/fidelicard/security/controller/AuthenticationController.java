@@ -1,8 +1,8 @@
 package com.loop.fidelicard.security.controller;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.response.Response;
-import com.loop.fidelicard.security.dto.TokenDto;
 import com.loop.fidelicard.security.dto.token.LoginDTO;
 import com.loop.fidelicard.security.dto.token.ResponseTokenAndEnterpriseDTO;
 import com.loop.fidelicard.security.dto.token.ResponseTokenDTO;
@@ -39,8 +37,8 @@ import com.loop.fidelicard.util.GenericsUtil;
 public class AuthenticationController {
 
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
-	private static final String TOKEN_HEADER = "Authorization";
-	private static final String BEARER_PREFIX = "Bearer ";
+//	private static final String TOKEN_HEADER = "Authorization";
+//	private static final String BEARER_PREFIX = "Bearer ";
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -68,10 +66,11 @@ public class AuthenticationController {
 			throws AuthenticationException {
 
 		if (result.hasErrors()) {
-			Response<TokenDto> response = new Response<TokenDto>();
+
 			log.error("Erro validando lançamento: {}", result.getAllErrors());
-			result.getAllErrors().forEach(error -> response.getErrors().add(error.getDefaultMessage()));
-			return ResponseEntity.badRequest().body(response);
+			List<String> errors = new ArrayList<>();
+			result.getAllErrors().forEach(error -> errors.add(error.getDefaultMessage()));
+			return GenericsUtil.errorsToResponse(errors);
 		}
 
 		log.info("Gerando token para o email {}.", authenticationDto.getUsername());
@@ -99,30 +98,32 @@ public class AuthenticationController {
 	 * @param request
 	 * @return ResponseEntity<Response<TokenDto>>
 	 */
-	@PostMapping(value = "/refresh")
-	public ResponseEntity<Response<TokenDto>> gerarRefreshTokenJwt(HttpServletRequest request) {
-		log.info("Gerando refresh token JWT.");
-		Response<TokenDto> response = new Response<TokenDto>();
-		Optional<String> token = Optional.ofNullable(request.getHeader(TOKEN_HEADER));
-
-		if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)) {
-			token = Optional.of(token.get().substring(7));
-		}
-
-		if (!token.isPresent()) {
-			response.getErrors().add("Token não informado.");
-		} else if (!jwtTokenUtil.tokenValido(token.get())) {
-			response.getErrors().add("Token inválido ou expirado.");
-		}
-
-		if (!response.getErrors().isEmpty()) {
-			return ResponseEntity.badRequest().body(response);
-		}
-
-		String refreshedToken = jwtTokenUtil.refreshToken(token.get());
-		response.setData(new TokenDto(refreshedToken));
-
-		return ResponseEntity.ok(response);
-	}
+	// @PostMapping(value = "/refresh")
+	// public ResponseEntity<Response<TokenDto>>
+	// gerarRefreshTokenJwt(HttpServletRequest request) {
+	// log.info("Gerando refresh token JWT.");
+	// Response<TokenDto> response = new Response<TokenDto>();
+	// Optional<String> token =
+	// Optional.ofNullable(request.getHeader(TOKEN_HEADER));
+	//
+	// if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)) {
+	// token = Optional.of(token.get().substring(7));
+	// }
+	//
+	// if (!token.isPresent()) {
+	// response.getErrors().add("Token não informado.");
+	// } else if (!jwtTokenUtil.tokenValido(token.get())) {
+	// response.getErrors().add("Token inválido ou expirado.");
+	// }
+	//
+	// if (!response.getErrors().isEmpty()) {
+	// return ResponseEntity.badRequest().body(response);
+	// }
+	//
+	// String refreshedToken = jwtTokenUtil.refreshToken(token.get());
+	// response.setData(new TokenDto(refreshedToken));
+	//
+	// return ResponseEntity.ok(response);
+	// }
 
 }

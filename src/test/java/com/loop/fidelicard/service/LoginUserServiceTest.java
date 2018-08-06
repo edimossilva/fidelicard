@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.loop.fidelicard.security.dto.LoginUserDTO;
-import com.loop.fidelicard.security.dto.ResponseLoginUserDTO;
+import com.loop.fidelicard.security.dto.loginuser.LoginUserDTO;
+import com.loop.fidelicard.security.dto.loginuser.ResponseLoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.security.model.UserRole;

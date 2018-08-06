@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.loop.fidelicard.security.dto.LoginUserDTO;
+import com.loop.fidelicard.security.dto.loginuser.LoginUserDTO;
 import com.loop.fidelicard.security.repository.LoginUserRepository;
 import com.loop.fidelicard.service.ErrorsService;
 import com.loop.fidelicard.util.PasswordUtils;
