@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class ConsumerCardDTO {
-	private Long id;
+	private Long cardId;
 	private Long finalClientId;
 	private Integer atualStampQuantity;
 	private Integer maxStampQuantity;
@@ -20,7 +20,7 @@ public class ConsumerCardDTO {
 	private ConsumerOfferDTO offer;
 
 	public ConsumerCardDTO(Card card) {
-		setId(card.getId());
+		setCardId(card.getId());
 		setFinalClientId(card.getFinalClient().getId());
 		setAtualStampQuantity(card.getNormalizedQuantity());
 		setMaxStampQuantity(card.getOffer().getQuantity());

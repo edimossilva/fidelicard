@@ -73,7 +73,7 @@ public class CardServiceTest {
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer().getId());
-		expectedResponseCardDTO.setAtualStampQuantity(1);
+		expectedResponseCardDTO.setCurrentStampQuantity(1);
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise().getId());
 		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient().getId());
@@ -95,7 +95,7 @@ public class CardServiceTest {
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
-		expectedResponseCardDTO.setAtualStampQuantity(2);
+		expectedResponseCardDTO.setCurrentStampQuantity(2);
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient2().getId());
@@ -119,7 +119,7 @@ public class CardServiceTest {
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
 		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
-		expectedResponseCardDTO.setAtualStampQuantity(MyMock.getOffer2().getQuantity());
+		expectedResponseCardDTO.setCurrentStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
 		expectedResponseCardDTO.setFinalClientId(MyMock.getFinalClient2().getId());
@@ -175,6 +175,6 @@ public class CardServiceTest {
 		dto.setFinalClientUI(finalClient2.getUniqueIdentifier());
 
 		ResponseFinalClientDTO responseFinalClientDTO = cardService.createWithStamp(dto);
-		assertEquals(responseFinalClientDTO.getCards().get(0).getAtualStampQuantity().intValue(), 1);
+		assertEquals(responseFinalClientDTO.getCard().getCurrentStampQuantity().intValue(), 1);
 	}
 }

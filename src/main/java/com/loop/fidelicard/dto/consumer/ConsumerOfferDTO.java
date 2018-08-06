@@ -8,16 +8,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ConsumerOfferDTO {
-	private Long id;
-	private String name;
-	private String description;
-	private Integer quantity;
+	private Long offerId;
+	private String offerName;
+	private String offerDescription;
+	private Integer offerQuantity;
 
 	public ConsumerOfferDTO(Offer offer) {
-		setId(offer.getId());
-		setName(offer.getName());
-		setDescription(offer.getDescription());
-		setQuantity(offer.getQuantity());
+		setOfferId(offer.getId());
+		setOfferName(offer.getName());
+		setOfferDescription(offer.getDescription());
+		setOfferQuantity(offer.getQuantity());
 	}
 
 }

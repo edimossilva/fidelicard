@@ -20,7 +20,6 @@ import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.consumer.ConsumerCardDTO;
 import com.loop.fidelicard.dto.consumer.ConsumerFinalClientDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
-import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -87,10 +86,6 @@ public class FinalClient implements Serializable {
 			}
 		}
 		return null;
-	}
-
-	public ResponseFinalClientDTO toResponseFinalClientDTO() {
-		return new ResponseFinalClientDTO(this);
 	}
 
 	public ConsumerFinalClientDTO toConsumerFinalClientDTO() {

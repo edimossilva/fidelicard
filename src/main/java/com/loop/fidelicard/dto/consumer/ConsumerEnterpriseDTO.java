@@ -12,11 +12,11 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 public class ConsumerEnterpriseDTO {
-	private Long id;
-	private String name;
+	private Long enterpriseId;
+	private String enterpriseName;
 
 	public ConsumerEnterpriseDTO(Enterprise enterprise) {
-		setId(enterprise.getId());
-		setName(enterprise.getName());
+		setEnterpriseId(enterprise.getId());
+		setEnterpriseName(enterprise.getName());
 	}
 }

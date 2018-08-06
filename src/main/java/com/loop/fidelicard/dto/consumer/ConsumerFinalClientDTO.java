@@ -10,15 +10,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ConsumerFinalClientDTO {
-	private Long id;
-	private String uniqueIdentifier;
-	private String email;
+	private Long finalClientId;
+	private String finalClientUI;
+	private String finalClientEmail;
 	private List<ConsumerCardDTO> cards;
 
 	public ConsumerFinalClientDTO(FinalClient fc) {
-		setId(fc.getId());
-		setUniqueIdentifier(fc.getUniqueIdentifier());
-		setEmail(fc.getEmail());
+		setFinalClientId(fc.getId());
+		setFinalClientUI(fc.getUniqueIdentifier());
+		setFinalClientEmail(fc.getEmail());
 		setCards(fc.getConsumerCardsDTO());
 	}
 

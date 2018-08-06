@@ -114,10 +114,10 @@ public class FinalClientServiceTest {
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 
 		ResponseFinalClientDTO responseFinalClientDTO = finalClientService.createWithStamp(dto);
-		ResponseCardDTO card = responseFinalClientDTO.getCards().get(0);
+		ResponseCardDTO card = responseFinalClientDTO.getCard();
 		assertNotNull(card);
 
-		assertEquals(1, card.getAtualStampQuantity().intValue());
+		assertEquals(1, card.getCurrentStampQuantity().intValue());
 		assertNotNull(card.getFinalClientId());
 		assertEquals(newClientEmail, responseFinalClientDTO.getFinalClientEmail());
 		assertEquals(uniqueIdentifier, responseFinalClientDTO.getFinalClientUI());
