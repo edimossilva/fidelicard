@@ -20,9 +20,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class ResponseFinalClientDTO {
-	private @NonNull Long id;
-	private @NonNull String uniqueIdentifier;
-	private @NonNull String email;
+	private @NonNull Long finalClientId;
+	private @NonNull String finalClientUI;
+	private @NonNull String finalClientEmail;
 	private List<ResponseCardDTO> cards;
 
 	public ResponseFinalClientDTO(FinalClient fc) {
@@ -44,9 +44,9 @@ public class ResponseFinalClientDTO {
 	}
 
 	private void fillFinalClient(FinalClient fc) {
-		setId(fc.getId());
-		setUniqueIdentifier(fc.getUniqueIdentifier());
-		setEmail(fc.getEmail());
+		setFinalClientId(fc.getId());
+		setFinalClientUI(fc.getUniqueIdentifier());
+		setFinalClientEmail(fc.getEmail());
 	}
 
 	public ResponseFinalClientDTO(Card card) {

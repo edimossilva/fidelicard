@@ -124,7 +124,6 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		// Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
 		ResponseFinalClientDTO finalClientResponseDTO = finalClientService
 				.findClientResponseDTOByUIAndEnterpriseId(dto);
 
@@ -155,11 +154,11 @@ public class FinalClientController {
 	@PreAuthorize("hasAuthority('ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/finalClient/existClientbyUI", method = POST)
 	public ResponseEntity existClientbyUI(@RequestBody UIDTO uIDTO) {
-		FinalClient finalClient = finalClientService.findByUI(uIDTO.getUniqueIdentifier());
+		FinalClient finalClient = finalClientService.findByUI(uIDTO.getFinalClientUI());
 		if (finalClient != null) {
 			return GenericsUtil.objectToResponse(finalClient.toResponseFinalClientDTO());
 		} else {
-			String message = "User not found with UI = " + uIDTO.getUniqueIdentifier();
+			String message = "User not found with UI = " + uIDTO.getFinalClientUI();
 			return GenericsUtil.objectToResponse(message);
 		}
 	}
@@ -177,8 +176,7 @@ public class FinalClientController {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		ConsumerFinalClientDTO dto = finalClientService
-				.findConsumerFinalClientByUI(uIDTO.getUniqueIdentifier());
+		ConsumerFinalClientDTO dto = finalClientService.findConsumerFinalClientByUI(uIDTO.getFinalClientUI());
 		return GenericsUtil.objectToResponse(dto);
 
 	}

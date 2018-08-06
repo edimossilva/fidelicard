@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class ClientUIAndEnterpriseIdDTO {
-	@NotEmpty(message = "O atributo [finalClienteUniqueIdentifier] nao pode ser vazio")
-	private String finalClienteUniqueIdentifier;
+	@NotEmpty(message = "O atributo [finalClientUI] nao pode ser vazio")
+	private String finalClientUI;
 	@NotNull(message = "O atributo [enterpriseId] nao pode ser vazio")
 	private Long enterpriseId;
 

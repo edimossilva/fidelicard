@@ -71,7 +71,7 @@ public class CardServiceTest {
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient().toResponseFinalClientDTO());
-		expectedResponseCardDTO.setId(card.getId());
+		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer().getId());
 		expectedResponseCardDTO.setAtualStampQuantity(1);
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer().getQuantity());
@@ -93,7 +93,7 @@ public class CardServiceTest {
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
-		expectedResponseCardDTO.setId(card.getId());
+		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualStampQuantity(2);
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
@@ -117,7 +117,7 @@ public class CardServiceTest {
 
 		ResponseCardDTO expectedResponseCardDTO = new ResponseCardDTO();
 		// expectedResponseCardDTO.setFinalClient(MyMock.getFinalClient2().toResponseFinalClientDTO());
-		expectedResponseCardDTO.setId(card.getId());
+		expectedResponseCardDTO.setCardId(card.getId());
 		expectedResponseCardDTO.setOfferId(MyMock.getOffer2().getId());
 		expectedResponseCardDTO.setAtualStampQuantity(MyMock.getOffer2().getQuantity());
 		expectedResponseCardDTO.setMaxStampQuantity(MyMock.getOffer2().getQuantity());
@@ -172,7 +172,7 @@ public class CardServiceTest {
 
 		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
 		dto.setEnterpriseId(enterprise.getId());
-		dto.setFinalClienteUniqueIdentifier(finalClient2.getUniqueIdentifier());
+		dto.setFinalClientUI(finalClient2.getUniqueIdentifier());
 
 		ResponseFinalClientDTO responseFinalClientDTO = cardService.createWithStamp(dto);
 		assertEquals(responseFinalClientDTO.getCards().get(0).getAtualStampQuantity().intValue(), 1);

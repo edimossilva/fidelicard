@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UIDTO {
-	@NotEmpty(message = "O atributo [uniqueIdentifier]  nao pode ser vazio")
-	private String uniqueIdentifier;
+	@NotEmpty(message = "O atributo [finalClientUI]  nao pode ser vazio")
+	private String finalClientUI;
 }

@@ -105,7 +105,7 @@ public class FinalClient implements Serializable {
 
 	public FinalClient(FinalClientAndEnterpriseIdDTO dto) {
 		setEmail(dto.getFinalClientEmail());
-		setUniqueIdentifier(dto.getFinalClienteUniqueIdentifier());
+		setUniqueIdentifier(dto.getFinalClientUI());
 	}
 
 	public Card findCardByEnterpriseId(Long enterpriseId) {

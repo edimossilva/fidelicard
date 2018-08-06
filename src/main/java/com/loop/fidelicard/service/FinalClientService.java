@@ -95,14 +95,14 @@ public class FinalClientService {
 	}
 
 	public ResponseFinalClientDTO findClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = findByUI(dto.getFinalClienteUniqueIdentifier());
+		FinalClient finalClient = findByUI(dto.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient, enterprise);
 		return responseFinalClientDTO;
 	}
 
 	public Card findClientCardByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = findByUI(dto.getFinalClienteUniqueIdentifier());
+		FinalClient finalClient = findByUI(dto.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Card card = cardService.findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
@@ -151,11 +151,11 @@ public class FinalClientService {
 	public List<String> errorsToCreateWithStamp(FinalClientAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
-		eS.addErrorsIfFinalClientByUIExist(dto.getFinalClienteUniqueIdentifier(), errors);
+		eS.addErrorsIfFinalClientByUIExist(dto.getFinalClientUI(), errors);
 		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClienteUniqueIdentifier(),
+		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClientUI(),
 				dto.getEnterpriseId(), errors);
 
 		return errors;
@@ -171,7 +171,7 @@ public class FinalClientService {
 
 	public List<String> errorsToExistClientByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
-		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClienteUniqueIdentifier(), errors);
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		// eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdNotExist(dto.getFinalClienteUniqueIdentifier(),
@@ -181,7 +181,7 @@ public class FinalClientService {
 
 	public List<String> errorsToGetAllCardsByUI(UIDTO dto) {
 		List<String> errors = new ArrayList<String>();
-		eS.addErrorsIfFinalClientByUINotExist(dto.getUniqueIdentifier(), errors);
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
 		return errors;
 	}
 

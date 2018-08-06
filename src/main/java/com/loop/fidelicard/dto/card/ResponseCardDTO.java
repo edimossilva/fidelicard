@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class ResponseCardDTO {
-	private @NonNull Long id;
+	private @NonNull Long cardId;
 	private @NonNull Long offerId;
 	private @NonNull Long enterpriseId;
 	private @NonNull Long finalClientId;
@@ -24,7 +24,7 @@ public class ResponseCardDTO {
 	// private @NonNull ResponseFinalClientDTO finalClient;
 
 	public ResponseCardDTO(Card card) {
-		setId(card.getId());
+		setCardId(card.getId());
 		setOfferId(card.getOffer().getId());
 		setEnterpriseId(card.getOffer().getEnterprise().getId());
 		setFinalClientId(card.getFinalClient().getId());

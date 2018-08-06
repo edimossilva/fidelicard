@@ -162,7 +162,7 @@ public class CardService {
 	}
 
 	public ResponseFinalClientDTO createWithStamp(ClientUIAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = finalClientService.findByUI(dto.getFinalClienteUniqueIdentifier());
+		FinalClient finalClient = finalClientService.findByUI(dto.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Offer offer = enterprise.getOffer();
 		Card card = createWithStampFromFinalClientAndOffer(finalClient, offer);
@@ -198,8 +198,8 @@ public class CardService {
 
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClienteUniqueIdentifier(), errors);
-		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClienteUniqueIdentifier(),
+		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
+		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClientUI(),
 				dto.getEnterpriseId(), errors);
 
 		return errors;

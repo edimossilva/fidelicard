@@ -76,46 +76,52 @@ public class FinalClientServiceTest {
 		FinalClient finalClient = finalClientService.save(finalClientCreateDTO);
 
 		ResponseFinalClientDTO expectedResponseFinalClientDTO = new ResponseFinalClientDTO();
-		expectedResponseFinalClientDTO.setEmail(email);
-		expectedResponseFinalClientDTO.setUniqueIdentifier(uniqueIdentifier);
-		expectedResponseFinalClientDTO.setId(finalClient.getId());
+		expectedResponseFinalClientDTO.setFinalClientEmail(email);
+		expectedResponseFinalClientDTO.setFinalClientUI(uniqueIdentifier);
+		expectedResponseFinalClientDTO.setFinalClientId(finalClient.getId());
 		expectedResponseFinalClientDTO.setCards(new ArrayList<>());
 		assertEquals(expectedResponseFinalClientDTO, finalClient.toResponseFinalClientDTO());
 	}
 
-//	@Test
-//	public void testExistClientbyUICardInEnterpriseWHENExist() {
-//		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
-//		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
-//		clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier("anything");
-//
-//		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
-//
-//		assertNull(finalClient);
-//	}
+	// @Test
+	// public void testExistClientbyUICardInEnterpriseWHENExist() {
+	// ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new
+	// ClientUIAndEnterpriseIdDTO();
+	// clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise().getId());
+	// clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier("anything");
+	//
+	// FinalClient finalClient =
+	// finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
+	//
+	// assertNull(finalClient);
+	// }
 
-//	@Test
-//	public void testExistClientbyUICardInEnterpriseWHENexist() {
-//		ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new ClientUIAndEnterpriseIdDTO();
-//		clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
-//		clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
-//
-//		FinalClient finalClient = finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
-//
-//		ResponseFinalClientDTO expectedResponseFinalClientDTO = new ResponseFinalClientDTO();
-//		expectedResponseFinalClientDTO.setEmail(MyMock.getFinalClient2().getEmail());
-//		expectedResponseFinalClientDTO.setId(MyMock.getFinalClient2().getId());
-//		expectedResponseFinalClientDTO.setUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
-//		expectedResponseFinalClientDTO.setCards(MyMock.get);
-//		assertEquals(expectedResponseFinalClientDTO, finalClient.toResponseFinalClientDTO());
-//	}
+	// @Test
+	// public void testExistClientbyUICardInEnterpriseWHENexist() {
+	// ClientUIAndEnterpriseIdDTO clientUIAndEnterpriseIdDTO = new
+	// ClientUIAndEnterpriseIdDTO();
+	// clientUIAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
+	// clientUIAndEnterpriseIdDTO.setFinalClienteUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
+	//
+	// FinalClient finalClient =
+	// finalClientService.findClientByUICardInEnterprise(clientUIAndEnterpriseIdDTO);
+	//
+	// ResponseFinalClientDTO expectedResponseFinalClientDTO = new
+	// ResponseFinalClientDTO();
+	// expectedResponseFinalClientDTO.setEmail(MyMock.getFinalClient2().getEmail());
+	// expectedResponseFinalClientDTO.setId(MyMock.getFinalClient2().getId());
+	// expectedResponseFinalClientDTO.setUniqueIdentifier(MyMock.getFinalClient2().getUniqueIdentifier());
+	// expectedResponseFinalClientDTO.setCards(MyMock.get);
+	// assertEquals(expectedResponseFinalClientDTO,
+	// finalClient.toResponseFinalClientDTO());
+	// }
 
 	@Test
 	public void testFindClientCardByUIAndEnterpriseIdWhenExists() {
 		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
 		dto.setEnterpriseId(MyMock.getEnterprise().getId());
 
-		dto.setFinalClienteUniqueIdentifier(MyMock.getFinalClient().getUniqueIdentifier());
+		dto.setFinalClientUI(MyMock.getFinalClient().getUniqueIdentifier());
 		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
 		assertNull(card);
 	}
@@ -185,17 +191,17 @@ public class FinalClientServiceTest {
 
 		FinalClientAndEnterpriseIdDTO dto = new FinalClientAndEnterpriseIdDTO();
 		dto.setFinalClientEmail(newClientEmail);
-		dto.setFinalClienteUniqueIdentifier(uniqueIdentifier);
+		dto.setFinalClientUI(uniqueIdentifier);
 		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
 
 		ResponseFinalClientDTO responseFinalClientDTO = finalClientService.createWithStamp(dto);
-		ResponseCardDTO card =responseFinalClientDTO.getCards().get(0);
+		ResponseCardDTO card = responseFinalClientDTO.getCards().get(0);
 		assertNotNull(card);
 
 		assertEquals(1, card.getAtualStampQuantity().intValue());
 		assertNotNull(card.getFinalClientId());
-		assertEquals(newClientEmail, responseFinalClientDTO.getEmail());
-		assertEquals(uniqueIdentifier, responseFinalClientDTO.getUniqueIdentifier());
+		assertEquals(newClientEmail, responseFinalClientDTO.getFinalClientEmail());
+		assertEquals(uniqueIdentifier, responseFinalClientDTO.getFinalClientUI());
 
 	}
 }
