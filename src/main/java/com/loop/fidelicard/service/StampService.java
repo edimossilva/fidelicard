@@ -26,7 +26,7 @@ public class StampService {
 	@Autowired
 	private EnterpriseService enterpriseService;
 
-	public Iterable<Stamp> findAll() {
+	public List<Stamp> findAll() {
 		return stampRepository.findAll();
 	}
 
@@ -81,6 +81,18 @@ public class StampService {
 		}
 
 		return errors;
+	}
+
+	public List<Stamp> findAllByEnterpriseId(long id) {
+		List<Stamp> stamps = findAll();
+		List<Stamp> stampsToCount = new ArrayList<>();
+		
+		for (Stamp stamp : stamps) {
+			if(stamp.getCard().getEnterprise().getId()==id) {
+				stampsToCount.add(stamp);
+			}
+		}
+		return stampsToCount;
 	}
 
 }
