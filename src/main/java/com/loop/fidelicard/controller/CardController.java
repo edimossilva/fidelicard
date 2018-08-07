@@ -63,7 +63,7 @@ public class CardController {
 
 		Card card = cardService.setRewardReceivedCard(dto);
 
-		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+		return GenericsUtil.objectToResponse(new ResponseFinalClientDTO(card));
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.loop.fidelicard.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class FinalClientService {
 	@Autowired
 	private ErrorsService eS;
 
-	public Iterable<FinalClient> findAll() {
+	public List<FinalClient> findAll() {
 		return finalClientRepository.findAll();
 	}
 
@@ -65,8 +66,6 @@ public class FinalClientService {
 	public void save(FinalClient finalClient) {
 		finalClientRepository.save(finalClient);
 	}
-
-
 
 	public ResponseFinalClientDTO findClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		FinalClient finalClient = findByUI(dto.getFinalClientUI());
@@ -103,14 +102,13 @@ public class FinalClientService {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByUIExist(dto.getFinalClientUI(), errors);
-		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
+//		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClientUI(), dto.getEnterpriseId(), errors);
 
 		return errors;
 	}
-
 
 	public List<String> errorsToExistClientByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
@@ -126,6 +124,20 @@ public class FinalClientService {
 		List<String> errors = new ArrayList<String>();
 		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
 		return errors;
+	}
+
+	public HashSet<FinalClient> findAllByEnterpriseId(long id) {
+		List<FinalClient> finalClients = findAll();
+		HashSet<FinalClient> finalClientsByEnterprise = new HashSet<>();
+		for (FinalClient finalClient : finalClients) {
+			for (Card card : finalClient.getCards()) {
+				if (card.getEnterprise().getId() == id) {
+					finalClientsByEnterprise.add(finalClient);
+					break;
+				}
+			}
+		}
+		return finalClientsByEnterprise;
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.StampService;
@@ -42,8 +43,8 @@ public class StampController {
 		}
 
 		Card card = stampService.addStampAndSave(dto);
-
-		return GenericsUtil.objectToResponse(card.toResponseCardDTO());
+		
+		return GenericsUtil.objectToResponse(new ResponseFinalClientDTO(card));
 	}
 
 }

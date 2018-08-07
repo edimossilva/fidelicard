@@ -44,7 +44,7 @@ public class FinalClient implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "email", nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = false)
 	private String email;
 
 	@Column(name = "uniqueIdentifier", nullable = false, unique = true)
