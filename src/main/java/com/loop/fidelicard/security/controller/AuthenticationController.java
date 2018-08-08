@@ -32,7 +32,7 @@ import com.loop.fidelicard.service.EnterpriseService;
 import com.loop.fidelicard.util.GenericsUtil;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("v1/login")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 
