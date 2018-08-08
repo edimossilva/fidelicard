@@ -39,25 +39,16 @@ public class EnterpriseService {
 		return enterprise;
 	}
 
-	// public Enterprise addFinalClientToEnterprise(FinalClientToEnterpriseDTO
-	// enterpriseFinalClientDTO) {
-	// FinalClient finalCLient =
-	// finalClientService.findById(enterpriseFinalClientDTO.getFinalClientId());
-	// Enterprise enterprise =
-	// enterpriseRepository.findById(enterpriseFinalClientDTO.getEnterpriseId());
-	// enterprise.addFinalClient(finalCLient);
-	// enterpriseRepository.save(enterprise);
-	// return enterprise;
-	// }
-
 	public Enterprise findById(Long enterpriseId) {
-
 		return enterpriseRepository.findById(enterpriseId);
+	}
+
+	public Enterprise findByName(String name) {
+		return enterpriseRepository.findByName(name);
 	}
 
 	public Enterprise findByOwnerLoginUserId(Long loginUserId) {
 		LoginUser loginUser = loginUserService.findById(loginUserId);
-
 		return enterpriseRepository.findByOwnerLoginUser(loginUser);
 	}
 
@@ -79,10 +70,6 @@ public class EnterpriseService {
 		eS.addErrosIfEnterprisByOwnerIdFinalClientExist(enterpriseDTO.getLoginUserId(), errors);
 
 		return errors;
-	}
-
-	public Enterprise findByName(String name) {
-		return enterpriseRepository.findByName(name);
 	}
 
 	public Enterprise findByOwnerEmail(String enterpriseOwnerEmail) {

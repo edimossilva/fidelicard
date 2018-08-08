@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.offer.OfferDTO;
-import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
-import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
 import com.loop.fidelicard.repository.OfferRepository;
 
@@ -21,8 +19,6 @@ public class OfferService {
 	private OfferRepository offerRepository;
 	@Autowired
 	private EnterpriseService enterpriseService;
-	@Autowired
-	private CardService cardService;
 	@Autowired
 	private ErrorsService eS;
 
@@ -56,30 +52,16 @@ public class OfferService {
 		return null;
 	}
 
-	public List<Offer> findAllByEnterprise(Enterprise enterprise) {
-		return offerRepository.findAllByEnterprise(enterprise);
-	}
-
-	public Offer findOfferByFinalClient(List<Offer> offers, FinalClient finalClient) {
-		for (Offer offer : offers) {
-			Card card = cardService.findCardByFinalClient(offer.getCards(), finalClient);
-			if (card != null) {
-				return offer;
-			}
-		}
-		return null;
-	}
-
 	public void save(Offer offer) {
 		offerRepository.save(offer);
 	}
 
 	public List<String> errorsToSave(@Valid OfferDTO offerDTO) {
 		List<String> errors = new ArrayList<String>();
-		
+
 		eS.addErrorsIfEnterpriseByIdNotExist(offerDTO.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdExist(offerDTO.getEnterpriseId(), errors);
-		
+
 		return errors;
 	}
 

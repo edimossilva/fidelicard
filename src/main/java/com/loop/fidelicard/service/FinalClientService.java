@@ -49,22 +49,8 @@ public class FinalClientService {
 		return finalClientRepository.findByUniqueIdentifier(uniqueIdentifir);
 	}
 
-	// public FinalClient findClientByUICardInEnterprise(ClientUIAndEnterpriseIdDTO
-	// clientUIAndEnterpriseIdDTO) {
-	// FinalClient finalClient =
-	// findByUI(clientUIAndEnterpriseIdDTO.getFinalClienteUniqueIdentifier());
-	// Enterprise enterprise =
-	// enterpriseService.findById(clientUIAndEnterpriseIdDTO.getEnterpriseId());
-	// List<Offer> offers = offerService.findAllByEnterprise(enterprise);
-	// Offer offer = offerService.findOfferByFinalClient(offers, finalClient);
-	// if (offer != null) {
-	// return finalClient;
-	// }
-	// return null;
-	// }
-
-	public void save(FinalClient finalClient) {
-		finalClientRepository.save(finalClient);
+	private FinalClient save(FinalClient finalClient) {
+		return finalClientRepository.save(finalClient);
 	}
 
 	public ResponseFinalClientDTO findFinalClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {

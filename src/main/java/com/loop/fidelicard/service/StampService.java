@@ -30,6 +30,18 @@ public class StampService {
 		return stampRepository.findAll();
 	}
 
+	public List<Stamp> findAllByEnterpriseId(long id) {
+		List<Stamp> stamps = findAll();
+		List<Stamp> stampsToCount = new ArrayList<>();
+
+		for (Stamp stamp : stamps) {
+			if (stamp.getCard().getEnterprise().getId() == id) {
+				stampsToCount.add(stamp);
+			}
+		}
+		return stampsToCount;
+	}
+
 	public Stamp addNewStamp(Card card) {
 		Stamp stamp = new Stamp();
 		stamp.setCard(card);
@@ -59,12 +71,6 @@ public class StampService {
 		return card;
 	}
 
-	public Card cleanCard(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-		card = cardService.removeAllStampsAndSave(card);
-		return card;
-	}
-
 	public void delete(Stamp stamp) {
 		stampRepository.delete(stamp);
 	}
@@ -81,18 +87,6 @@ public class StampService {
 		}
 
 		return errors;
-	}
-
-	public List<Stamp> findAllByEnterpriseId(long id) {
-		List<Stamp> stamps = findAll();
-		List<Stamp> stampsToCount = new ArrayList<>();
-		
-		for (Stamp stamp : stamps) {
-			if(stamp.getCard().getEnterprise().getId()==id) {
-				stampsToCount.add(stamp);
-			}
-		}
-		return stampsToCount;
 	}
 
 }

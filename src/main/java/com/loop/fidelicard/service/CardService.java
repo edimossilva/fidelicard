@@ -3,14 +3,11 @@ package com.loop.fidelicard.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
-import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -27,9 +24,6 @@ public class CardService {
 
 	@Autowired
 	private EnterpriseService enterpriseService;
-
-	@Autowired
-	private OfferService offerService;
 
 	@Autowired
 	private StampService stampService;
@@ -54,12 +48,11 @@ public class CardService {
 	}
 
 	public Card findByFinalClientAndEnterprise(FinalClient finalClient, Enterprise enterprise) {
-		List<Offer> offers =enterprise.getOffers();
+		List<Offer> offers = enterprise.getOffers();
 		Offer offer = offers.get(0);
 
 		return findByFinalClientAndOffer(finalClient, offer);
 	}
-
 
 	public Card findCardByFinalClient(List<Card> cards, FinalClient finalClient) {
 		for (Card card : cards) {
@@ -68,26 +61,6 @@ public class CardService {
 			}
 		}
 		return null;
-	}
-
-	public Card createCardWithStampFromClientIDAndEnterpriseIdDTO(
-			FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Long enterpriseId = clientIDAndEnterpriseIdDTO.getEnterpriseId();
-		Long finalClientId = clientIDAndEnterpriseIdDTO.getFinalClientId();
-		Enterprise enterprise = enterpriseService.findById(enterpriseId);
-		Offer offer = offerService.findAllByEnterprise(enterprise).get(0);
-		FinalClient finalClient = finalClientService.findById(finalClientId);
-
-		Card card = new Card(finalClient, offer);
-		card = cardRepository.save(card);
-		stampService.addNewStamp(card);
-
-		return card;
-	}
-
-	public Boolean isBeforeLastStamp(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = findByClientIdAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-		return card.isAlmostFull();
 	}
 
 	public Card save(Card card) {
@@ -106,30 +79,17 @@ public class CardService {
 		cardRepository.delete(findById(id));
 	}
 
-	public Card removeAllStampsAndSave(Card card) {
-		card.getStamps().clear();
-		return cardRepository.save(card);
-	}
-
 	private Card setRewardReceivedCardAndSave(Card card) {
 		card.setRewardReceived(true);
-		cardRepository.save(card);
-		return card;
-	}
-
-	public Card cleanCard(FinalClientIdAndEnterpriseIdDTO dto) {
-		Card card = findByClientIdAndEnterpriseIdDTO(dto);
-		card = removeAllStampsAndSave(card);
-		return card;
+		return cardRepository.save(card);
 	}
 
 	public Card setRewardReceivedCard(FinalClientIdAndEnterpriseIdDTO dto) {
 		Card card = findByClientIdAndEnterpriseIdDTO(dto);
-		card = setRewardReceivedCardAndSave(card);
-		return card;
+		return setRewardReceivedCardAndSave(card);
 	}
 
-	public Card findByClientIdAndEnterpriseIdDTO(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
+	private Card findByClientIdAndEnterpriseIdDTO(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
 		FinalClient finalClient = finalClientService.findById(clientIDAndEnterpriseIdDTO.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(clientIDAndEnterpriseIdDTO.getEnterpriseId());
 		if (finalClient == null) {
@@ -141,7 +101,13 @@ public class CardService {
 	public Card findByFinalClientUIAndEnterpriseId(String finalClientUI, Long enterpriseId) {
 		FinalClient finalClient = finalClientService.findByUI(finalClientUI);
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
-		System.out.println(enterpriseId);
+		Card card = findByFinalClientAndEnterprise(finalClient, enterprise);
+		return card;
+	}
+
+	public Card findByFinalClientIdAndEnterpriseId(Long finalClientId, Long enterpriseId) {
+		FinalClient finalClient = finalClientService.findById(finalClientId);
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
 		Card card = findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
 	}
@@ -154,22 +120,13 @@ public class CardService {
 		return card;
 	}
 
-	public ResponseFinalClientDTO createWithStamp(ClientUIAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = finalClientService.findByUI(dto.getFinalClientUI());
+	public ResponseFinalClientDTO createWithStamp(FinalClientIdAndEnterpriseIdDTO dto) {
+		FinalClient finalClient = finalClientService.findById(dto.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Offer offer = enterprise.getOffer();
 		Card card = createWithStampFromFinalClientAndOffer(finalClient, offer);
 		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(card.getFinalClient(), card);
 		return responseFinalClientDTO;
-	}
-
-	public List<String> errorsTocleanCard(@Valid FinalClientIdAndEnterpriseIdDTO dto) {
-		List<String> errors = new ArrayList<String>();
-
-		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
-		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
-
-		return errors;
 	}
 
 	public List<String> errorsToGetReward(FinalClientIdAndEnterpriseIdDTO dto) {
@@ -186,14 +143,13 @@ public class CardService {
 		return errors;
 	}
 
-	public List<String> errorsToCreateWithStamp(ClientUIAndEnterpriseIdDTO dto) {
+	public List<String> errorsToCreateWithStamp(FinalClientIdAndEnterpriseIdDTO dto) {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
-		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClientUI(),
-				dto.getEnterpriseId(), errors);
+		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
+		eS.addErrorsIfCardByFinalClientIdAndEnterpriseIdExist(dto.getFinalClientId(), dto.getEnterpriseId(), errors);
 
 		return errors;
 	}
