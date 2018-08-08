@@ -165,9 +165,7 @@ public class MyMock {
 		return finalClient;
 	}
 
-	private static void setFinalClient(FinalClient finalClient) {
-		MyMock.finalClient = finalClient;
-	}
+	
 
 	public static LoginUser getLoginUser2() {
 		return loginUser2;

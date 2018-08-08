@@ -97,7 +97,7 @@ public class FinalClientServiceTest {
 		dto.setEnterpriseId(MyMock.getEnterprise().getId());
 
 		dto.setFinalClientUI(MyMock.getFinalClient().getUniqueIdentifier());
-		Card card = finalClientService.findClientCardByUIAndEnterpriseId(dto);
+		Card card = finalClientService.findFinalClientCardByUIAndEnterpriseId(dto);
 		assertNull(card);
 	}
 

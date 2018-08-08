@@ -67,14 +67,14 @@ public class FinalClientService {
 		finalClientRepository.save(finalClient);
 	}
 
-	public ResponseFinalClientDTO findClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
+	public ResponseFinalClientDTO findFinalClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		FinalClient finalClient = findByUI(dto.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(finalClient, enterprise);
 		return responseFinalClientDTO;
 	}
 
-	public Card findClientCardByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
+	public Card findFinalClientCardByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
 		FinalClient finalClient = findByUI(dto.getFinalClientUI());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Card card = cardService.findByFinalClientAndEnterprise(finalClient, enterprise);

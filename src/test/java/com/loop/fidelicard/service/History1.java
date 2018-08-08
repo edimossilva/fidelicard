@@ -1,7 +1,5 @@
 package com.loop.fidelicard.service;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
 import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.mock.MyMock;
 import com.loop.fidelicard.security.model.LoginUserService;
@@ -40,6 +37,7 @@ public class History1 {
 		MyMock.createLoginUser1(loginUserService);
 		MyMock.createEnterprise1(loginUserService, enterpriseService);
 		MyMock.createOffer1(offerService, enterpriseService);
+		MyMock.createLoginUser1(loginUserService);
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -47,6 +45,18 @@ public class History1 {
 		ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
 		dto.setFinalClientUI("new UI");
 		dto.setEnterpriseId(MyMock.getEnterprise().getId());
-		finalClientService.findClientResponseDTOByUIAndEnterpriseId(dto);
+		finalClientService.findFinalClientResponseDTOByUIAndEnterpriseId(dto);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testFindClientResponseDTOByUIAndEnterpriseIdWhenExist() {
+
+		// ClientUIAndEnterpriseIdDTO dto = new ClientUIAndEnterpriseIdDTO();
+		// dto.setFinalClientUI(MyMock.getFinalClient().getUniqueIdentifier());
+		// dto.setEnterpriseId(MyMock.getEnterprise().getId());
+		// ResponseFinalClientDTO responseDTO =
+		// finalClientService.findFinalClientResponseDTOByUIAndEnterpriseId(dto);
+		//
+		// assertEquals(MyMock.getFinalClient().to, actual);
 	}
 }
