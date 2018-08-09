@@ -1,6 +1,7 @@
 package com.loop.fidelicard.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -62,6 +63,9 @@ public class Offer implements Serializable {
 
 	@OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
+
+	@Column(name = "createdAt")
+	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	public Offer(OfferDTO offerDTO) {
 		setName(offerDTO.getOfferName());

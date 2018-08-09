@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
-import com.loop.fidelicard.dto.hybrid.ClientUIAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.CardService;
@@ -31,7 +30,8 @@ public class CardController {
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = "/v1/card/createCardWithStamp", method = POST)
-	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientIdAndEnterpriseIdDTO dto, BindingResult result) {
+	public ResponseEntity createWithStamp(@Valid @RequestBody FinalClientIdAndEnterpriseIdDTO dto,
+			BindingResult result) {
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);

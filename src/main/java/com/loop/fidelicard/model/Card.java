@@ -1,6 +1,7 @@
 package com.loop.fidelicard.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,9 @@ public class Card implements Serializable {
 
 	@Column(name = "rewardReceivede")
 	private boolean RewardReceived;
+
+	@Column(name = "createdAt")
+	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	public Card(FinalClient finalClient, Offer offer) {
 		setFinalClient(finalClient);

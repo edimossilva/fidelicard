@@ -1,6 +1,7 @@
 package com.loop.fidelicard.dto.finalclient;
 
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
+import com.loop.fidelicard.dto.date.DateDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -22,6 +23,7 @@ public class ResponseFinalClientDTO {
 	private @NonNull String finalClientUI;
 	private @NonNull String finalClientEmail;
 	private ResponseCardDTO card;
+	private DateDTO createdAt;
 
 	public ResponseFinalClientDTO(FinalClient fc, Enterprise enterprise) {
 		fillFinalClient(fc);
@@ -36,15 +38,17 @@ public class ResponseFinalClientDTO {
 		setCard(card.toResponseCardDTO());
 	}
 
+	public ResponseFinalClientDTO(Card card) {
+		fillFinalClient(card.getFinalClient());
+		setCard(card.toResponseCardDTO());
+	}
+
 	private void fillFinalClient(FinalClient fc) {
 		setFinalClientId(fc.getId());
 		setFinalClientUI(fc.getUniqueIdentifier());
 		setFinalClientEmail(fc.getEmail());
-	}
+		setCreatedAt(new DateDTO(fc.getCreatedAt()));
 
-	public ResponseFinalClientDTO(Card card) {
-		fillFinalClient(card.getFinalClient());
-		setCard(card.toResponseCardDTO());
 	}
 
 }

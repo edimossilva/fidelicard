@@ -1,5 +1,6 @@
 package com.loop.fidelicard.dto.consumer;
 
+import com.loop.fidelicard.dto.date.DateDTO;
 import com.loop.fidelicard.model.Card;
 
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ public class ConsumerCardDTO {
 	private Integer maxStampQuantity;
 	private ConsumerEnterpriseDTO enterprise;
 	private ConsumerOfferDTO offer;
+	private DateDTO createdAt;
 
 	public ConsumerCardDTO(Card card) {
 		setCardId(card.getId());
@@ -26,6 +28,7 @@ public class ConsumerCardDTO {
 		setMaxStampQuantity(card.getOffer().getQuantity());
 		setEnterprise(card.getOffer().getEnterprise().toConsumerEnterpriseDTO());
 		setOffer(card.getOffer().toConsumerOfferDTO());
+		setCreatedAt(new DateDTO(card.getCreatedAt()));
 
 	}
 

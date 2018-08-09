@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -28,8 +29,10 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Proxy(lazy = false)
+
 public class Stamp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -42,21 +45,15 @@ public class Stamp implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Card card;
 
-	@Column(name = "date", nullable = false)
-	private LocalDateTime date;
-
-	public Stamp() {
-		setDate(LocalDateTime.now());
-	}
+	@Column(name = "createdAt")
+	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	public Stamp(Card card) {
-		setDate(LocalDateTime.now());
 		setCard(card);
 	}
 
-	public Stamp(Long id, LocalDateTime date) {
+	public Stamp(Long id) {
 		this.id = id;
-		this.date = date;
 	}
 
 }

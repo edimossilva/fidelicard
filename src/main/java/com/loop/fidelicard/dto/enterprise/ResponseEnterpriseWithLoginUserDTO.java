@@ -1,5 +1,6 @@
 package com.loop.fidelicard.dto.enterprise;
 
+import com.loop.fidelicard.dto.date.DateDTO;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.security.dto.loginuser.ResponseLoginUserDTO;
 
@@ -16,11 +17,14 @@ public class ResponseEnterpriseWithLoginUserDTO {
 	private Long enterpriseId;
 	private String enterpriseName;
 	private ResponseLoginUserDTO ownerLoginUser;
+	private DateDTO createdAt;
 
 	public ResponseEnterpriseWithLoginUserDTO(Enterprise enterprise) {
 		setEnterpriseId(enterprise.getId());
 		setEnterpriseName(enterprise.getName());
 		setOwnerLoginUser(new ResponseLoginUserDTO(enterprise.getOwnerLoginUser()));
+		setCreatedAt(new DateDTO(enterprise.getCreatedAt()));
+
 	}
 
 }

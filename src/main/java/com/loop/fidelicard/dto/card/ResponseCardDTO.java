@@ -1,11 +1,11 @@
 package com.loop.fidelicard.dto.card;
 
+import com.loop.fidelicard.dto.date.DateDTO;
 import com.loop.fidelicard.model.Card;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -13,15 +13,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class ResponseCardDTO {
-	private @NonNull Long cardId;
-	private @NonNull Long offerId;
-	private @NonNull Long enterpriseId;
-	private @NonNull Long finalClientId;
-	private @NonNull Integer currentStampQuantity;
-	private @NonNull Integer maxStampQuantity;
-	// private @NonNull Integer totalStampQuantity;
-
-	// private @NonNull ResponseFinalClientDTO finalClient;
+	private Long cardId;
+	private Long offerId;
+	private Long enterpriseId;
+	private Long finalClientId;
+	private Integer currentStampQuantity;
+	private Integer maxStampQuantity;
+	private DateDTO createdAt;
 
 	public ResponseCardDTO(Card card) {
 		setCardId(card.getId());
@@ -30,7 +28,6 @@ public class ResponseCardDTO {
 		setFinalClientId(card.getFinalClient().getId());
 		setCurrentStampQuantity(card.getNormalizedQuantity());
 		setMaxStampQuantity(card.getOffer().getQuantity());
-		// setTotalStampQuantity(card.getStamps().size());
-		// setFinalClient(card.getFinalClient().toResponseFinalClientDTO());
+		setCreatedAt(new DateDTO(card.getCreatedAt()));
 	}
 }

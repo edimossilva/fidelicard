@@ -1,5 +1,6 @@
 package com.loop.fidelicard.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -54,6 +55,9 @@ public class Enterprise {
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")
 	private LoginUser ownerLoginUser;
+
+	@Column(name = "createdAt")
+	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	public Enterprise() {
 	}

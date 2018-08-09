@@ -1,6 +1,7 @@
 package com.loop.fidelicard.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,9 @@ public class FinalClient implements Serializable {
 
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
+
+	@Column(name = "createdAt")
+	private final LocalDateTime createdAt = LocalDateTime.now();
 
 	// @JsonIgnore
 	// @ManyToMany(mappedBy = "finalClients")
