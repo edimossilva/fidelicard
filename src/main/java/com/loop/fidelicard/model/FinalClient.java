@@ -57,9 +57,6 @@ public class FinalClient implements Serializable {
 	@Column(name = "createdAt")
 	private final LocalDateTime createdAt = LocalDateTime.now();
 
-	// @JsonIgnore
-	// @ManyToMany(mappedBy = "finalClients")
-	// private List<Enterprise> enterprises;
 
 	public boolean isCardAlmostFull(Offer offer) {
 		for (Card card : cards) {

@@ -112,12 +112,12 @@ public class FinalClientService {
 		return errors;
 	}
 
-	public HashSet<FinalClient> findAllByEnterpriseId(long id) {
+	public HashSet<FinalClient> findAllByEnterpriseId(long enterpriseId) {
 		List<FinalClient> finalClients = findAll();
 		HashSet<FinalClient> finalClientsByEnterprise = new HashSet<>();
 		for (FinalClient finalClient : finalClients) {
 			for (Card card : finalClient.getCards()) {
-				if (card.getEnterprise().getId() == id) {
+				if (card.getEnterprise().getId() == enterpriseId) {
 					finalClientsByEnterprise.add(finalClient);
 					break;
 				}

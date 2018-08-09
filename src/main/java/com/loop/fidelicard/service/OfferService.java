@@ -26,6 +26,10 @@ public class OfferService {
 		return offerRepository.findAll();
 	}
 
+	public List<Offer> findAllByEnterprise(Enterprise enterprise) {
+		return offerRepository.findAllByEnterprise(enterprise);
+	}
+
 	public Offer save(OfferDTO offerDTO) {
 		Enterprise enterprise = enterpriseService.findById(offerDTO.getEnterpriseId());
 		Offer offer = new Offer(offerDTO);

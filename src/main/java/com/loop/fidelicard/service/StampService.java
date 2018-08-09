@@ -1,5 +1,6 @@
 package com.loop.fidelicard.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
+import com.loop.fidelicard.dto.manager.EnterpriseIdAndDateDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
@@ -40,6 +42,37 @@ public class StampService {
 			}
 		}
 		return stampsToCount;
+	}
+
+	public List<Stamp> findAllByEnterpriseIdAndDate(EnterpriseIdAndDateDTO dto) {
+		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
+		List<Stamp> stamps = findAllByEnterprise(enterprise);
+		stamps = findByStampsAndDayMonthYear(stamps, dto.getDay(), dto.getMonth(), dto.getYear());
+		return stamps;
+	}
+
+	private List<Stamp> findByStampsAndDayMonthYear(List<Stamp> stamps, Long day, Long month, Long year) {
+		List<Stamp> selectedStamps = new ArrayList<>();
+		for (Stamp stamp : stamps) {
+			LocalDateTime createdAt = stamp.getCreatedAt();
+			if (createdAt.getYear() == year) {
+				if (createdAt.getMonthValue() == month) {
+					if (createdAt.getDayOfMonth() == day) {
+						selectedStamps.add(stamp);
+					}
+				}
+			}
+		}
+		return selectedStamps;
+	}
+
+	private List<Stamp> findAllByEnterprise(Enterprise enterprise) {
+		List<Stamp> stamps = new ArrayList<>();
+		List<Card> cards = cardService.findAllByEnterprise(enterprise);
+		for (Card card : cards) {
+			stamps.addAll(card.getStamps());
+		}
+		return stamps;
 	}
 
 	public Stamp addNewStamp(Card card) {

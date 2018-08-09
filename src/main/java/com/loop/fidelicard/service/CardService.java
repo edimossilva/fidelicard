@@ -29,14 +29,26 @@ public class CardService {
 	private StampService stampService;
 
 	@Autowired
+	private OfferService offerService;
+
+	@Autowired
 	private ErrorsService eS;
+
+	public Card save() {
+		return cardRepository.save(new Card());
+	}
 
 	public Iterable<Card> findAll() {
 		return cardRepository.findAll();
 	}
 
-	public Card save() {
-		return cardRepository.save(new Card());
+	public List<Card> findAllByEnterprise(Enterprise enterprise) {
+		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
+		List<Card> cards = new ArrayList<>();
+		for (Offer offer : offers) {
+			cards.addAll(offer.getCards());
+		}
+		return cards;
 	}
 
 	public Card findById(Long id) {
