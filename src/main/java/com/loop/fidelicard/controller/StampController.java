@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,19 +22,29 @@ import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.service.StampService;
 import com.loop.fidelicard.util.GenericsUtil;
+import com.loop.fidelicard.util.MyLogger;
 
 @RestController
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @CrossOrigin(origins = "*")
 public class StampController {
+	
+	private static final String V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID = "v1/stamp/addStampByFinalClientIdAndEnterpriseId/";
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private StampService stampService;
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
-	@RequestMapping(value = "v1/stamp/addStampByFinalClientIdAndEnterpriseId/", method = POST)
+	@RequestMapping(value = V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, method = POST)
 	public ResponseEntity addStampByFinalClientIdAndEnterpriseId(
 			@Valid @RequestBody FinalClientIdAndEnterpriseIdDTO dto, BindingResult result) {
+		
+		logger.info(MyLogger.getMessage(V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, dto));
+
+		
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
 		}

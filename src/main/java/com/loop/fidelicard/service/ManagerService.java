@@ -16,9 +16,6 @@ public class ManagerService {
 	private StampService stampService;
 
 	@Autowired
-	private EnterpriseService enterpriseService;
-
-	@Autowired
 	private FinalClientService finalClientService;
 
 	@Autowired

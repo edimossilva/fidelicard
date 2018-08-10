@@ -36,9 +36,9 @@ import com.loop.fidelicard.util.GenericsUtil;
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 
-	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
-//	private static final String TOKEN_HEADER = "Authorization";
-//	private static final String BEARER_PREFIX = "Bearer ";
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	// private static final String TOKEN_HEADER = "Authorization";
+	// private static final String BEARER_PREFIX = "Bearer ";
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -67,13 +67,13 @@ public class AuthenticationController {
 
 		if (result.hasErrors()) {
 
-			log.error("Erro validando lançamento: {}", result.getAllErrors());
+			logger.error("Erro validando lançamento: {}", result.getAllErrors());
 			List<String> errors = new ArrayList<>();
 			result.getAllErrors().forEach(error -> errors.add(error.getDefaultMessage()));
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		log.info("Gerando token para o email {}.", authenticationDto.getUsername());
+		logger.debug("Gerando token para o email {}.", authenticationDto.getUsername());
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 				authenticationDto.getUsername(), authenticationDto.getPassword()));
 
@@ -91,39 +91,5 @@ public class AuthenticationController {
 		}
 
 	}
-
-	/**
-	 * Gera um novo token com uma nova data de expiração.
-	 * 
-	 * @param request
-	 * @return ResponseEntity<Response<TokenDto>>
-	 */
-	// @PostMapping(value = "/refresh")
-	// public ResponseEntity<Response<TokenDto>>
-	// gerarRefreshTokenJwt(HttpServletRequest request) {
-	// log.info("Gerando refresh token JWT.");
-	// Response<TokenDto> response = new Response<TokenDto>();
-	// Optional<String> token =
-	// Optional.ofNullable(request.getHeader(TOKEN_HEADER));
-	//
-	// if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)) {
-	// token = Optional.of(token.get().substring(7));
-	// }
-	//
-	// if (!token.isPresent()) {
-	// response.getErrors().add("Token não informado.");
-	// } else if (!jwtTokenUtil.tokenValido(token.get())) {
-	// response.getErrors().add("Token inválido ou expirado.");
-	// }
-	//
-	// if (!response.getErrors().isEmpty()) {
-	// return ResponseEntity.badRequest().body(response);
-	// }
-	//
-	// String refreshedToken = jwtTokenUtil.refreshToken(token.get());
-	// response.setData(new TokenDto(refreshedToken));
-	//
-	// return ResponseEntity.ok(response);
-	// }
 
 }

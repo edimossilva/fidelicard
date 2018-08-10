@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,27 +21,35 @@ import com.loop.fidelicard.security.dto.loginuser.LoginUserDTO;
 import com.loop.fidelicard.security.model.LoginUser;
 import com.loop.fidelicard.security.model.LoginUserService;
 import com.loop.fidelicard.util.GenericsUtil;
+import com.loop.fidelicard.util.MyLogger;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class LoginUserController {
+	private static final String V1_LOGIN_USER = "/v1/loginUser";
+
 	@Autowired
 	private LoginUserService loginUserService;
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value = "/v1/loginUser", method = POST)
-	public ResponseEntity save(@Valid @RequestBody LoginUserDTO loginUserDTO, BindingResult result) {
+	@RequestMapping(value = V1_LOGIN_USER, method = POST)
+	public ResponseEntity save(@Valid @RequestBody LoginUserDTO dto, BindingResult result) {
+
+		logger.info(MyLogger.getMessage(V1_LOGIN_USER, dto));
+
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
 		}
 
-		List<String> errors = loginUserService.errorsToSave(loginUserDTO);
+		List<String> errors = loginUserService.errorsToSave(dto);
 		if (!errors.isEmpty()) {
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
-		LoginUser loginUser = loginUserService.save(loginUserDTO);
+		LoginUser loginUser = loginUserService.save(dto);
 		return GenericsUtil.objectToResponse(loginUser.toResponseLoginUserDTO());
 	}
 

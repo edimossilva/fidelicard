@@ -7,9 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @EqualsAndHashCode
 public class ClientUIAndEnterpriseIdDTO {
 	@NotEmpty(message = "O atributo [finalClientUI] nao pode ser vazio")

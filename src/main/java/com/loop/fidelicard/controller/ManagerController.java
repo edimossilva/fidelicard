@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,19 +21,32 @@ import com.loop.fidelicard.dto.enterprise.EnterpriseIdDTO;
 import com.loop.fidelicard.dto.manager.EnterpriseIdAndDateDTO;
 import com.loop.fidelicard.service.ManagerService;
 import com.loop.fidelicard.util.GenericsUtil;
+import com.loop.fidelicard.util.MyLogger;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class ManagerController {
 
+	private static final String V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID = "v1/manager/countFinalClientsByEnterpriseId";
+
+	private static final String V1_MANAGER_COUNT_ALL_STAMPS = "v1/manager/countAllStamps";
+
+	private static final String V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID = "v1/manager/countStampsByEnterpriseId";
+
+	private static final String V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE = "v1/manager/countStampsByEnterpriseIdAndDate";
+
 	@Autowired
 	private ManagerService managerService;
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value = "v1/manager/countStampsByEnterpriseIdAndDate", method = POST)
+	@RequestMapping(value = V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE, method = POST)
 	public ResponseEntity countByEnterpriseIdAndDate(@Valid @RequestBody EnterpriseIdAndDateDTO dto,
 			BindingResult result) {
+
+		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE, dto));
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
@@ -50,8 +65,10 @@ public class ManagerController {
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value = "v1/manager/countStampsByEnterpriseId", method = POST)
+	@RequestMapping(value = V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID, method = POST)
 	public ResponseEntity countStampsByEnterpriseId(@Valid @RequestBody EnterpriseIdDTO dto, BindingResult result) {
+
+		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID, dto));
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
@@ -70,19 +87,24 @@ public class ManagerController {
 
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value = "v1/manager/countAllStamps", method = POST)
+	@RequestMapping(value = V1_MANAGER_COUNT_ALL_STAMPS, method = POST)
 	public ResponseEntity countAllStamps() {
+
+		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_ALL_STAMPS, ""));
 
 		int count = managerService.countAllStamps();
 
 		return GenericsUtil.objectToResponse(count);
 
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@RequestMapping(value = "v1/manager/countFinalClientsByEnterpriseId", method = POST)
-	public ResponseEntity countFinalClientsByEnterpriseId(@Valid @RequestBody EnterpriseIdDTO dto, BindingResult result) {
+	@RequestMapping(value = V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID, method = POST)
+	public ResponseEntity countFinalClientsByEnterpriseId(@Valid @RequestBody EnterpriseIdDTO dto,
+			BindingResult result) {
+
+		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID, dto));
 
 		if (result.hasErrors()) {
 			return GenericsUtil.errorsToResponse(result);
