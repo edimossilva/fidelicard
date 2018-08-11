@@ -13,9 +13,9 @@ public class GenericsUtil {
 		// Response<T> response = new Response<>();
 		// response.setData(t);
 		// Date d = new Date();
-		for (int i = 0; i < 500000; i++) {
-			System.out.println(i);
-		}
+//		for (int i = 0; i < 500000; i++) {
+//			System.out.println(i);
+//		}
 		// System.out.println("Digite");
 		// new Scanner(System.in).nextLine();
 
