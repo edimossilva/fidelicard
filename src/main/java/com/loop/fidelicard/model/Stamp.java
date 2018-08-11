@@ -14,8 +14,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -41,7 +39,6 @@ public class Stamp implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Card card;
 

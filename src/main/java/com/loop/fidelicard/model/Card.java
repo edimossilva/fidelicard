@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.loop.fidelicard.dto.card.ResponseCardDTO;
 import com.loop.fidelicard.dto.consumer.ConsumerCardDTO;
 
@@ -46,14 +45,15 @@ public class Card implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private FinalClient finalClient;
 
 	@OneToMany(orphanRemoval = true, mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Stamp> stamps;
 
-	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	private Enterprise enterprise;
+
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Offer offer;
 
@@ -63,9 +63,10 @@ public class Card implements Serializable {
 	@Column(name = "createdAt")
 	private final LocalDateTime createdAt = LocalDateTime.now();
 
-	public Card(FinalClient finalClient, Offer offer) {
+	public Card(FinalClient finalClient, Offer offer, Enterprise enterprise) {
 		setFinalClient(finalClient);
 		setOffer(offer);
+		setEnterprise(enterprise);
 	}
 
 	public int getNormalizedQuantity() {
@@ -131,4 +132,17 @@ public class Card implements Serializable {
 	public ConsumerCardDTO toConsumerCardDTO() {
 		return new ConsumerCardDTO(this);
 	}
+
+	public List<Stamp> getStamps() {
+		if (stamps == null) {
+			setStamps(new ArrayList<>());
+		}
+		return stamps;
+	}
+
+	public void addStamp(Stamp stamp) {
+		getStamps().add(stamp);
+		setRewardReceived(false);
+	}
+
 }

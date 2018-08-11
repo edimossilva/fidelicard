@@ -29,9 +29,6 @@ public class CardService {
 	private StampService stampService;
 
 	@Autowired
-	private OfferService offerService;
-
-	@Autowired
 	private ErrorsService eS;
 
 	public Card save() {
@@ -43,12 +40,7 @@ public class CardService {
 	}
 
 	public List<Card> findAllByEnterprise(Enterprise enterprise) {
-		List<Offer> offers = offerService.findAllByEnterprise(enterprise);
-		List<Card> cards = new ArrayList<>();
-		for (Offer offer : offers) {
-			cards.addAll(offer.getCards());
-		}
-		return cards;
+		return cardRepository.findAllByEnterprise(enterprise);
 	}
 
 	public Card findById(Long id) {
@@ -125,9 +117,10 @@ public class CardService {
 	}
 
 	public Card createWithStampFromFinalClientAndOffer(FinalClient finalClient, Offer offer) {
-		Card card = new Card(finalClient, offer);
+		Card card = new Card(finalClient, offer, offer.getEnterprise());
 		card = cardRepository.save(card);
-		stampService.addNewStamp(card);
+		enterpriseService.addCardAndSave(offer.getEnterprise(), card);
+		stampService.addStampAndSave(card);
 
 		return card;
 	}
@@ -136,9 +129,12 @@ public class CardService {
 		FinalClient finalClient = finalClientService.findById(dto.getFinalClientId());
 		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
 		Offer offer = enterprise.getOffer();
+
+		finalClient = finalClientService.joinFinalClientAndEnterprise(finalClient, enterprise);
+
 		Card card = createWithStampFromFinalClientAndOffer(finalClient, offer);
-		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(card.getFinalClient(), card);
-		return responseFinalClientDTO;
+
+		return new ResponseFinalClientDTO(card.getFinalClient(), card);
 	}
 
 	public List<String> errorsToGetReward(FinalClientIdAndEnterpriseIdDTO dto) {

@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -44,15 +47,16 @@ public class Enterprise {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	// @ManyToMany(cascade = CascadeType.ALL)
-	// @JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name =
-	// "client_id", referencedColumnName = "id"), inverseJoinColumns =
-	// @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
-	// private List<FinalClient> finalClients;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
+	private List<FinalClient> finalClients;
 
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
-
+	
+	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Card> cards;
+	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")
 	private LoginUser ownerLoginUser;
 
@@ -88,6 +92,14 @@ public class Enterprise {
 
 	public ConsumerEnterpriseDTO toConsumerEnterpriseDTO() {
 		return new ConsumerEnterpriseDTO(this);
+	}
+
+	public void addFinalClient(FinalClient finalClient) {
+		getFinalClients().add(finalClient);
+	}
+
+	public void addCard(Card card) {
+		getCards().add(card);
 	}
 
 }

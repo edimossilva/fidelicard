@@ -1,7 +1,6 @@
 package com.loop.fidelicard.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,12 @@ public class FinalClientService {
 		return finalClientRepository.findAll();
 	}
 
+	public List<FinalClient> findAllByEnterpriseId(long enterpriseId) {
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+
+		return enterprise.getFinalClients();
+	}
+
 	public FinalClient findById(Long finalClientId) {
 
 		return finalClientRepository.findById(finalClientId);
@@ -49,8 +54,13 @@ public class FinalClientService {
 		return finalClientRepository.findByUniqueIdentifier(uniqueIdentifir);
 	}
 
-	private FinalClient save(FinalClient finalClient) {
-		return finalClientRepository.save(finalClient);
+	public FinalClient joinFinalClientAndEnterprise(FinalClient finalClient, Enterprise enterprise) {
+		enterprise.addFinalClient(finalClient);
+		finalClient.addEnterprise(enterprise);
+		finalClient = finalClientRepository.save(finalClient);
+		enterpriseService.save(enterprise);
+
+		return finalClient;
 	}
 
 	public ResponseFinalClientDTO findFinalClientResponseDTOByUIAndEnterpriseId(ClientUIAndEnterpriseIdDTO dto) {
@@ -73,10 +83,11 @@ public class FinalClientService {
 	}
 
 	public ResponseFinalClientDTO createWithStamp(FinalClientAndEnterpriseIdDTO dto) {
-		FinalClient finalClient = new FinalClient(dto);
-		save(finalClient);
+		Enterprise enterprise = enterpriseService.findById(dto.getEnterpriseId());
+		Offer offer = offerService.findByEnterprise(enterprise);
 
-		Offer offer = offerService.findByEnterpriseId(dto.getEnterpriseId());
+		FinalClient finalClient = new FinalClient(dto);
+		finalClient = joinFinalClientAndEnterprise(finalClient, enterprise);
 		Card card = cardService.createWithStampFromFinalClientAndOffer(finalClient, offer);
 
 		ResponseFinalClientDTO responseFinalClientDTO = new ResponseFinalClientDTO(card);
@@ -88,7 +99,7 @@ public class FinalClientService {
 		List<String> errors = new ArrayList<String>();
 
 		eS.addErrorsIfFinalClientByUIExist(dto.getFinalClientUI(), errors);
-//		eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
+		// eS.addErrorsIfFinalClientByEmailExist(dto.getFinalClientEmail(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfCardByFinalClientUIAndEnterpriseIdExist(dto.getFinalClientUI(), dto.getEnterpriseId(), errors);
@@ -110,20 +121,6 @@ public class FinalClientService {
 		List<String> errors = new ArrayList<String>();
 		eS.addErrorsIfFinalClientByUINotExist(dto.getFinalClientUI(), errors);
 		return errors;
-	}
-
-	public HashSet<FinalClient> findAllByEnterpriseId(long enterpriseId) {
-		List<FinalClient> finalClients = findAll();
-		HashSet<FinalClient> finalClientsByEnterprise = new HashSet<>();
-		for (FinalClient finalClient : finalClients) {
-			for (Card card : finalClient.getCards()) {
-				if (card.getEnterprise().getId() == enterpriseId) {
-					finalClientsByEnterprise.add(finalClient);
-					break;
-				}
-			}
-		}
-		return finalClientsByEnterprise;
 	}
 
 }

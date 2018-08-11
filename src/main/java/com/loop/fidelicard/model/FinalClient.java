@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,9 +55,11 @@ public class FinalClient implements Serializable {
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
 
+	@ManyToMany(mappedBy = "finalClients")
+	private List<Enterprise> enterprises;
+
 	@Column(name = "createdAt")
 	private final LocalDateTime createdAt = LocalDateTime.now();
-
 
 	public boolean isCardAlmostFull(Offer offer) {
 		for (Card card : cards) {
@@ -124,6 +127,18 @@ public class FinalClient implements Serializable {
 		}
 
 		return dTOList;
+	}
+
+	public List<Enterprise> getEnterprises() {
+		if (enterprises == null) {
+			enterprises = new ArrayList<>();
+		}
+		return enterprises;
+	}
+
+	public void addEnterprise(Enterprise enterprise) {
+
+		getEnterprises().add(enterprise);
 	}
 
 }

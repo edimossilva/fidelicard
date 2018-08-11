@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
+import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.repository.EnterpriseRepository;
 import com.loop.fidelicard.security.model.LoginUser;
@@ -57,8 +58,8 @@ public class EnterpriseService {
 		return loginUser.getEnterprise();
 	}
 
-	public void save(Enterprise enterprise) {
-		enterpriseRepository.save(enterprise);
+	public Enterprise save(Enterprise enterprise) {
+		return enterpriseRepository.save(enterprise);
 	}
 
 	public List<String> errorsToSave(@Valid EnterpriseDTO enterpriseDTO) {
@@ -78,6 +79,11 @@ public class EnterpriseService {
 			return null;
 		}
 		return loginUser.getEnterprise();
+	}
+
+	public Enterprise addCardAndSave(Enterprise enterprise, Card card) {
+		enterprise.addCard(card);
+		return save(enterprise);
 	}
 
 }

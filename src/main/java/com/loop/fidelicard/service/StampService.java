@@ -32,16 +32,9 @@ public class StampService {
 		return stampRepository.findAll();
 	}
 
-	public List<Stamp> findAllByEnterpriseId(long id) {
-		List<Stamp> stamps = findAll();
-		List<Stamp> stampsToCount = new ArrayList<>();
-
-		for (Stamp stamp : stamps) {
-			if (stamp.getCard().getEnterprise().getId() == id) {
-				stampsToCount.add(stamp);
-			}
-		}
-		return stampsToCount;
+	public List<Stamp> findAllByEnterpriseId(long enterpriseId) {
+		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		return findAllByEnterprise(enterprise);
 	}
 
 	public List<Stamp> findAllByEnterpriseIdAndDate(EnterpriseIdAndDateDTO dto) {
@@ -67,33 +60,24 @@ public class StampService {
 	}
 
 	private List<Stamp> findAllByEnterprise(Enterprise enterprise) {
-		List<Stamp> stamps = new ArrayList<>();
 		List<Card> cards = cardService.findAllByEnterprise(enterprise);
-		for (Card card : cards) {
-			stamps.addAll(card.getStamps());
-		}
+		List<Stamp> stamps = new ArrayList<>();
+		cards.forEach(c -> stamps.addAll(c.getStamps()));
 		return stamps;
 	}
 
-	public Stamp addNewStamp(Card card) {
-		Stamp stamp = new Stamp();
-		stamp.setCard(card);
-		stamp = stampRepository.save(stamp);
-		if (card.getStamps() == null) {
-			card.setStamps(new ArrayList<Stamp>());
-		}
-		card.getStamps().add(stamp);
-		card.setRewardReceived(false);
-		return stamp;
-	}
-
-	public Card addStampAndSave(FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO) {
-		Card card = getCardByClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
+	public Card addStampAndSave(FinalClientIdAndEnterpriseIdDTO dto) {
+		Card card = getCardByClientIDAndEnterpriseIdDTO(dto);
 		return addStampAndSave(card);
 	}
 
 	public Card addStampAndSave(Card card) {
-		addNewStamp(card);
+		Stamp stamp = new Stamp(card);
+		stamp = stampRepository.save(stamp);
+
+		card.addStamp(stamp);
+
+		enterpriseService.save(card.getEnterprise());
 		return cardService.save(card);
 	}
 

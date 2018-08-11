@@ -46,6 +46,15 @@ public class OfferService {
 		return offerRepository.findByDescription(offerDescription);
 	}
 
+	public Offer findByEnterprise(Enterprise enterprise) {
+		if (enterprise != null) {
+			if (enterprise.getOffers().size() > 0) {
+				return enterprise.getOffers().get(0);
+			}
+		}
+		return null;
+	}
+
 	public Offer findByEnterpriseId(Long enterpriseId) {
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
 		if (enterprise != null) {

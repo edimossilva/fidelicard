@@ -55,7 +55,7 @@ public class StampController {
 		}
 
 		Card card = stampService.addStampAndSave(dto);
-
+		
 		return GenericsUtil.objectToResponse(new ResponseFinalClientDTO(card));
 	}
 

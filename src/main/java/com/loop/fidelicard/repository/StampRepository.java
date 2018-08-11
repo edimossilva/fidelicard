@@ -6,4 +6,7 @@ import com.loop.fidelicard.model.Stamp;
 
 public interface StampRepository extends JpaRepository<Stamp, Long> {
 
+	Stamp findById(Long id);
+
+
 }
