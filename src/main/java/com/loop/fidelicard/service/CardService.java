@@ -52,6 +52,10 @@ public class CardService {
 	}
 
 	public Card findByFinalClientAndEnterprise(FinalClient finalClient, Enterprise enterprise) {
+		if (finalClient == null || enterprise == null) {
+			return null;
+		}
+
 		List<Offer> offers = enterprise.getOffers();
 		Offer offer = offers.get(0);
 
@@ -105,6 +109,9 @@ public class CardService {
 	public Card findByFinalClientUIAndEnterpriseId(String finalClientUI, Long enterpriseId) {
 		FinalClient finalClient = finalClientService.findByUI(finalClientUI);
 		Enterprise enterprise = enterpriseService.findById(enterpriseId);
+		if (enterprise == null || finalClient == null) {
+			return null;
+		}
 		Card card = findByFinalClientAndEnterprise(finalClient, enterprise);
 		return card;
 	}
@@ -143,7 +150,7 @@ public class CardService {
 		eS.addErrorsIfFinalClientByIdNotExist(dto.getFinalClientId(), errors);
 		eS.addErrorsIfEnterpriseByIdNotExist(dto.getEnterpriseId(), errors);
 		eS.addErrorsIfOfferByEnterpriseIdNotExist(dto.getEnterpriseId(), errors);
-		if (!isFull(dto)) {
+		if (!isFull(dto) && errors.size() == 0) {
 			errors.add(
 					"O cartao do cliente com id [" + dto.getFinalClientId() + "] NAO esta cheio para a empresa com id ["
 							+ dto.getEnterpriseId() + "], para receber o premio eh preciso completa-lo");

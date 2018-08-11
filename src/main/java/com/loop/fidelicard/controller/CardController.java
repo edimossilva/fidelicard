@@ -36,7 +36,6 @@ public class CardController {
 	@Autowired
 	private CardService cardService;
 
-
 	@SuppressWarnings("rawtypes")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = V1_CARD_CREATE_CARD_WITH_STAMP, method = POST)
@@ -46,11 +45,15 @@ public class CardController {
 		logger.info(MyLogger.getMessage(V1_CARD_CREATE_CARD_WITH_STAMP, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_CARD_CREATE_CARD_WITH_STAMP, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = cardService.errorsToCreateWithStamp(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_CARD_CREATE_CARD_WITH_STAMP, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
@@ -63,15 +66,19 @@ public class CardController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_ENTERPRISE')")
 	@RequestMapping(value = V1_CARD_GET_REWARD, method = POST)
 	public ResponseEntity getReward(@Valid @RequestBody FinalClientIdAndEnterpriseIdDTO dto, BindingResult result) {
-		
+
 		logger.info(MyLogger.getMessage(V1_CARD_GET_REWARD, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_CARD_GET_REWARD, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = cardService.errorsToGetReward(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_CARD_CREATE_CARD_WITH_STAMP, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 

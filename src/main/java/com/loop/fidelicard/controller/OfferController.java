@@ -41,11 +41,14 @@ public class OfferController {
 		logger.info(MyLogger.getMessage(V1_OFFER, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_OFFER, result));
 			return GenericsUtil.errorsToResponse(result);
 		}
 		
 		List<String> errors = offerService.errorsToSave(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_OFFER, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 		

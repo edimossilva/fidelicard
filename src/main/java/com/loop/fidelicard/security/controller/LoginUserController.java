@@ -41,11 +41,15 @@ public class LoginUserController {
 		logger.info(MyLogger.getMessage(V1_LOGIN_USER, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_LOGIN_USER, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = loginUserService.errorsToSave(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_LOGIN_USER, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 

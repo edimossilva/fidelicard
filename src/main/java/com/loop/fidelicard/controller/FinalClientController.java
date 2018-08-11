@@ -40,7 +40,6 @@ public class FinalClientController {
 
 	private static final String V1_FINAL_CLIENT_GET_ALL_CARDS_BY_UI = "/v1/finalClient/getAllCardsByUI";
 
-
 	@Autowired
 	private FinalClientService finalClientService;
 
@@ -71,11 +70,14 @@ public class FinalClientController {
 		logger.info(MyLogger.getMessage(V1_FINAL_CLIENT_EXIST_CLIENT_BY_UI_AND_ENTERPRISE_ID, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_FINAL_CLIENT_EXIST_CLIENT_BY_UI_AND_ENTERPRISE_ID, result));
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = finalClientService.errorsToExistClientByUIAndEnterpriseId(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_FINAL_CLIENT_EXIST_CLIENT_BY_UI_AND_ENTERPRISE_ID, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
@@ -94,16 +96,20 @@ public class FinalClientController {
 		logger.info(MyLogger.getMessage(V1_FINAL_CLIENT_CREATE_WITH_STAMP, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_FINAL_CLIENT_CREATE_WITH_STAMP, result));
+			
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = finalClientService.errorsToCreateWithStamp(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_FINAL_CLIENT_CREATE_WITH_STAMP, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
 		ResponseFinalClientDTO finalClientResponseDTO = finalClientService.createWithStamp(dto);
-		
+
 		return GenericsUtil.objectToResponse(finalClientResponseDTO);
 	}
 
@@ -115,11 +121,14 @@ public class FinalClientController {
 		logger.info(MyLogger.getMessage(V1_FINAL_CLIENT_GET_ALL_CARDS_BY_UI, uIDTO));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_FINAL_CLIENT_GET_ALL_CARDS_BY_UI, result));
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = finalClientService.errorsToGetAllCardsByUI(uIDTO);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_FINAL_CLIENT_GET_ALL_CARDS_BY_UI, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 

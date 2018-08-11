@@ -12,6 +12,13 @@ public class GenericsUtil {
 	public static <T> ResponseEntity objectToResponse(T t) {
 		// Response<T> response = new Response<>();
 		// response.setData(t);
+		// Date d = new Date();
+		for (int i = 0; i < 500000; i++) {
+			System.out.println(i);
+		}
+		// System.out.println("Digite");
+		// new Scanner(System.in).nextLine();
+
 		return ResponseEntity.ok(t);
 	}
 

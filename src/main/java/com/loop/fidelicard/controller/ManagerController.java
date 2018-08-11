@@ -49,11 +49,15 @@ public class ManagerController {
 		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = managerService.errorsToCountByEnterpriseIdAndDate(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID_AND_DATE, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
@@ -71,11 +75,15 @@ public class ManagerController {
 		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = managerService.errorsToCountStampsByEnterpriseId(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_MANAGER_COUNT_STAMPS_BY_ENTERPRISE_ID, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
@@ -107,11 +115,15 @@ public class ManagerController {
 		logger.info(MyLogger.getMessage(V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID, dto));
 
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = managerService.errorsToCountFinalClientsByEnterpriseId(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_MANAGER_COUNT_FINAL_CLIENTS_BY_ENTERPRISE_ID, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 

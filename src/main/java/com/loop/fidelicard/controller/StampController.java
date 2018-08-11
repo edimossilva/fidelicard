@@ -28,7 +28,7 @@ import com.loop.fidelicard.util.MyLogger;
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @CrossOrigin(origins = "*")
 public class StampController {
-	
+
 	private static final String V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID = "v1/stamp/addStampByFinalClientIdAndEnterpriseId/";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -41,21 +41,25 @@ public class StampController {
 	@RequestMapping(value = V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, method = POST)
 	public ResponseEntity addStampByFinalClientIdAndEnterpriseId(
 			@Valid @RequestBody FinalClientIdAndEnterpriseIdDTO dto, BindingResult result) {
-		
+
 		logger.info(MyLogger.getMessage(V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, dto));
 
-		
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = stampService.errorsToAddStampByFinalClientIdAndEnterpriseId(dto);
 		if (!errors.isEmpty()) {
+			logger.error(
+					MyLogger.getErrorMessageFromList(V1_STAMP_ADD_STAMP_BY_FINAL_CLIENT_ID_AND_ENTERPRISE_ID, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
 		Card card = stampService.addStampAndSave(dto);
-		
+
 		return GenericsUtil.objectToResponse(new ResponseFinalClientDTO(card));
 	}
 

@@ -40,13 +40,16 @@ public class EnterpriseController {
 		
 		logger.info(MyLogger.getMessage(V1_ENTERPRISE, dto));
 
-		
 		if (result.hasErrors()) {
+			logger.error(MyLogger.getErrorMessage(V1_ENTERPRISE, result));
+
 			return GenericsUtil.errorsToResponse(result);
 		}
 
 		List<String> errors = enterpriseService.errorsToSave(dto);
 		if (!errors.isEmpty()) {
+			logger.error(MyLogger.getErrorMessageFromList(V1_ENTERPRISE, errors));
+
 			return GenericsUtil.errorsToResponse(errors);
 		}
 
