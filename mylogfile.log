@@ -12734,4 +12734,38 @@ Caused by: org.springframework.data.mapping.PropertyReferenceException: No prope
    11-08-2018 08:04:40.425 INFO  c.l.f.c.ManagerController  - URL = v1/manager/countStampsByEnterpriseId ,data = EnterpriseIdDTO(enterpriseId=3)
    11-08-2018 08:04:46.918 INFO  c.l.f.c.ManagerController  - URL = v1/manager/countStampsByEnterpriseIdAndDate ,data = EnterpriseIdAndDateDTO(enterpriseId=3, day=9, month=8, year=2018)
    11-08-2018 08:04:55.438 INFO  c.l.f.c.ManagerController  - URL = v1/manager/countStampsByEnterpriseIdAndDate ,data = EnterpriseIdAndDateDTO(enterpriseId=3, day=11, month=8, year=2018)
+   11-08-2018 08:06:22.571 INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext  - Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@7e9c0d68: startup date [Sat Aug 11 08:00:37 BRT 2018]; root of context hierarchy
+   11-08-2018 08:06:22.585 INFO  o.s.j.e.a.AnnotationMBeanExporter  - Unregistering JMX-exposed beans on shutdown
+   11-08-2018 08:06:22.586 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean  - Closing JPA EntityManagerFactory for persistence unit 'default'
+   11-08-2018 08:06:23.457 INFO  c.l.f.FidelicardApplication  - Starting FidelicardApplication on edimos-MacBook-Air.local with PID 21804 (/Users/edimosousasilva/Development/java/springudemy/Fidelicard/target/classes started by edimosousasilva in /Users/edimosousasilva/Development/java/springudemy/Fidelicard)
+   11-08-2018 08:06:23.458 INFO  c.l.f.FidelicardApplication  - No active profile set, falling back to default profiles: default
+   11-08-2018 08:06:23.461 INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext  - Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@3b0f6c86: startup date [Sat Aug 11 08:06:23 BRT 2018]; root of context hierarchy
+   11-08-2018 08:06:23.981 INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer  - Tomcat initialized with port(s): 8080 (http)
+   11-08-2018 08:06:23.982 INFO  o.a.c.c.StandardService  - Starting service [Tomcat]
+   11-08-2018 08:06:23.983 INFO  o.a.c.c.StandardEngine  - Starting Servlet Engine: Apache Tomcat/8.5.16
+   11-08-2018 08:06:24.001 INFO  o.a.c.c.C.[.[.[/]  - Initializing Spring embedded WebApplicationContext
+   11-08-2018 08:06:24.002 INFO  o.s.w.c.ContextLoader  - Root WebApplicationContext: initialization completed in 541 ms
+   11-08-2018 08:06:24.186 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean  - Building JPA container EntityManagerFactory for persistence unit 'default'
+   11-08-2018 08:06:24.186 INFO  o.h.j.i.u.LogHelper  - HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+   11-08-2018 08:06:24.200 INFO  o.h.d.Dialect  - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+   11-08-2018 08:06:24.201 INFO  o.h.e.j.e.i.LobCreatorBuilderImpl  - HHH000422: Disabling contextual LOB creation as connection was null
+   11-08-2018 08:06:24.201 INFO  o.h.t.BasicTypeRegistry  - HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@679bba73
+   11-08-2018 08:06:24.225 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.225 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.225 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.226 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.226 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.226 WARN  o.h.o.deprecation  - HHH90000014: Found use of deprecated [org.hibernate.id.SequenceGenerator] sequence-based id generator; use org.hibernate.id.enhanced.SequenceStyleGenerator instead.  See Hibernate Domain Model Mapping Guide for details.
+   11-08-2018 08:06:24.263 INFO  o.h.t.h.SchemaUpdate  - HHH000228: Running hbm2ddl schema update
+   11-08-2018 08:06:24.655 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean  - Initialized JPA EntityManagerFactory for persistence unit 'default'
+   11-08-2018 08:06:25.010 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'corsFilter' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'characterEncodingFilter' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'httpPutFormContentFilter' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'requestContextFilter' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.DelegatingFilterProxyRegistrationBean  - Mapping filter: 'springSecurityFilterChain' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.FilterRegistrationBean  - Mapping filter: 'authenticationTokenFilterBean' to: [/*]
+   11-08-2018 08:06:25.011 INFO  o.s.b.w.s.ServletRegistrationBean  - Mapping servlet: 'dispatcherServlet' to [/]
    
