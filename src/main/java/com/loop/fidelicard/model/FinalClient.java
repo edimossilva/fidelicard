@@ -55,7 +55,7 @@ public class FinalClient implements Serializable {
 	@OneToMany(mappedBy = "finalClient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
 
-	@ManyToMany(mappedBy = "finalClients")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "finalClients", cascade = CascadeType.MERGE)
 	private List<Enterprise> enterprises;
 
 	@Column(name = "createdAt")

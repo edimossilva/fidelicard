@@ -3,8 +3,8 @@ package com.loop.fidelicard.mock;
 import com.loop.fidelicard.dto.enterprise.EnterpriseDTO;
 import com.loop.fidelicard.dto.finalclient.FinalClientAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.finalclient.ResponseFinalClientDTO;
+import com.loop.fidelicard.dto.hybrid.FinalClientIdAndEnterpriseIdDTO;
 import com.loop.fidelicard.dto.offer.OfferDTO;
-import com.loop.fidelicard.model.Card;
 import com.loop.fidelicard.model.Enterprise;
 import com.loop.fidelicard.model.FinalClient;
 import com.loop.fidelicard.model.Offer;
@@ -30,7 +30,13 @@ public class MyMock {
 	private static Offer offer2;
 	private static FinalClient finalClient;
 	private static FinalClient finalClient2;
-	private static Card card2;
+
+	public static void createCardForClienteInEnterprise2(CardService cardService) {
+		FinalClientIdAndEnterpriseIdDTO dto = new FinalClientIdAndEnterpriseIdDTO();
+		dto.setFinalClientId(MyMock.getFinalClient().getId());
+		dto.setEnterpriseId(MyMock.getEnterprise2().getId());
+		cardService.createWithStamp(dto);
+	}
 
 	public static void createLoginUser1(LoginUserService loginUserService) {
 		String password = "secretword1";
@@ -107,7 +113,7 @@ public class MyMock {
 
 	}
 
-	public static void createFinalClient1(FinalClientService finalClientService) {
+	public static void createFinalClient1WithCard(FinalClientService finalClientService) {
 		String email = "clientemail@gmail.com";
 		String uniqueIdentifier = "123456789";
 		FinalClientAndEnterpriseIdDTO dto = new FinalClientAndEnterpriseIdDTO();
@@ -119,25 +125,6 @@ public class MyMock {
 		setFinalClient(finalClient);
 	}
 
-	public static void createFinalClient2(FinalClientService finalClientService) {
-		// FinalClientCreateDTO finalClientCreateDTO = new FinalClientCreateDTO();
-		// String email = "clientemail@gmail.com2";
-		// String uniqueIdentifier = "1234567892";
-		//
-		// finalClientCreateDTO.setEmail(email);
-		// finalClientCreateDTO.setUniqueIdentifier(uniqueIdentifier);
-		//
-		// setFinalClient2(finalClientService.save(finalClientCreateDTO));
-	}
-
-	public static void createCard2(CardService cardService) {
-//		FinalClientIdAndEnterpriseIdDTO clientIDAndEnterpriseIdDTO = new FinalClientIdAndEnterpriseIdDTO();
-//		clientIDAndEnterpriseIdDTO.setFinalClientId(MyMock.getFinalClient2().getId());
-//		clientIDAndEnterpriseIdDTO.setEnterpriseId(MyMock.getEnterprise2().getId());
-//
-//		Card card = cardService.createCardWithStampFromClientIDAndEnterpriseIdDTO(clientIDAndEnterpriseIdDTO);
-//		setCard2(card);
-	}
 
 	public static LoginUser getLoginUser() {
 		return loginUser;
@@ -203,11 +190,4 @@ public class MyMock {
 		MyMock.finalClient2 = finalClient2;
 	}
 
-	public static Card getCard2() {
-		return card2;
-	}
-
-	public static void setCard2(Card card2) {
-		MyMock.card2 = card2;
-	}
 }

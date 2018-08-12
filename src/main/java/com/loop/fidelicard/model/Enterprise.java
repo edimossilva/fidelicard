@@ -47,16 +47,16 @@ public class Enterprise {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "enterprise_final_client", joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "enterprise_id", referencedColumnName = "id"))
 	private List<FinalClient> finalClients;
 
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Offer> offers;
-	
+
 	@OneToMany(mappedBy = "enterprise", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Card> cards;
-	
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, mappedBy = "enterprise")
 	private LoginUser ownerLoginUser;
 

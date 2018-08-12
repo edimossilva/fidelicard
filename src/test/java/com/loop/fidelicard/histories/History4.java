@@ -50,8 +50,8 @@ public class History4 {
 		MyMock.createEnterprise2(loginUserService, enterpriseService);
 		MyMock.createOffer1(offerService, enterpriseService);
 		MyMock.createOffer2(offerService, enterpriseService);
-		MyMock.createFinalClient1(finalClientService);
-		MyMock.createFinalClient2(finalClientService);
+		MyMock.createFinalClient1WithCard(finalClientService);
+//		MyMock.createFinalClient2(finalClientService);
 		// MyMock.createFinalClient1(finalClientService);
 	}
 

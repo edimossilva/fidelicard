@@ -48,7 +48,7 @@ public class Card implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private FinalClient finalClient;
 
-	@OneToMany(orphanRemoval = true, mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "card", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Stamp> stamps;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
