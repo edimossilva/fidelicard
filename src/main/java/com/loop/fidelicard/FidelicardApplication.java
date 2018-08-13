@@ -117,8 +117,8 @@ public class FidelicardApplication {
 	// }
 
 	private void createAdminUser() {
-		String email = "edimodeveloper@gmail.com";
-		String password = "Ju&Bx+qc9";
+		String email = "admin@gmail.com";
+		String password = "123";
 		LoginUser loginUser = loginUserService.findByEmail(email);
 		if (loginUser == null) {
 			LoginUser loginUser1 = LoginUser.builder().email(email).password(password).userRole(UserRole.ROLE_ADMIN)
