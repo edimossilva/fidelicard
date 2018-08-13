@@ -80,7 +80,7 @@ public class ErrorsService {
 	}
 
 	public void addErrorsIfFinalClientByUINotExist(String finalClientUI, List<String> errors) {
-		String errorMessage = "Nao existe cliente com o identificador [" + finalClientUI + "]";
+		String errorMessage = "Não existe cliente com telefone " + finalClientUI;
 		FinalClient finalClient = finalClientService.findByUI(finalClientUI);
 		MyValidator.addErrorsWhenNull(errors, errorMessage, finalClient);
 
@@ -107,7 +107,7 @@ public class ErrorsService {
 				+ enterpriseId + "]";
 		Card card = cardService.findByFinalClientIdAndEnterpriseId(finalClientId, enterpriseId);
 		MyValidator.addErrorsWhenNotNull(errors, errorMessage, card);
-		
+
 	}
 
 }
