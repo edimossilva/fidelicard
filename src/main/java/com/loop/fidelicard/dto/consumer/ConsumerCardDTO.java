@@ -15,7 +15,7 @@ import lombok.Setter;
 public class ConsumerCardDTO {
 	private Long cardId;
 	private Long finalClientId;
-	private Integer atualStampQuantity;
+	private Integer currentStampQuantity;
 	private Integer maxStampQuantity;
 	private ConsumerEnterpriseDTO enterprise;
 	private ConsumerOfferDTO offer;
@@ -24,7 +24,7 @@ public class ConsumerCardDTO {
 	public ConsumerCardDTO(Card card) {
 		setCardId(card.getId());
 		setFinalClientId(card.getFinalClient().getId());
-		setAtualStampQuantity(card.getNormalizedQuantity());
+		setCurrentStampQuantity(card.getNormalizedQuantity());
 		setMaxStampQuantity(card.getOffer().getQuantity());
 		setEnterprise(card.getOffer().getEnterprise().toConsumerEnterpriseDTO());
 		setOffer(card.getOffer().toConsumerOfferDTO());
